@@ -1,0 +1,21 @@
+<div>
+	<div class="modal-header">
+		<h4>Link Analysis
+			<button type="button" class="fa fa-times btn-warning pull-right" aria-hidden="true" ng-click="ctrl.modalCancel()"></button>
+		</h4>
+  </div>
+  <div class="modal-body graph-modal-body" id="modal-body">
+  	<div ng-show="ctrl.selectedNode" class="selected-details">
+  		<a ng-href="detail{{ctrl.selectedNode.uri}}" ng-click="ctrl.modalCancel()"><h4>{{ctrl.selectedNode.label}}</h4></a>
+  		<div class="cash"><b>Cash Flow:</b>
+  		  <span class="surplus-positive" ng-show="ctrl.selectedNode.cashflow >= 0">{{ctrl.selectedNode.cashflow | currency}}</span>
+  		  <span class="surplus-negative" ng-show="ctrl.selectedNode.cashflow < 0">{{ctrl.selectedNode.cashflow | currency}}</span>
+  		 </div>
+       <div class="transactions">
+  		  <b>Incoming</b>: {{ctrl.selectedNode.incomingSummary.amount | currency}} (<i>Transactions:</i> {{ctrl.selectedNode.incomingSummary.count}})<br/>
+  		  <b>Outgoing</b>: {{ctrl.selectedNode.outgoingSummary.amount | currency}} (<i>Transactions:</i> {{ctrl.selectedNode.outgoingSummary.count}})
+      </div>
+  	</div>
+    <ml-visjs-graph uris="ctrl.nodeUri" graph-options="ctrl.graphOptions" graph-events="ctrl.myGraphEvents" graph-search="ctrl.graphSearch" graph-expand="ctrl.graphExpand"></ml-visjs-graph>
+  </div>
+</div>

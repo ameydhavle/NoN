@@ -1,0 +1,119 @@
+
+<div >
+  <nav class="navbar navbar-default nav" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"><h1 id="logo">Finserv Customer 360</h1></a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><img src="/images/360-icn.png"/><a href="/search">Data 360</a></li>
+        <li class="ref-data">
+          <i class="fa fa-database"></i>
+          <a href="/idl">Internal Data</a></li>
+        <li class="ext-data">
+          <i class="fa fa-database"></i>
+          <a href="/edl">External Data</a></li>
+        <li class="network-view">
+          <i class="fa fa-cubes"></i>
+          <a href="/events">Network View</a></li>
+        <li class="dropdown data-hub">
+          <img src="/images/datahub-reverse.png"/><a class="dropdown-toggle" data-toggle="dropdown" href="#">Data Hub
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/upload"><i class="fa fa-fw fa-database"></i>Ingest Data As-Is</a></li>
+            <li class="nav-divider"></li>
+            <li><a href="/harmonize"><i class="fa fa-fw fa-gears"></i>Harmonize B2C Data</a></li>
+            <li class="nav-divider"></li>
+            <li><a href="/harmonizeNetworks"><i class="fa fa-fw fa-gears"></i>Harmonize B2B Data</a></li>
+            <li class="nav-divider"></li>
+            <li><a href="/settings"><i class="fa fa-fw fa-chain"></i>Settings</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ml-user mode="inline"></ml-user>
+    </div><!-- /.navbar-collapse -->
+  </nav>
+</div>
+<div class="row" >
+  <!--
+  <div class="col-sm-2" style="background-color: #7DA3C0;  line-height: 60px; font-weight: 300; font-size: 16px; height: 100%" >
+      <nav class="navbar navbar " role="navigation" >
+        <ul class="nav sidebar-nav"  ng-if="url == '/home' ">
+          <li>
+            <a href="/upload" style="color: #2A4356 ;"><i class="fa fa-fw fa-database"></i> Ingest Data As-Is</a>
+          </li>
+          <li>
+            <a href="/search" style="color: #2A4356 ;"><i class="fa fa-fw fa-search"></i> Access the Data</a>
+          </li>
+          <li>
+            <a href="/harmonize" style="color: #2A4356 ;"><i class="fa fa-fw fa-gears"></i> Harmonize &amp; Enrich </a>
+          </li>
+          <li>
+            <a href="/operationalize" style="color: #2A4356 ;"><i class="fa fa-fw fa-calculator"></i> Operationalize</a>
+          </li>
+          <li>
+            <a href="/settings" style="color: #2A4356 ;"><i class="fa fa-fw fa-chain"></i> Settings</a>
+          </li>
+        </ul>
+      </nav>
+  </div>
+  -->
+  <!-- Add your site or application content here -->
+  <div class="col-sm-1" ></div>
+  <div class="content col-sm-12">
+      <message-board msg="ctrl.messageBoardService.message()"></message-board>
+      <div ng-hide="ctrl.messageBoardService.message()">
+        <ui-view></ui-view>
+      </div>
+    </div>
+<div class="col-sm-1" ></div>
+
+  </div>
+</div>
+
+<footer id="footer" class="powered">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="social-links">
+          <a href="https://www.facebook.com/marklogic" title="Facebook" rel="external">
+            <img src="images/facebook.svg" alt="Facebook" title="Facebook"></a>
+          <a href="https://twitter.com/marklogic" title="Twitter" rel="external">
+            <img src="images/twitter.svg" alt="Twitter" title="Twitter"></a>
+          <a href="http://www.linkedin.com/company/marklogic" title="LinkedIn" rel="external">
+            <img src="images/linkedin.svg" alt="LinkedIn" title="LinkedIn"></a>
+          <a href="https://www.flickr.com/photos/marklogicuc/" title="Flickr" rel="external">
+            <img src="images/flickr.svg" alt="Flickr" title="Flickr"></a>
+          <a href="https://www.youtube.com/channel/UCT2Q5qhC2gmd89K9qpV2TrQ" title="YouTube" rel="external">
+            <img src="images/youtube.svg" alt="YouTube" title="YouTube"></a>
+          <a href="https://plus.google.com/+MarklogicCo/posts" title="Google+" rel="external">
+            <img src="images/google.svg" alt="Google+" title="Google+"></a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <ul id="menu-footer-navigation-logged-in" class="nav">
+          <li id="menu-item-140" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-140">
+            <a target="_blank" href="http://www.marklogic.com">MarkLogic.com</a>
+          </li>
+          <li id="menu-item-71" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-71">
+            <a target="_blank" href="http://developer.marklogic.com">MarkLogic Developers</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row copyright">
+      <div class="col-sm-12 text-muted">
+        Copyright <sup>&copy;</sup> {{ ctrl.currentYear }} MarkLogic Corporation. MARKLOGIC <sup>&reg;</sup> is a
+        registered trademark of MarkLogic Corporation.
+      </div>
+    </div>
+  </div>
+</footer>

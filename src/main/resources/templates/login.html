@@ -1,0 +1,44 @@
+<html>
+
+<head>
+<base href="/" />
+<meta charset="utf-8" />
+<title>BAML GTS NoN</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width" />
+<link rel="shortcut icon" th:href="@{images/favicon.ico}" />
+<!-- bower:css -->
+<link rel="stylesheet" href="bower_components/highlightjs/styles/default.css" />
+<link rel="stylesheet" href="bower_components/ng-json-explorer/dist/angular-json-explorer.css" />
+<link rel="stylesheet" href="bower_components/d3-cloud-ng/dist/d3-cloud-ng.css" />
+<link rel="stylesheet" href="bower_components/split-pane/split-pane.css" />
+<link rel="stylesheet" href="bower_components/angular-tree-control/css/tree-control.css" />
+<link rel="stylesheet" href="bower_components/vis/dist/vis.css" />
+<link rel="stylesheet" href="bower_components/ml-visjs-graph-ng/dist/ml-visjs-graph-ng.css" />
+<link rel="stylesheet" href="bower_components/ng-sortable/dist/ng-sortable.css" />
+<!-- endbower -->
+<link rel="stylesheet" href="/styles/main.css" />
+</head>
+
+<body>
+  <div class="container">
+    <center>
+      <form style="max-width: 350px;" th:action="@{/login}" method="post">
+        <h2>GTS - Network of Networks</h2>
+        <div th:if="${param.error}" class="alert alert-error">Invalid username and password.</div>
+        <div th:if="${param.logout}" class="alert alert-success">You have been logged out.</div>
+        <div class="form-group">
+          <label for="username" class="sr-only">Username</label> <input type="text" name="username" class="form-control"
+            placeholder="Username" required="required" autofocus="autofocus" />
+        </div>
+        <div class="form-group">
+          <label for="password" class="sr-only">Password</label> <input type="password" name="password"
+            class="form-control" placeholder="Password" required="required" />
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+      </form>
+    </center>
+  </div>
+</body>
+
+</html>

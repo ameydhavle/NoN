@@ -1,0 +1,161 @@
+buildscript {
+  // Load MarkLogic properties from the Spring Boot properties file to avoid duplication
+  Properties props = new Properties()
+  props.load(new FileInputStream("src/main/resources/application.properties"))
+  props.each { prop ->
+    // Don't set the property if it's already been set, e.g. via -P on the command line
+    if (prop.key.startsWith("ml") && !project.hasProperty(prop.key)) {
+      project.ext.set(prop.key, prop.value)
+    }
+  }
+
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.3.RELEASE")
+	}
+}
+
+plugins {
+	id "java"
+	id "eclipse"
+  id "com.marklogic.ml-gradle" version "2.2.0-RC1"
+
+	// For managing environment-sensitive properties - see https://github.com/stevesaliman/gradle-properties-plugin
+	// id 'net.saliman.properties' version '1.4.5'
+}
+
+configurations {
+	mlcp
+}
+
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+  jcenter()
+
+  // Needed for mlcp and its Hadoop dependencies
+  maven {url "http://developer.marklogic.com/maven2/"}
+  maven {url "http://repository.cloudera.com/artifactory/cloudera-repos/" }
+}
+
+
+dependencies {
+
+
+  // Main Boot library for running a webapp
+  compile("org.springframework.boot:spring-boot-starter-web")
+
+  // Adds Spring Security integration
+  compile("org.springframework.boot:spring-boot-starter-security")
+
+  // Adds Thymeleaf integration; Thymeleaf is used for the main HTML templates
+  compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+
+  // Optional Boot library - see https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-devtools.html
+  compile("org.springframework.boot:spring-boot-devtools")
+
+  // Provides integration points between Boot and MarkLogic
+  compile "com.marklogic:marklogic-spring-web:0.1.2"
+
+  // Needed for loading modules into MarkLogic
+  compile "com.marklogic:ml-javaclient-util:2.9.0-RC1"
+
+  // Needed for the Upload feature using mlcp
+  compile "com.marklogic:mlcp-util:0.2.0"
+  runtime "commons-fileupload:commons-fileupload:1.3.1"
+
+  // Needed for the SQL migration tool
+  compile "com.marklogic:marklogic-spring-batch:0.1.0"
+  // Samples of including JDBC drivers - uncomment or add your own as needed
+  runtime "mysql:mysql-connector-java:5.1.6"
+  //runtime "postgresql:postgresql:9.2-1002.jdbc4"
+
+  compile group: 'org.apache.commons', name: 'commons-csv', version: '1.4'
+
+  // Needed for writing JUnit tests with ml-junit
+  testCompile "com.marklogic:ml-junit:2.5"
+
+  mlcp "com.marklogic:mlcp:8.0-5"
+	mlcp "org.apache.commons:commons-csv:1.2"
+	mlcp files("lib")
+}
+
+// Tell Spring Boot, when run by Gradle, to watch the resources directory
+bootRun {
+  addResources = true
+}
+
+// See http://docs.spring.io/spring-boot/docs/current/reference/html/deployment-install.html
+springBoot {
+	executable = true
+	mainClass = "org.example.App"
+}
+
+task importThesaurus(type: com.marklogic.gradle.task.MlcpTask) {
+	classpath = configurations.mlcp
+	command = "IMPORT"
+	database = mlAppConfig.contentDatabaseName
+	port = mlRestPort.toInteger()
+	input_file_path = "data/thesaurus.xml"
+	input_file_type = "documents"
+	document_type = "xml"
+	output_collections = "thesaurus"
+	output_uri_replace = ".*data/,'/data/'"
+	output_permissions = "rest-reader,read,program-360-admin,read,program-360-admin,update"
+}
+
+
+task importDictionary(type: com.marklogic.gradle.task.MlcpTask) {
+	classpath = configurations.mlcp
+	command = "IMPORT"
+	database = mlAppConfig.contentDatabaseName
+	port = mlRestPort.toInteger()
+	input_file_path = "data/dictionary-large.xml"
+	input_file_type = "documents"
+	document_type = "xml"
+	output_collections = "dictionary"
+	output_uri_replace = ".*data/,'/data/ref/'"
+	output_permissions = "rest-reader,read,program-360-admin,read,program-360-admin,update"
+}
+
+task importAirlineData(type: com.marklogic.gradle.task.MlcpTask) {
+	classpath = configurations.mlcp
+	command = "IMPORT"
+	database = mlAppConfig.contentDatabaseName
+	port = mlRestPort.toInteger()
+	input_file_path = "data/airline/*.csv"
+	input_file_type = "delimited_text"
+  document_type = "xml"
+  output_collections = "airline-entities"
+	output_uri_replace = ".*data/,'/data/airline/'"
+	output_permissions = "rest-reader,read,program-360-admin,read,program-360-admin,update"
+}
+
+task importZipCodes(type: com.marklogic.gradle.task.MlcpTask) {
+		classpath = configurations.mlcp
+		command = "IMPORT"
+		database = mlAppConfig.contentDatabaseName
+		port = mlRestPort.toInteger()
+		input_file_path = "data/ref/zipcodes/zipcode.csv"
+		input_file_type = "delimited_text"
+		document_type = "xml"
+		output_collections = "zipcodes"
+		output_uri_prefix = "/data/ref/zipcode/"
+		output_permissions = "rest-reader,read,program-360-admin,read,program-360-admin,update"
+}
+
+task configureRedactionRules(type: com.marklogic.gradle.task.XccTask) {
+    xccUrl = "xcc://${mlUsername}:${mlPassword}@${mlHost}:${mlRestPort.toInteger()}/${mlSchemasDbName}"
+    xquery = new File('redaction-rules.xqy').text
+}
+
+task configureSqlTemplates(type: com.marklogic.gradle.task.XccTask) {
+    xccUrl = "xcc://${mlUsername}:${mlPassword}@${mlHost}:${mlRestPort.toInteger()}/${mlSchemasDbName}"
+    xquery = new File('sql-templates.xqy').text
+}
+
+task importDemoData {
+  dependsOn importZipCodes, configureRedactionRules, configureSqlTemplates, importThesaurus, importDictionary
+}

@@ -1,0 +1,32 @@
+<div ng-repeat="result in results" class=" product-result">
+  <div class="col-lg-4 col-md-6">
+    <div class="bg-warning panel profile-tile animated bounceInRight ">
+      <div class="panel-body bg-info">
+        
+          <div class="text-left trunc">
+
+            <address>
+              <br><strong class="truncate">{{result.metadata['title'].values[0].substring(0,200)}}</strong><br><br>
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button ng-if="result.metadata['policy_id']" class="btn btn-sm btn-success" ng-click="filterCreditor(result.metadata['policy_id'].values[0])">{{
+                  result.metadata['policy_id'].values[0]
+                  }}</button>
+              </div>
+              <br>
+              <strong>Caller Name: {{result.metadata['caller_name'].values[0]}}</strong><br>
+              <strong class="truncate">Transcript {{result.metadata['transcript'].values[0].substring(0,200)}}</strong><br>
+              Date: {{result.metadata['date'].values[0] | date}}<br>
+            </address>
+
+          </div>
+      </div>
+      <a ui-sref="root.view({uri: result.uri})">
+        <div class="panel-footer">
+          <span class="pull-left">View Details</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

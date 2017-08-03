@@ -1,0 +1,368 @@
+<options xmlns="http://marklogic.com/appservices/search">
+  <search-option>unfiltered</search-option>
+  <page-length>10</page-length>
+  <!--
+<additional-query>
+<cts:and-query xmlns:cts="http://marklogic.com/cts">
+  <cts:collection-query>
+  <cts:uri>call-center</cts:uri>
+    <cts:uri>customers</cts:uri>
+    <cts:uri>documents</cts:uri>
+  </cts:collection-query>
+
+  <cts:not-query xmlns:cts="http://marklogic.com/cts">
+    <cts:collection-query>
+      <cts:uri>binary</cts:uri>
+      <cts:uri>processed-binary</cts:uri>
+      <cts:uri>linkedData</cts:uri>
+      <cts:uri>http://marklogic.com/semantics#default-graph</cts:uri>
+      <cts:uri>http://marklogic.com/semantics#graphs</cts:uri>
+
+     <cts:uri>call-center</cts:uri>
+      <cts:uri>zipcodes</cts:uri>
+    </cts:collection-query>
+  </cts:not-query>
+      <cts:not-query xmlns:cts="http://marklogic.com/cts">
+        <cts:directory-query>
+          <cts:uri>/users/</cts:uri>
+        </cts:directory-query>
+      </cts:not-query>
+    </cts:and-query>
+  </additional-query>
+  -->
+  <term apply="term">
+    <empty apply="all-results" />
+    <term-option>punctuation-insensitive</term-option>
+    <term-option>stemmed</term-option>
+  </term>
+  <sort-order direction="ascending" type="xs:string">
+    <element name="last_name"/>
+  </sort-order>
+  <constraint name="Gender">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="normalizedGender"/>
+    </range>
+  </constraint>
+  <constraint name="company_name">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="company_name"/>
+    </range>
+  </constraint>
+  <constraint name="company_type">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="company_type"/>
+    </range>
+  </constraint>
+  <constraint name="company_category">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="company_category"/>
+    </range>
+  </constraint>
+  <constraint name="Spending_Category">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="Spending_Category"/>
+    </range>
+  </constraint>
+
+  <constraint name="Tags">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="tags"/>
+    </range>
+  </constraint>
+  <constraint name="Service-Area">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="Service_Area"/>
+    </range>
+  </constraint>
+
+  <constraint name="Transaction-Size">
+    <range type="xs:int" facet="true" collation="">
+      <bucket name="Under 1000" ge="0" lt="1000"/>
+      <bucket name="1000-5000" ge="1001" lt="5000"/>
+      <bucket name="5001-10000" ge="5001" lt="10000"/>
+      <bucket name="10001-50000" ge="10001" lt="50000"/>
+      <bucket name="50001-100000" ge="50001" lt="1000000"/>
+      <element ns="" name="Amount"/>
+    </range>
+  </constraint>
+  <constraint name="Age-Group">
+    <range type="xs:int" facet="true" collation="">
+      <bucket name="Under 20" ge="13" lt="20"/>
+      <bucket name="20-30" ge="20" lt="30"/>
+      <bucket name="30-40" ge="30" lt="40"/>
+      <bucket name="40-55" ge="40" lt="55"/>
+      <bucket name="55+" ge="55" lt="100"/>
+      <element ns="" name="Age"/>
+    </range>
+  </constraint>
+
+  <constraint name="City">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="City"/>
+    </range>
+  </constraint>
+  <constraint name="State">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="State"/>
+    </range>
+  </constraint>
+
+  <constraint name="Occupation">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="Occupation"/>
+    </range>
+  </constraint>
+  <constraint name="Zip">
+    <range type="xs:string" facet="false" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="zip"/>
+    </range>
+  </constraint>
+  <!--
+  <constraint name="UniqueCarrier">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="UniqueCarrier"/>
+    </range>
+  </constraint>
+  <constraint name="Origin">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="Origin"/>
+    </range>
+  </constraint>
+  <constraint name="Dest">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="Dest"/>
+    </range>
+  </constraint>
+  <constraint name="FlightNum">
+    <range type="xs:string" facet="false" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="FlightNum"/>
+    </range>
+  </constraint>
+  -->
+  <constraint name="Creditor">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="Creditor"/>
+    </range>
+  </constraint>
+  <constraint name="Collection">
+    <collection prefix=""/>
+  </constraint>
+
+
+  <constraint name="Last-Updated-By">
+    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+      <facet-option>limit=10</facet-option>
+      <facet-option>frequency-order</facet-option>
+      <facet-option>descending</facet-option>
+      <element ns="" name="last_updated_by"/>
+    </range>
+  </constraint>
+
+  <default-suggestion-source>
+      <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+        <facet-option>limit=10</facet-option>
+        <facet-option>frequency-order</facet-option>
+        <facet-option>descending</facet-option>
+        <element ns="" name="tags"/>
+      </range>
+
+  </default-suggestion-source>
+  <grammar>
+    <quotation>"</quotation>
+    <implicit>
+      <cts:and-query strength="20" xmlns:cts="http://marklogic.com/cts" />
+    </implicit>
+    <starter strength="30" apply="grouping" delimiter=")">(</starter>
+    <starter strength="40" apply="prefix" element="cts:not-query">-</starter>
+    <joiner strength="10" apply="infix" element="cts:or-query" tokenize="word">OR</joiner>
+    <joiner strength="20" apply="infix" element="cts:and-query" tokenize="word">AND</joiner>
+    <joiner strength="30" apply="infix" element="cts:near-query" tokenize="word">NEAR</joiner>
+    <joiner strength="30" apply="near2" consume="2" element="cts:near-query">NEAR/</joiner>
+    <joiner strength="50" apply="constraint">:</joiner>
+    <joiner strength="50" apply="constraint" compare="LT" tokenize="word">LT</joiner>
+    <joiner strength="50" apply="constraint" compare="LE" tokenize="word">LE</joiner>
+    <joiner strength="50" apply="constraint" compare="GT" tokenize="word">GT</joiner>
+    <joiner strength="50" apply="constraint" compare="GE" tokenize="word">GE</joiner>
+    <joiner strength="50" apply="constraint" compare="NE" tokenize="word">NE</joiner>
+  </grammar>
+  <sort-order direction="descending">
+    <score />
+  </sort-order>
+  <transform-results apply="snippet">
+    <preferred-elements>
+      <element ns="" name="body" />
+    </preferred-elements>
+    <max-matches>1</max-matches>
+    <max-snippet-chars>150</max-snippet-chars>
+    <per-match-tokens>20</per-match-tokens>
+  </transform-results>
+  <return-query>1</return-query>
+  <operator name="results">
+    <state name="compact">
+      <transform-results apply="snippet">
+        <preferred-elements>
+          <element ns="" name="body" />
+        </preferred-elements>
+        <max-matches>1</max-matches>
+        <max-snippet-chars>150</max-snippet-chars>
+        <per-match-tokens>20</per-match-tokens>
+      </transform-results>
+    </state>
+    <state name="detailed">
+      <transform-results apply="snippet">
+        <preferred-elements>
+          <element ns="" name="body" />
+        </preferred-elements>
+        <max-matches>2</max-matches>
+        <max-snippet-chars>400</max-snippet-chars>
+        <per-match-tokens>30</per-match-tokens>
+      </transform-results>
+    </state>
+  </operator>
+
+  <constraint name="geo-point">
+    <custom facet="true">
+      <parse apply="parse-structured" ns="http://marklogic.com/appservices/viz/geo" at="/ext/constraint/geo_ml8.xqy" />
+      <start-facet apply="start" ns="http://marklogic.com/appservices/viz/geo" at="/ext/constraint/geo_ml8.xqy" />
+      <finish-facet apply="finish" ns="http://marklogic.com/appservices/viz/geo" at="/ext/constraint/geo_ml8.xqy" />
+    </custom>
+    <annotation>
+      <geo-elem-pair>
+        <heatmap n="90" e="180" s="-90" w="-180" latdivs="20" londivs="20"/>
+        <parent ns="" name="geo-data"/>
+        <lat ns="" name="Lat"/>
+        <lon ns="" name="Long"/>
+      </geo-elem-pair>
+    </annotation>
+  </constraint>
+
+  <extract-metadata>
+    <qname elem-ns="" elem-name="transaction-data"/>
+    <qname elem-ns="" elem-name="record"/>
+    <qname elem-ns="" elem-name="Service_Area"/>
+    <qname elem-ns="" elem-name="Account_Description"/>
+    <qname elem-ns="" elem-name="Creditor"/>
+    <qname elem-ns="" elem-name="Company_Name"/>
+    <qname elem-ns="" elem-name="SIC_Code"/>
+    <qname elem-ns="" elem-name="JV_Value"/>
+    <qname elem-ns="" elem-name="tags"/>
+    <qname elem-ns="" elem-name="record"/>
+
+    <qname elem-ns="" elem-name="CCNumber"/>
+    <qname elem-ns="" elem-name="Amount"/>
+    <qname elem-ns="" elem-name="Transaction_Date"/>
+    <qname elem-ns="" elem-name="AccountNum"/>
+
+
+
+    <qname elem-ns="" elem-name="Title"/>
+    <qname elem-ns="" elem-name="GivenName"/>
+    <qname elem-ns="" elem-name="Surname"/>
+    <qname elem-ns="" elem-name="StreetAddress"/>
+    <qname elem-ns="" elem-name="City"/>
+    <qname elem-ns="" elem-name="TelephoneNumber"/>
+    <qname elem-ns="" elem-name="CCNumber"/>
+    <qname elem-ns="" elem-name="AccountNum"/>
+    <qname elem-ns="" elem-name="EmailAddress"/>
+    <qname elem-ns="" elem-name="SSN"/>
+
+
+    <qname elem-ns="" elem-name="fname"/>
+    <qname elem-ns="" elem-name="lname"/>
+    <qname elem-ns="" elem-name="email"/>
+    <qname elem-ns="" elem-name="street_adddress"/>
+    <qname elem-ns="" elem-name="city"/>
+    <qname elem-ns="" elem-name="state"/>
+    <qname elem-ns="" elem-name="zip"/>
+    <qname elem-ns="" elem-name="policy_id"/>
+    <qname elem-ns="" elem-name="type"/>
+
+    <qname elem-ns="" elem-name="first_name"/>
+    <qname elem-ns="" elem-name="last_name"/>
+    <qname elem-ns="" elem-name="email"/>
+    <qname elem-ns="" elem-name="address"/>
+
+    <qname elem-ns="" elem-name="firstName"/>
+    <qname elem-ns="" elem-name="lastName"/>
+    <qname elem-ns="" elem-name="addr1"/>
+    <qname elem-ns="" elem-name="city"/>
+    <qname elem-ns="" elem-name="state"/>
+    <qname elem-ns="" elem-name="zipcode"/>
+
+    <qname elem-ns="" elem-name="title"/>
+    <qname elem-ns="" elem-name="submitted-by"/>
+
+    <qname elem-ns="" elem-name="link"/>
+    <qname elem-ns="http://marklogic.com/semantics" elem-name="object"/>
+    <qname elem-ns="" elem-name="pubDate"/>
+    <qname elem-ns="" elem-name="description"/>
+
+    <qname elem-ns="" elem-name="UniqueCarrier"/>
+    <qname elem-ns="" elem-name="FlightNum"/>
+    <qname elem-ns="" elem-name="Origin"/>
+    <qname elem-ns="" elem-name="Dest"/>
+    <qname elem-ns="" elem-name="Year"/>
+    <qname elem-ns="" elem-name="Month"/>
+    <qname elem-ns="" elem-name="DayofMonth"/>
+
+    <qname elem-ns="" elem-name="name"/>
+    <qname elem-ns="" elem-name="jurisdiction"/>
+    <qname elem-ns="" elem-name="jurisdiction_description"/>
+    <qname elem-ns="" elem-name="sourceID"/>
+    <qname elem-ns="" elem-name="ibcRUC"/>
+
+
+    <qname elem-ns="http://www.w3.org/1999/xhtml" elem-name="meta" attr-ns="http://www.w3.org/1999/xhtml" attr-name="Author"/>
+    <qname elem-ns="" elem-name="meta" attr-ns="http://www.w3.org/1999/xhtml" attr-name="content-type"/>
+
+
+  </extract-metadata>
+</options>

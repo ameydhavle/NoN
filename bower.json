@@ -1,0 +1,46 @@
+{
+  "name": "data-hub-gradle",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "~1.4.4",
+    "angular-bootstrap": "~0.13.3",
+    "angular-cookies": "~1.4.4",
+    "angular-highlightjs": "~0.4.3",
+    "angular-mocks": "~1.4.4",
+    "angular-ui-router": "~0.2.15",
+    "angular-x2js": "https://github.com/janmichaelyu/angular-x2js.git",
+    "bootstrap": "~3.3.5",
+    "font-awesome": "~4.4.0",
+    "highlightjs": "~8.7.0",
+    "jquery": "~2.1.4",
+    "lodash": "~3.10.1",
+    "ml-search-ng": "~0.2.0",
+    "ml-utils": "withjam/ml-utils",
+    "ng-json-explorer": "8c2a0f9104",
+    "vkbeautify-wrapper": "https://github.com/vkiryukhin/vkBeautify.git",
+    "ml-highcharts-ng": "~0.0.11",
+    "d3-cloud-ng": "^0.9.4",
+    "angular-split-pane": "*",
+    "angular-tree-control": "*",
+    "angular-openlayers-directive": "^1.15.2",
+    "ml-visjs-graph-ng": "^2.1.0",
+    "ng-sortable": "~1.3.7"
+  },
+  "overrides": {
+    "angular-highlightjs": {
+      "dependencies": {
+        "angular": ">1.0.8",
+        "highlightjs": "~8.7.0"
+      }
+    }
+  },
+  "private": true,
+  "resolutions": {
+    "jquery": "1.9.1 - 3",
+    "highcharts": "~4.1.8",
+    "angular": "^1.4.1",
+    "angular-bootstrap": "^1.1",
+    "vis": "~4.16.1",
+    "lodash": ">= 3.0.1 < 5"
+  }
+}

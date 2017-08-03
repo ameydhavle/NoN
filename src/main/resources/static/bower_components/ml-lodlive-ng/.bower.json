@@ -1,0 +1,55 @@
+{
+  "name": "ml-lodlive-ng",
+  "version": "0.1.2",
+  "description": "Angular directive that wraps around Matt's ml-lodlive project",
+  "main": [
+    "dist/ml-lodlive-ng.js",
+    "dist/ml-lodlive-ng.css"
+  ],
+  "dependencies": {
+    "angular": ">1.3.1",
+    "ml-lodlive": "~0.4.1"
+  },
+  "devDependencies": {
+    "angular-mocks": ">1.2.14"
+  },
+  "moduleType": [
+    "globals"
+  ],
+  "authors": [
+    "grtjn"
+  ],
+  "homepage": "http://grtjn.github.io/ml-lodlive-ng/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/grtjn/ml-lodlive-ng.git"
+  },
+  "keywords": [
+    "angular",
+    "angularjs",
+    "marklogic",
+    "lodlive"
+  ],
+  "license": "Apache-2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    ".tmp",
+    "build",
+    "test",
+    "coverage",
+    "gulpfile.js",
+    "karma.conf.js",
+    "package.json"
+  ],
+  "_release": "0.1.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.2",
+    "commit": "946717e68e27627a7bc718640e0c23cb01830a94"
+  },
+  "_source": "https://github.com/grtjn/ml-lodlive-ng.git",
+  "_target": "~0.1.2",
+  "_originalSource": "ml-lodlive-ng"
+}

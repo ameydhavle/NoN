@@ -1,0 +1,699 @@
+@import "../../resources/static/bower_components/bootstrap/less/bootstrap.less";
+@import "../../resources/static/bower_components/font-awesome/less/font-awesome.less";
+@import "../../resources/static/bower_components/ml-search-ng/dist/ml-search-ng-tpls.less";
+@icon-font-path:    "/fonts/";
+@FontAwesomePath:    "/fonts/";
+
+/* for the uiux pieces */
+@import "uiux.less";
+
+@brand-primary: #28375B;
+@brand-info: #A5B0E3;
+@brand-warning: #6068B2;
+@form-bg: #ccc;
+
+.bg-info {
+  background-color: #f1f2f2;
+}
+.panel-footer {
+  background-color: #a5b0e3;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+	color: #0A57C1;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Amiko', sans-serif;
+	font-size: 18px;
+}
+
+.jumbotron {
+  background-color: #fff;
+}
+.curtain{
+  background-color: #d7e6ef;
+  line-height: 60px;
+  font-weight: 300;
+  font-size: 16px;
+  height: 200%
+}
+.login-tile {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f0f9ff+0,a1dbff+100 */
+  background: #A5B0E3; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #fff , #2c2D65); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #fff , #2c2D65); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  display: inline-block;
+  padding: 7px;
+  margin: 2.0%;
+  height: 250px;
+  width: 25%;
+  min-width: 200px;
+  vertical-align: top;
+  text-align: center;
+  position: relative;
+  color: #fff;
+}
+.login-tile button {
+  position: absolute;
+  bottom: 10px;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  left: 50%;
+  margin-right: -50%;
+}
+
+.jumbotron p {
+  font-size: 16px;
+}
+
+/*header*/
+.navbar-default .navbar-nav>li>a,
+.navbar-default .navbar-text {
+    color: #fff;
+}
+.navbar-default .navbar-nav>li>a:hover {
+  text-decoration: underline;
+}
+
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:active,
+.navbar-default .navbar-nav>li>a:visited,
+.navbar-default .navbar-nav>li>a:focus {
+    color: #fff;
+}
+.navbar-brand {
+  padding: 5px 10px 0 25px;
+}
+.navbar-default {
+  background-color: #28375B;
+  border-color: #27282c;
+  height: 75px;
+}
+.welcome {
+  margin-top: 25px;
+  color: #fff;
+}
+.navbar {
+  margin-bottom: 0;
+
+  img {
+    width: 43%;
+    display: block;
+    margin: -3px 0 0 20px;
+  }
+  .data-hub img {
+    width: 35%;
+    margin-left: 26px;
+  }
+  .ref-data .fa,
+  .ext-data .fa,
+  .network-view .fa {
+    display: block;
+    font-size: 2.6em;
+    padding: 0 25px;
+    color: #fff;
+  }
+  .ext-data .fa {
+    padding: 0 42px;
+  }
+  .ref-data .fa {
+    padding: 0 49px;
+  }
+  .network-view .fa {
+    padding: 0 35px;
+  }
+  span.profile-link a {
+    color: #fff;
+  }
+}
+.navbar-nav>li>a {
+  line-height: 0;
+}
+.navbar-nav li {
+  padding: 10px 0;
+}
+nav.nav {
+  border-bottom: 0;
+  border-radius: 0;
+}
+// Dropdown menu
+.dropdown-menu {
+  top: inherit;
+}
+.navbar-nav .dropdown-menu li {
+  padding: 0;
+}
+
+#logo {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  background: url('/images/Marklogic-white.png') no-repeat;
+  background-size: contain;
+  min-height: 30px;
+  height: 33px;
+  margin: 0.5em 0;
+  width: 160px;
+}
+
+.error {
+  font-weight: bold;
+}
+
+/* user login/logout */
+.user {
+  button {
+    margin-left: 3px;
+  }
+  input {
+    margin: 0 2px;
+  }
+}
+
+/* side bar */
+.right-col {
+  font-size: 13px;
+  h3 {
+    color: @brand-primary;
+    border-bottom: 2px solid @brand-primary;
+    padding-top: 15px;
+    font-size: 16px;
+    margin: 10px auto 5px;
+  }
+}
+/* to get cursor for facet links */
+.facet > div {
+  cursor: hand;
+  cursor: pointer;
+}
+
+.chiclet {
+  margin: 3px;
+}
+
+.facet-icon-pos.facet-add-pos {
+  content: "\f041";
+}
+
+/* negated and added chiclets */
+.chiclet  {
+    position: relative;
+}
+/* set up the added one first */
+.chiclet:before {
+    content: "\f055";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    color: #fff;
+    font-size: 10px;
+    padding-right: 0.5em;
+    position: absolute;
+    top: 0px;
+    left: 2px;
+}
+/* replace for negated */
+.chiclet.negated:before {
+    content: "\f056";
+}
+
+/* landing page */
+.panel-body {
+  min-height: 125px;
+}
+
+.panel > .panel-heading {
+  text-align: center;
+  border-radius: 0;
+}
+
+/* profile page */
+.input-group.additional-email {
+  margin: 3px 0;
+}
+
+/*footer*/
+footer {
+  bottom: 0;
+  width: 100%;
+  padding: 1.3em 0;
+  border-top: 1px solid #ccc;
+  color: #555555;
+  text-align: center;
+  background-color: #eee;
+
+  .social-links {
+
+    margin: auto;
+
+    a {
+      width: 25px;
+      height: 25px;
+      display: inline-block;
+      margin-left: 1.5em;
+
+      img { width: 100%; max-height: 100%; }
+      &:first-child{ margin-left: 0 }
+    }
+  }
+
+  .nav {
+    padding: 1em 0;
+
+    li {
+
+      display: inline-block;
+
+      a {
+        color: #555;
+        display: block;
+        padding: 0 0 0 1em;
+
+        &:after {
+          content: '|';
+          display: inline-block;
+          margin-left: 1em;
+        }
+      }
+
+      &:last-child {
+        a {
+          padding-right: 1em;
+        }
+        a:after{ display: none; margin-left: 0; }
+
+      }
+    }
+  }
+
+  .copyright { font-size: 0.9em }
+
+  .nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #dedede;
+  }
+}
+
+.powered {
+    background: url(/images/MarkLogic-Powered-By.png) 10px 10px no-repeat transparent;
+  }
+
+/*Content well*/
+.content {
+    padding: 20px 50px 50px;
+}
+
+.detail {
+  .desc textarea {
+    width: 100%;
+  }
+}
+
+.map-detail {
+  height: 100%;
+}
+
+.facet-list .facet a {
+  cursor: pointer;
+}
+
+.results {
+  ul.pagination {
+    margin: 0;
+
+    + div.btn-group {
+      margin-top: -3px;
+    }
+  }
+
+  .search-metrics {
+    line-height: 28px;
+    margin-left: 10px;
+    vertical-align: top;
+  }
+
+  .highlight {
+    background-color: #FFFFCC;
+  }
+}
+
+form[name=profileForm] {
+  .valid-email {
+    min-height: 20px;
+  }
+}
+
+.create .tag {
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
+/* Search */
+.search form {
+  margin-bottom: 15px;
+}
+
+/* Search results */
+.pagination-ctrls .btn-group button#single-button {
+    margin-top: -20px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.pagination-ctrls {
+    margin-top: 15px;
+}
+
+.results .match .highlight {
+  background-color: @brand-info;
+  color: @gray-lighter;
+  font-weight: bold;
+  padding: 0 2px 2px 2px;
+  margin: 0;
+}
+
+.nav-pills {
+  margin-bottom: 15px;
+}
+
+.pre-xml {
+  background-color: white;
+  border-width : 0;
+  font-family: monospace;
+  font-size: 1.1em;
+}
+
+.map-search {
+	height: 400px;
+}
+
+.synonym-groups {
+
+  margin: -15px -15px 15px 0px;
+  padding: 8px 8px 8px 18px;
+  background-color: #EFEFEF;
+  border-bottom: solid 1px #DDD;
+  font-size: 0.85em;
+
+  li {
+    display: inline-block;
+
+    .title { font-weight: 500; }
+    .label {
+      font-size: 1em;
+      color: #444;
+      background-color: #FFF;
+    }
+  }
+}
+
+.related-terms {
+  margin: 5px 5px 5px 5px;
+}
+
+.modal-custom {
+	width: 95%;
+	height: 80%;
+}
+
+.graph-modal-body {
+	width: 95%;
+	height: 100%;
+	min-height: 650px;
+}
+
+.analysis-buttons {
+	margin-bottom: 10px;
+}
+
+.ml-upload {
+
+  margin-top: 20px;
+
+  .ml-dropzone {
+    width: 100%;
+    border: dashed 1px;
+    border-radius: 6px;
+    padding: 15px;
+    text-align: center;
+    background: #F9F9F9;
+    min-height: 100px;
+
+    .notes {
+      padding: 20px 15px;
+    }
+
+    &.hover { background: #9CF; border-color: #369; }
+
+    .ml-upload-file-list {
+      display: block;
+      width: 100%;
+      text-align: left;
+
+
+      .ml-upload-file {
+        display: inline-block;
+        background-color: #FFF;
+        border-radius: 8px;
+        border: solid 1px #333;
+        box-shadow: 2px 2px 1px #999;
+        padding: 10px;
+        margin: 5px;
+        position: relative;
+        height: 90px;
+        max-width: 95%;
+        overflow: hidden;
+
+        .ml-upload-file-name {
+          display: block;
+        }
+
+        .ml-upload-file-progress {
+          display: block;
+          position: absolute;
+          bottom: 5px;
+          left: 5%;
+          font-size: 0.75em;
+          text-align: center;
+          padding: 0;
+          width: 90%;
+          line-height: 1.75;
+          border-radius: 6px;
+          color: #333;
+          background-color: #999;
+          overflow: hidden;
+
+          .ml-upload-progress-bar {
+            background-color: #9CF;
+            height: 100%;
+            width: 1%;
+            display: block;
+          }
+
+          .ml-upload-progress-value {
+            position: absolute;
+            display: block;
+            left: 0;
+            width: 100%;
+            text-align: center;
+          }
+        }
+
+        &.ml-upload-done {
+          border-color: green;
+          background-color: lightgreen;
+
+          .ml-upload-file-progress .ml-upload-progress-bar { background-color: green; }
+        }
+
+        &.ml-upload-error {
+          border-color: red;
+          background-color: pink;
+
+          .ml-upload-file-progress .ml-upload-progress-bar { background-color: red; }
+        }
+
+      }
+    }
+  }
+}
+// Facets & left col
+.options {
+  position: relative;
+  margin: auto -5px 10px;
+  border: 1px solid @brand-primary;
+  padding: 0 10px;
+}
+
+.btn.chiclet {
+  white-space: normal;
+  text-align: left;
+}
+
+.explore {
+
+  blockquote {
+    padding: 10px;
+  }
+  treecontrol li {
+    padding: 8px 0 0 10px;
+  }
+}
+
+// Content well
+.trunc {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.esriSimpleSliderTL {
+  top: 20px;
+  left: 1420px;
+}
+.panel {
+  border: none;
+
+  .panel-body button {
+    margin-bottom: 4px;
+  }
+
+}
+
+.idl {
+  .col-sm-12 > .panel {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .nav-tabs {
+    border-bottom: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .nav>li>a {
+    padding: 9px 10px;
+    font-size: .9em;
+  }
+  .nav-tabs>li>a:hover {
+    border-radius: 0;
+  }
+  .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #fff;
+    background-color: @brand-primary;
+    border: 1px solid @brand-primary;
+    border-radius: 0;
+    border-bottom-color: transparent;
+    cursor: default;
+  }
+}
+// Detail
+.detail {
+  .dash-summary {
+    .trunc {
+      width: 170px;
+    }
+    .panel-footer {
+      background-color: #f5f5f5;
+    }
+  }
+  .truncate {
+    width: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .lodlive-graph-container {
+    width: 110%;
+    height: 110%;
+    overflow: scroll;
+    font-family: 'Open Sans', Verdana, sans-serif;
+    font-size: 10px;
+    position: relative;
+    background: #757F9A; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #757F9A , #D7DDE8); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #757F9A , #D7DDE8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+}
+.analysis-buttons {
+  h4 {
+    display: inline;
+    padding-right: 5px;
+  }
+  background: #f2f2f2;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  padding: 10px 20px;
+}
+.surplus-positive {
+	color: green;
+}
+.surplus-negative {
+	color: red;
+}
+
+/* Form controls */
+.form-control {
+  font-size: 13px;
+  line-height: 18px;
+  color: #222222;
+  background: @form-bg;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  padding: 16px 30px 15px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  box-sizing: border-box !important;
+  width: 100%;
+  display: block;
+  height: 45px;
+}
+.form-control:focus {
+  background: #fff;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 0 2px @brand-primary;
+  -moz-box-shadow: 0 0 0 2px @brand-primary;
+  box-shadow: 0 0 0 2px @brand-primary;
+}
+.nav-pills>li>a,
+.input-group-addon,
+.btn,
+.panel {
+  border-radius: 0;
+}
+/* Harmonize Panels */
+.harmonize {
+  .panel {
+    border: 1px solid #ccc;
+  }
+  .well {
+    margin: 5px;
+  }
+  .row.delete-btn button {
+    margin-top: 15px;
+  }
+}
+/* Link Analysis */
+.selected-details {
+  background: #f1f2f2;
+  position: absolute;
+  right: 30px;
+  width: 400px;
+  top: 100px;
+  padding: 15px;
+  z-index: 100;
+  border: 1px solid #ccc;
+}

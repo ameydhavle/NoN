@@ -1,0 +1,554 @@
+<div class="search row">
+  <div class="row" ng-if="ctrl.currentUser">
+    <div class="col-md-12">
+      <ml-input qtext="ctrl.model.qtext" search="ctrl.search(qtext)" suggest="ctrl.suggest(val)" template="fa" class="search"></ml-input>
+    </div>
+  </div>
+</div>
+<div class="row idl">
+  <div class="col-md-12">
+    <split-pane>
+      <split-pane-component>
+        <div class="explore">
+          <blockquote>
+            <p>Explore Data.</p>
+            <div class="tree">
+              <treecontrol class="tree-light" tree-model="ctrl.model.tree.data"
+                           options="ctrl.model.tree.options" on-selection="ctrl.showSelected(node)"
+                           selected-node="node1">
+              <span >
+                <i ng-if="node.type === 'transaction-data'" class="icon fa fa-bar-chart fa-lg"></i>
+                <i ng-if="node.type === 'Credit Card Swipe'"class="icon fa fa-credit-card fa-lg"></i>
+                <i ng-if="node.type === 'Cash Deposits'"class="icon fa fa-bank fa-lg"></i>
+                <i ng-if="node.type === 'customer-data'"class="icon fa fa-group fa-lg"></i>
+                <i ng-if="node.type === 'product-data'"class="icon fa fa-tags fa-lg"></i>
+                <i ng-if="node.type === 'document-data'"class="icon fa fa-paperclip fa-lg"></i>
+                <i ng-if="node.type === 'merchant-data'"class="icon fa fa-dollar fa-lg"></i>
+                <i ng-if="node.type === 'call-data'"class="icon fa fa-phone fa-lg"></i>
+                <i ng-if="node.type === 'company-data'"class="icon fa fa-building fa-lg"></i>
+                {{node.name}}
+                <span ng-if="node.count > 0 && !ctrl.model.transactions.isSearching">(<b>{{node.count}}</b>)</span>
+                <span ng-show="model.transactions.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
+              </span>
+              <!--
+              <span ng-if="node.type === 'customer-data'">
+                <i class="icon fa fa-group fa-lg"></i>
+                {{node.name}}
+                <span ng-if="node.count > 0 && !ctrl.model.customers.isSearching">(<b>{{node.count}}</b>)</span>
+                <span ng-show="model.customers.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
+              </span>
+              <span ng-if="node.type === 'product-data'">
+                  <i class="icon fa fa-book fa-lg"></i>
+                  {{node.name}}
+                  <span ng-if="node.count > 0 && !ctrl.model.products.isSearching">(<b>{{node.count}}</b>)</span>
+                  <span ng-show="model.products.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
+                </span>
+                -->
+              </treecontrol>
+            </div>
+          </blockquote>
+        </div>
+      </split-pane-component>
+      <split-pane-divider width="5px"></split-pane-divider>
+      <split-pane-component width="80%">
+        <uib-tabset>
+          <uib-tab active="ctrl.model.tabs.transactions.active">
+            <uib-tab-heading>
+              <i class='icon fa fa-bar-chart fa-lg'></i>
+              Transaction Data
+              <span ng-if="ctrl.model.transactions.search.total > 0 && !ctrl.model.transactions.isSearching">(<b>{{ctrl.model.transactions.search.total}}</b>)</span>
+              <span ng-show="ctrl.model.transactions.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
+            </uib-tab-heading>
+            <div class="col-sm-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i>{{ctrl.model.qtext}}</i> Transactions</h3>
+                </div>
+                <div class="panel-body">
+                  <h3 ng-show="model.transactions.search.total === 0 && !model.transactions.isSearching">No results to
+                    show</h3>
+                  <h3 ng-show="model.transactions.isSearching">
+                    <span class="glyphicon glyphicon-refresh spinning"></span>
+                    Searching ...
+                  </h3>
+                  <div class="col-md-12"
+                       ng-show="ctrl.model.transactions.search.total > 0 && !ctrl.model.transactions.isSearching">
+                    <uib-pagination ng-model="ctrl.model.transactions.page" ng-change="ctrl.searchTransactions()"
+                                max-size="10" boundary-links="true" total-items="ctrl.model.transactions.search.total"
+                                items-per-page="ctrl.model.transactions.search['page-length']"></uib-pagination>
+                    <ml-metrics search="ctrl.model.transactions.search"></ml-metrics>
+                    <div ng-repeat="result in ctrl.model.transactions.results" class=" product-result">
+                      <div class="col-lg-4 col-md-6">
+                        <div class="bg-warning panel profile-tile animated bounceInRight ">
+                          <div class="panel-body bg-info">
+                            
+                              <div class="text-left trunc">
+                                 <dl>
+                                  <dd>
+                                    <button ng-if="result.metadata['Company_Name']" class="btn btn-sm btn-primary" ng-click="filterCreditor(result.metadata['Company_Name'].values[0])">Merchant: {{
+                                      result.metadata['Company_Name'].values[0]
+                                      }}</button><br ng-if="result.metadata['Company_Name']"/>
+                                    <button ng-if="result.metadata['AccountNum']" class="btn btn-sm btn-primary" ng-click="filterCreditor(result.metadata['AccountNum'].values[0])">Account:{{
+                                      result.metadata['AccountNum'].values[0]
+                                      }}</button><br ng-if="result.metadata['AccountNum']"/>
+                                    <button ng-if="result.metadata['Service_Area'].values[0].length > 0"  class="btn btn-sm btn-warning" ng-click="filterCreditor(result.metadata['Service_Area'].values[0])">Event: {{
+                                      result.metadata['Service_Area'].values[0]
+                                      }}</button><br ng-if="result.metadata['Service_Area'].values[0].length > 0"/>
+                                  </dd>
+                                   <dd class="col-lg-10" class="trunc" style="margin-top: 5px;">
+                                    {{
+                                    result.metadata['Account_Description'].values[0]
+                                    }}
+                                  </dd>
+                                  <dd ng-if="result.metadata['CCNumber']"
+                                      class="col-lg-10" class="trunc" style="margin-top: 5px;">
+                                    <b>Credit Card:</b>
+                                    &nbsp;&nbsp;<i class="icon fa fa-credit-card fa-lg"></i>
+                                    {{
+                                    result.metadata['CCNumber'].values[0]
+                                    }}
+                                  </dd>
+                                   <dd ng-if="result.metadata['AccountNum']"
+                                       class="col-lg-10" class="trunc" style="margin-top: 5px;">
+                                     <b>Account:</b>
+                                     &nbsp;&nbsp;<i class="icon fa fa-bank fa-lg"></i>
+                                     {{
+                                     result.metadata['AccountNum'].values[0]
+                                     }}
+                                   </dd>
+                                  <dd class="col-lg-10" class="trunc" style="margin-top: 5px;">
+                                    <b>Amount:</b>&nbsp;&nbsp;{{
+                                    result.metadata['Amount'].values[0] | currency
+                                    }}
+                                  </dd>
+                                  <dd class="col-lg-10" class="trunc" style="margin-top: 5px;">
+                                    <b>Date:</b>
+                                    &nbsp;&nbsp;<i class="icon fa fa-calendar fa-lg"></i>
+                                    {{result.metadata['Transaction_Date'].values[0]}}
+                                  </dd>
+                                </dl>
+                              </div>
+                            
+                          </div>
+                          <a ui-sref="root.view({uri: result.uri})">
+                            <div class="panel-footer">
+                              <span class="pull-left">View Details</span>
+                              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                              <div class="clearfix"></div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+          <uib-tab active="ctrl.model.tabs.customers.active">
+            <uib-tab-heading>
+              <i class='icon fa fa-group fa-lg'></i>
+              Customer Data
+              <span ng-if="ctrl.model.customers.search.total > 0 && !ctrl.model.customers.isSearching"></span>
+              <span ng-show="model.customers.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
+            </uib-tab-heading>
+            <div class="col-sm-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i>{{ctrl.model.qtext}}</i> Customer Data</h3>
+                </div>
+                <div class="panel-body">
+                  <h3 ng-show="model.customers.search.total === 0 && !model.customers.isSearching">No results to
+                    show</h3>
+                  <h3 ng-show="model.customers.isSearching">
+                    <span class="glyphicon glyphicon-refresh spinning"></span>
+                    Searching ...
+                  </h3>
+                  <div class="col-md-12"
+                       ng-show="ctrl.model.customers.search.total > 0 && !ctrl.model.customers.isSearching">
+                    <uib-pagination ng-model="ctrl.model.customers.page" ng-change="ctrl.searchCustomers()" max-size="10"
+                                boundary-links="true" total-items="ctrl.model.customers.search.total"
+                                items-per-page="ctrl.model.customers.search['page-length']"></uib-pagination>
+                    <ml-metrics search="ctrl.model.customers.search"></ml-metrics>
+                    <div ng-repeat="result in ctrl.model.customers.results" class="product-result">
+                      <div class="col-lg-4 col-md-6">
+                        <div class="panel profile-tile animated bounceInRight ">
+                          <div class="panel-body bg-info">
+
+                            <div class="text-left ">
+                              <dl>
+                                <span class=" pull-right badge badge-primary">{{result.fitness}}</span>
+                                <dd class="col-lg-8" class="trunc"><b>
+                                  {{
+                                  result.metadata['name'].values[0]|| result.metadata['GivenName'].values[0]|| result.metadata['title'].values[0] || result.extracted.content[0].envelope.content['GivenName'] || result.metadata['UniqueCarrier'].values[0]  || result.metadata['fname'].values[0] ||"N.A."
+                                  }}
+                                  {{
+                                  result.metadata['FlightNum'].values[0]  || result.metadata['Surname'].values[0] || result.metadata['lname'].values[0]|| result.extracted.content[0].envelope.content['Surname'] || '- ' + result.metadata['pubDate'].values[0]
+                                  }}</b>
+                                </dd>
+
+                                <dd class="col-lg-8" class="text-left trunc">
+                                  {{
+                                  result.metadata['jurisdiction_description'].values[0]|| result.metadata['Origin'].values[0]  || result.metadata['street_adddress'].values[0] ||  result.metadata['StreetAddress'].values[0] || result.extracted.content[0].envelope.content['StreetAddress'] || "N.A"
+                                  }}
+                                </dd>
+
+                                <dd class="col-lg-8" class="text-left trunc">
+                                  {{
+                                  result.metadata['sourceID'].values[0] || result.metadata['Dest'].values[0] || result.metadata['city'].values[0] || result.metadata['City'].values[0] || result.extracted.content[0].envelope.content['City'] || "N.A"
+                                  }}
+                                </dd>
+
+                                <dd class="col-lg-8" class="text-left trunc">
+                                  {{
+                                  result.metadata['state'].values[0] || result.metadata['Month'].values[0] + " " + result.metadata['DayofMonth'].values[0] + " " +result.metadata['Year'].values[0] || result.metadata['CCNumber'].values[0] || result.extracted.content[0].envelope.content['CCNumber'] || "N.A"
+                                  }}
+                                </dd>
+
+                                <dd class="col-lg-8" class="text-left trunc">
+                                  {{
+                                  result.metadata['AccountNum'].values[0] || result.extracted.content[0].envelope.content['AccountNum']
+                                  }}
+                                </dd>
+                              </dl>
+                            </div>
+
+                          </div>
+                          <a ui-sref="root.view({uri: result.uri})">
+                            <div class="panel-footer">
+                              <span class="pull-left">View Details</span>
+                              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                              <div class="clearfix"></div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+          <uib-tab active="ctrl.model.tabs.products.active">
+            <uib-tab-heading>
+              <i class='icon fa fa-tags fa-lg'></i>
+              Products Data
+              <span ng-if="ctrl.model.products.search.total > 0 && !ctrl.model.products.isSearching"></span>
+              <span ng-show="model.products.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
+            </uib-tab-heading>
+            <div class="col-sm-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i>{{ctrl.model.qtext}}</i> Products Data</h3>
+                </div>
+                <div class="panel-body">
+                  <h3 ng-show="model.customers.search.total === 0 && !model.customers.isSearching">No results to
+                    show</h3>
+                  <h3 ng-show="model.customers.isSearching">
+                    <span class="glyphicon glyphicon-refresh spinning"></span>
+                    Searching ...
+                  </h3>
+                  <div class="col-md-12"
+                       ng-show="ctrl.model.products.search.total > 0 && !ctrl.model.products.isSearching">
+                    <uib-pagination ng-model="ctrl.model.products.page" ng-change="ctrl.searchProducts()" max-size="10"
+                                boundary-links="true" total-items="ctrl.model.products.search.total"
+                                items-per-page="ctrl.model.products.search['page-length']"></uib-pagination>
+                    <ml-metrics search="ctrl.model.products.search"></ml-metrics>
+                    <div ng-repeat="result in ctrl.model.products.results" class="product-result">
+                      <div class="col-lg-4 col-md-6">
+                        <div class="panel profile-tile animated bounceInRight ">
+                          <div class="panel-body bg-info">
+                              <div class="text-left trunc">
+                                <dl>
+                                  <dt class="col-lg-4">Brand Partner:</dt>
+                                  <dd class="col-lg-8" class="trunc">
+                                   {{result.metadata['BrandPartner'].values[0]}}
+                                  </dd>
+                                  <dt class="col-lg-4">Product:</dt>
+                                  <dd class="col-lg-8" class="text-left trunc">
+                                    {{
+                                    result.metadata['ProductName'].values[0]
+                                    }}
+                                  </dd>
+                                  <dt class="col-lg-4">Category:</dt>
+                                  <dd class="col-lg-8" class="text-left trunc">
+                                    {{
+                                    result.metadata['ProductCategory'].values[0]
+                                    }}
+                                  </dd>
+                                  <dt class="col-lg-4">Sub Category:</dt>
+                                  <dd class="col-lg-8" class="text-left trunc">
+                                    {{
+                                    result.metadata['ProductSubCategory'].values[0]
+                                    }}
+                                  </dd>
+                                </dl>
+                              </div>
+                           
+                          </div>
+                          <a ui-sref="root.view({uri: result.uri})">
+                            <div class="panel-footer">
+                              <span class="pull-left">View Details</span>
+                              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                              <div class="clearfix"></div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+          <uib-tab active="ctrl.model.tabs.merchants.active">
+            <uib-tab-heading>
+              <i class='icon fa fa-dollar fa-lg'></i>
+              Billing Merchants Data
+              <span ng-if="ctrl.model.merchants.search.total > 0 && !ctrl.model.merchants.isSearching"></span>
+              <span ng-show="model.merchants.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
+            </uib-tab-heading>
+            <div class="col-sm-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i>{{ctrl.model.qtext}}</i> Billing Merchants Data</h3>
+                </div>
+                <div class="panel-body">
+                  <h3 ng-show="model.merchants.search.total === 0 && !model.documents.isSearching">No results to
+                    show</h3>
+                  <h3 ng-show="model.merchants.isSearching">
+                    <span class="glyphicon glyphicon-refresh spinning"></span>
+                    Searching ...
+                  </h3>
+                  <div class="col-md-12"
+                       ng-show="ctrl.model.merchants.search.total > 0 && !ctrl.model.merchants.isSearching">
+                    <pagination ng-model="ctrl.model.merchants.page" ng-change="ctrl.searchMerchants()" max-size="10"
+                                boundary-links="true" total-items="ctrl.model.merchants.search.total"
+                                items-per-page="ctrl.model.merchants.search['page-length']"></pagination>
+                    <ml-metrics search="ctrl.model.merchants.search"></ml-metrics>
+                    <div ng-repeat="result in ctrl.model.merchants.results" class="product-result">
+                      <div class="col-lg-4 col-md-6">
+                        <div class="panel profile-tile animated bounceInRight ">
+                          <div class="panel-body bg-info">
+                              <div class="text-left trunc">
+                                <dl>
+                                  <dd class="col-lg-12" class="trunc">
+                                    <button ng-if="result.metadata['SIC_Code']" class="btn btn-sm btn-primary" ng-click="filterCreditor(result.metadata['SIC_Code'].values[0])">SIC Code:{{
+                                      result.metadata['SIC_Code'].values[0]
+                                      }}</button>
+                                  </dd>
+                                  <dt class="col-lg-4">Company:</dt>
+                                  <dd class="col-lg-8" class="text-left trunc">
+                                    {{
+                                    result.metadata['Company_Name'].values[0] | strReplace:'_':' '
+                                    }}
+                                  </dd>
+                                  <dt class="col-lg-4">City:</dt>
+                                  <dd class="col-lg-8" class="text-left trunc">
+                                    {{
+                                    result.metadata['City'].values[0]
+                                    }}
+                                  </dd>
+                                  <dt class="col-lg-4">State:</dt>
+                                  <dd class="col-lg-8" class="text-left trunc">
+                                    {{
+                                    result.metadata['State'].values[0]
+                                    }}
+                                  </dd>
+                                  <dt class="col-lg-4">Industy:</dt>
+                                  <dd class="col-lg-8" class="text-left trunc">
+                                    {{
+                                    result.metadata['Industry'].values[0] | strReplace:'_':' '
+                                    }}
+                                  </dd>
+                                </dl>
+                              </div>
+                            
+                          </div>
+                          <a ui-sref="root.view({uri: result.uri})">
+                            <div class="panel-footer">
+                              <span class="pull-left">View Details</span>
+                              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                              <div class="clearfix"></div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+          <uib-tab active="ctrl.model.tabs.documents.active">
+            <uib-tab-heading>
+              <i class='icon fa fa-paperclip fa-lg'></i>
+              Documents Data
+              <span ng-if="ctrl.model.documents.search.total > 0 && !ctrl.model.documents.isSearching"></span>
+              <span ng-show="model.documents.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
+            </uib-tab-heading>
+            <div class="col-sm-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i>{{ctrl.model.qtext}}</i> Documents Data</h3>
+                </div>
+                <div class="panel-body">
+                  <h3 ng-show="model.documents.search.total === 0 && !model.documents.isSearching">No results to
+                    show</h3>
+                  <h3 ng-show="model.documents.isSearching">
+                    <span class="glyphicon glyphicon-refresh spinning"></span>
+                    Searching ...
+                  </h3>
+                  <div class="col-md-12"
+                       ng-show="ctrl.model.documents.search.total > 0 && !ctrl.model.documents.isSearching">
+                    <pagination ng-model="ctrl.model.documents.page" ng-change="ctrl.searchDocuments()" max-size="10"
+                                boundary-links="true" total-items="ctrl.model.documents.search.total"
+                                items-per-page="ctrl.model.documents.search['page-length']"></pagination>
+                    <ml-metrics search="ctrl.model.documents.search"></ml-metrics>
+                    <div ng-repeat="result in ctrl.model.documents.results" class="product-result">
+                      <div class="col-lg-4 col-md-6">
+                        <div class="panel profile-tile animated bounceInRight ">
+                          <div class="panel-body bg-info">
+                              <div class="text-left trunc">
+                                <dl>
+                                  <dd class="col-lg-12" class="text-left trunc">
+                                    {{
+                                    result.metadata['title'].values[0].replace("/\d\g/",'')
+
+                                    }}
+                                  </dd>
+                                  <dd class="col-lg-12" class="trunc">
+                                    {{result.metadata['submitted-by'].values[0]}}
+                                  </dd>
+                                </dl>
+                              </div>
+                          </div>
+                          <a ui-sref="root.view({uri: result.uri})">
+                            <div class="panel-footer">
+                              <span class="pull-left">View Details</span>
+                              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                              <div class="clearfix"></div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+          <uib-tab active="ctrl.model.tabs.callcenter.active">
+            <uib-tab-heading>
+              <i class='icon fa fa-phone fa-lg'></i>
+              Call-Center
+            </uib-tab-heading>
+            <div class="col-sm-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i>{{ctrl.model.qtext}}</i> Call-Center</h3>
+                </div>
+                <div class="panel-body">
+                  <h3 ng-show="model.callcenter.search.total === 0 && !model.callcenter.isSearching">No results to
+                    show</h3>
+                  <h3 ng-show="model.callcenter.isSearching">
+                    <span class="glyphicon glyphicon-refresh spinning"></span>
+                    Searching ...
+                  </h3>
+                  <div class="col-md-12"
+                       ng-show="ctrl.model.callcenter.search.total > 0 && !ctrl.model.callcenter.isSearching">
+                    <pagination ng-model="ctrl.model.callcenter.page" ng-change="ctrl.searchCallCenter()" max-size="10"
+                                boundary-links="true" total-items="ctrl.model.documents.search.total"
+                                items-per-page="ctrl.model.documents.search['page-length']"></pagination>
+                    <ml-metrics search="ctrl.model.callcenter.search"></ml-metrics>
+                    <ml-results template="app/IDL/call-results.html" results="ctrl.model.callcenter.results"></ml-results>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+          <uib-tab active="ctrl.model.tabs.companies.active">
+            <uib-tab-heading>
+              <i class='icon fa fa-dollar fa-lg'></i>
+              Companies Data
+              <span ng-if="ctrl.model.companies.search.total > 0 && !ctrl.model.companies.isSearching"></span>
+              <span ng-show="model.companies.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
+            </uib-tab-heading>
+            <div class="col-sm-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i>{{ctrl.model.qtext}}</i> Companies Data</h3>
+                </div>
+                <div class="panel-body">
+                  <h3 ng-show="model.companies.search.total === 0 && !model.companies.isSearching">No results to
+                    show</h3>
+                  <h3 ng-show="model.companies.isSearching">
+                    <span class="glyphicon glyphicon-refresh spinning"></span>
+                    Searching ...
+                  </h3>
+                  <div class="col-md-12"
+                       ng-show="ctrl.model.companies.search.total > 0 && !ctrl.model.companies.isSearching">
+                    <pagination ng-model="ctrl.model.companies.page" ng-change="ctrl.searchCompanies()" max-size="10"
+                                boundary-links="true" total-items="ctrl.model.companies.search.total"
+                                items-per-page="ctrl.model.companies.search['page-length']"></pagination>
+                    <ml-metrics search="ctrl.model.companies.search"></ml-metrics>
+                    <div ng-repeat="result in ctrl.model.companies.results" class="product-result">
+                      <div class="col-lg-4 col-md-6">
+                        <div class="panel profile-tile animated bounceInRight ">
+                          <div class="panel-body bg-info">
+                              <div class="text-left trunc">
+                                <dl>
+                                  <dd class="col-lg-12" class="trunc">
+                                    <button ng-if="result.metadata['company_type']" class="btn btn-sm btn-primary" ng-click="filterCreditor(result.metadata['company_type'].values[0])">Company Type:{{
+                                      result.metadata['company_type'].values[0]
+                                      }}</button>
+                                  </dd>
+                                  <dt class="col-lg-4">Company:</dt>
+                                  <dd class="col-lg-8" class="text-left trunc">
+                                    {{
+                                    result.metadata['company_name'].values[0] | strReplace:'_':' '
+                                    }}
+                                  </dd>
+                                  <dt class="col-lg-4">City:</dt>
+                                  <dd class="col-lg-8" class="text-left trunc">
+                                    {{
+                                    result.metadata['city'].values[0]
+                                    }}
+                                  </dd>
+                                  <dt class="col-lg-4">State:</dt>
+                                  <dd class="col-lg-8" class="text-left trunc">
+                                    {{
+                                    result.metadata['state'].values[0]
+                                    }}
+                                  </dd>
+                                  <dt class="col-lg-4">Industy:</dt>
+                                  <dd class="col-lg-8" class="text-left trunc">
+                                    {{
+                                    result.metadata['company_category'].values[0] | strReplace:'_':' '
+                                    }}
+                                  </dd>
+                                </dl>
+                              </div>
+                          </div>
+                          <a ui-sref="root.view({uri: result.uri})">
+                            <div class="panel-footer">
+                              <span class="pull-left">View Details</span>
+                              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                              <div class="clearfix"></div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+
+        </uib-tabset>
+      </split-pane-component>
+    </split-pane>
+  </div>
+</div>

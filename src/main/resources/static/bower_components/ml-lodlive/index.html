@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ML LodLive - Extensible RDF Browser</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="dist/ml-lodlive.all.css">
+  <style>
+    html, body, #lodlive { height: 100%; width: 100% }
+    .navbar-right { margin-right: 0}
+    .lodlive-docinfo { top: 45px; }
+  </style>
+</head>
+
+<div id="lodlive"></div>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-brand">ml-lodlive</div>
+    <div class="navbar-right navbar-text">v0.1</div>
+  </div>
+</nav>
+
+<!-- dependencies not in complete -->
+<script src="js/deps/jquery-ui-1.9.2.min.js"></script>
+<!-- dependencies not in complete -->
+
+<!-- Would like to remove these deps -->
+<script src="dist/ml-lodlive.complete.js"></script>
+
+<!-- this is now just a customized options object, might make sense to just pass it in as part of init rather then with the constructor -->
+<script src="js/profile/profile.example.js"></script>
+<script>
+  'use strict';
+  jQuery('#lodlive').lodlive({ profile: ExampleProfile, firstUri: 'http://dbpedia.org/resource/Philadelphia_Flyers', ignoreBnodes: true }); 
+</script>
+
+</html>

@@ -1,0 +1,18 @@
+<div class="panel panel-info" ng-repeat="result in results" class="results" style="width:100%">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{result.metadata.title.values[0]}} <a target="_blank" ng-href="{{result.downloadlink}}"><button class="btn btn-sm btn-primary"><i class="fa fa-cloud-download"></i> Download</button></a></h3>
+  </div>
+  <div class="panel-body">
+    <table class="table table-condensed">
+      <tr class="warning">
+        <th>URL</th>
+      </tr>
+      <tr>
+        <td>{{result.metadata}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
+

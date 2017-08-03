@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div ng-repeat="result in results" class="product-result">
+      <div class="col-lg-4 col-md-6" >
+        <div class="panel profile-tile animated bounceInRight ">
+          <div class="panel-body bg-info">
+
+              <div class="text-left ">
+                <dl>
+                  <span class=" pull-right badge badge-primary">{{result.fitness}}</span>
+                  <dd class="col-lg-8" class="trunc"><b>
+                    {{
+                    result.metadata['name'].values[0]|| result.metadata['GivenName'].values[0]|| result.metadata['title'].values[0] || result.extracted.content[0].envelope.content['GivenName'] || result.metadata['UniqueCarrier'].values[0]  || result.metadata['fname'].values[0] ||"N.A."
+                    }}
+                    {{
+                    result.metadata['FlightNum'].values[0]  || result.metadata['Surname'].values[0] || result.metadata['lname'].values[0]|| result.extracted.content[0].envelope.content['Surname'] || '- ' + result.metadata['pubDate'].values[0]
+                    }}</b>
+                  </dd>
+
+                  <dd class="col-lg-8" class="text-left trunc">
+                    {{
+                    result.metadata['jurisdiction_description'].values[0]|| result.metadata['Origin'].values[0]  || result.metadata['street_adddress'].values[0] ||  result.metadata['StreetAddress'].values[0] || result.extracted.content[0].envelope.content['StreetAddress'] || "N.A"
+                    }}
+                  </dd>
+
+                  <dd class="col-lg-8" class="text-left trunc">
+                    {{
+                    result.metadata['sourceID'].values[0] || result.metadata['Dest'].values[0] || result.metadata['city'].values[0] || result.metadata['City'].values[0] || result.extracted.content[0].envelope.content['City'] || "N.A"
+                    }}
+                  </dd>
+
+                  <dd class="col-lg-8" class="text-left trunc">
+                    {{
+                    result.metadata['state'].values[0] || result.metadata['Month'].values[0] + " " + result.metadata['DayofMonth'].values[0] + " " +result.metadata['Year'].values[0] || result.metadata['CCNumber'].values[0] || result.extracted.content[0].envelope.content['CCNumber'] || "N.A"
+                    }}
+                  </dd>
+
+                  <dd class="col-lg-8" class="text-left trunc">
+                    {{
+                    result.metadata['AccountNum'].values[0] || result.extracted.content[0].envelope.content['AccountNum']
+                    }}
+                  </dd>
+                </dl>
+              </div>
+
+          </div>
+          <a ui-sref="root.view({uri: result.uri})">
+            <div class="panel-footer">
+              <span class="pull-left">View Details
+              </span>
+              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              <div class="clearfix"></div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+.ml-lodlive {
+  width: 100%;
+  height: 550px;
+  border: solid 1px black;
+  overflow: hidden;
+}
+.ml-lodlive .ml-lodlive-toolbar {
+  z-index: 100;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background-color: #92C6F7;
+  width: 23px;
+}
+.ml-lodlive .ml-lodlive-toolbar .ml-lodlive-toolbar-button {
+  background-color: inherit;
+  width: 20px;
+  height: 20px;
+}
+.ml-lodlive .ml-lodlive-toolbar .ml-lodlive-legend-display {
+  position: absolute;
+  left: 25px;
+  top: 0px;
+  width: 200px;
+  height: auto;
+  background-color: #92C6F7;
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+.ml-lodlive .ml-lodlive-toolbar .ml-lodlive-legend-display h4,
+.ml-lodlive .ml-lodlive-toolbar .ml-lodlive-legend-display h5 {
+  font-weight: bold;
+}

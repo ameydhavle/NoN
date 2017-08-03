@@ -1,0 +1,56 @@
+<style>
+.ml-search .input-group {
+  width: 100%;
+}
+
+.ml-search .search-submit {
+  width: 40px !important;
+}
+
+.ml-search .search-input-icon {
+  z-index: 1;
+  top: 0px;
+}
+
+.ml-search .search-input-clear {
+  right: 35px;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.ml-search .search-loading {
+  right: -35px;
+}
+</style>
+<form ng-submit="search({ qtext: (qtext.keys) ? qtext[qtext.keys[0]] + ((qtext.keys[1]) ? ' ' + qtext[qtext.keys[1]]:'') + ((qtext.keys[2]) ? ' ' + qtext[qtext.keys[2]]:'') + ((qtext.keys[3]) ? ' ' + qtext[qtext.keys[3]]:'') : qtext })" class="ml-search form-inline" role="search">
+  <div class="input-group">
+    <input ng-model="qtext" type="text" class="form-control" placeholder="Search..." autocomplete="off"
+           typeahead="suggestion for suggestion in suggest({ val: $viewValue })"
+           typeahead-editable="true"
+           typeahead-on-select="search({ qtext: (qtext.keys) ? qtext[qtext.keys[0]] + ((qtext.keys[1]) ? ' ' + qtext[qtext.keys[1]]:'') + ((qtext.keys[2]) ? ' ' + qtext[qtext.keys[2]]:'') + ((qtext.keys[3]) ? ' ' + qtext[qtext.keys[3]]:'') : qtext })"
+           typeahead-input-formatter="$model.keys ? $model[$model.keys[0]] + (($model.keys[1]) ? ' ' + $model[$model.keys[1]]:'') + (($model.keys[2]) ? ' ' + $model[$model.keys[2]]:'') + (($model.keys[3]) ? ' ' + $model[$model.keys[3]]:'') : $model"
+           typeahead-template-url="itemTpl.html"/>
+  <span ng-show="qtext" ng-click="clear()" class="search-input-icon search-input-clear form-control-feedback">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <span ng-show="loadingSuggestions" class="search-input-icon search-loading form-control-feedback">
+      <i class="fa fa-refresh fa-spin"></i>
+    </span>
+    <div ng-click="search({ qtext: qtext })" class="input-group-addon search-submit">
+      <i class="fa fa-search"></i>
+    </div>
+  </div>
+    <script type="text/ng-template" id="itemTpl.html">
+      <div ng-if="!match.model.uri">{{match.model}}</div>
+      <div ng-if="match.model.uri">
+        <div ng-if="match.model.labels" class="col-sm-12">
+          <div ng-repeat="label in match.model.labels track by $index" ng-class="{'col-sm-3': match.model.labels.length === 4,'col-sm-4': match.model.labels.length === 3}"><strong>{{label}}</strong></div>
+        </div>
+        <div class="col-sm-12">
+          <div ng-repeat="key in match.model.keys track by $index" ng-class="{'col-sm-3': match.model.keys.length === 4,'col-sm-4': match.model.keys.length === 3}" ng-bind-html-unsafe="(match.model[key] | typeaheadHighlight:query">{{match.model[key]}}</div>
+        </div>
+      </div>
+    </script>
+
+  </div>
+</form>

@@ -1,0 +1,486 @@
+<style>
+  $red: #FF0000;
+  $white: #FFFFFF;
+  $green: #1abc9c;
+  $grey: #888888;
+  .block {
+    background: #f2f2f2;
+    position: relative;
+    padding: 15px;
+    border: 1px solid #ccc;
+  &:not(:first-child) {
+     margin-top: 10px;
+   }
+  }
+
+  .modifier {
+    float: right;
+    margin-left: 8px;
+    font-size: 14px;
+  }
+
+  .action {
+    color: $green;
+  }
+
+  .edit {
+    color: $grey;
+  }
+
+  .column-selector {
+    position: relative;
+  }
+
+  .remove {
+    color:$red;
+  }
+
+  .column-option {
+    float: left;
+  }
+
+  .dropdown-menu {
+    top: inherit;
+  }
+
+  .blocks {
+    margin-bottom: 0;
+  }
+
+  .panel {
+    border-radius: 0;
+  }
+
+  .row > .panel {
+    background-color: #f2f2f2;
+  }
+
+  .builder {
+    padding: 20px;
+  }
+
+  .block-placeholder {
+    background: #DADADA;
+    position: relative;
+  }
+
+  .block-placeholder:after {
+    content: " ";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 15px;
+    background-color: #FFF;
+  }
+</style>
+<div class="row" ng-if="!ctrl.currentUser">Please log in to see content</div>
+<div class="row" ng-if="ctrl.currentUser">
+  <div class="col-md-12">
+    <ml-input qtext="ctrl.qtext" search="ctrl.search(qtext)"  suggest="ctrl.suggestAdvanced(val)"  template="app/search/ml-input.html"></ml-input>
+  </div>
+</div>
+
+<div class="row">
+</div>
+<div class="search row" ng-if="ctrl.currentUser">
+	<div class="col-md-2 right-col">
+    <div class="options">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="ctrl.runSynonyms" ng-change="ctrl.toggleSynonyms()">
+          Use Fuzzy Search
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="ctrl.runMapSearch" ng-change="ctrl.toggleMapSearch()">
+          Limit results to the visible map
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="ctrl.hideMap">
+          Hide Map
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="ctrl.runHouseHolding" ng-change="  ctrl.toggleHouseHolding()">
+          Expand results to include householdings
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="ctrl.runBulkSearch" ng-change="  ctrl.toggleBulkSearch()">
+          Run bulk search
+        </label>
+      </div>
+    </div>
+    <a class="btn btn-primary btn-sm pull-right" ng-href="{{ctrl.downloadReportUrl()}}" target="_blank"><i class="fa fa-disk"></i>Download</a>
+		<ml-facets facets="ctrl.response.facets" toggle="ctrl.toggleFacet(facet, value)" active-facets="ctrl.mlSearch.activeFacets" negate="ctrl.toggleNegatedFacet(facet,value)"></ml-facets>
+	</div>
+  <div class="col-md-10">
+  <uib-tabset type="pills">
+    <uib-tab heading="Search">
+      <ul class="list-unstyled synonym-groups" ng-if="ctrl.houseHold.length > 1">
+        <li class="title"><strong class="title"><i>The following members were identified as household from the search results</i></strong>
+          <span ng-repeat="a in ctrl.houseHold" class="label label-default related-terms"><a ng-click="ctrl.filterCreditor(a)">{{a}}</a></span>
+        </li>
+      </ul>
+      <ul class="list-unstyled synonym-groups" ng-if="ctrl.suggestions.length > 1">
+        <li class="title"><strong class="title"><i>Did you mean</i></strong>
+          <span ng-repeat="a in ctrl.suggestions" class="label label-default related-terms"><a ng-click="ctrl.filterCreditor(a)">{{a}}</a></span>
+          <button class="button btn-xs btn-success" ng-click="ctrl.learnWord()"><i class="glyphicon glyphicon-plus"></i> Learn</button>
+        </li>
+      </ul>
+      <h4 ng-if="ctrl.response.total === 0">No results to show</h4>
+      <div ng-if="ctrl.response.total > 0" class="results">
+
+        <ul class="list-unstyled synonym-groups" ng-repeat="syn in ctrl.synonymMatches">
+          <li class="title"><strong class="title">Synonyms for term [ {{syn.term}} ]: </strong>
+            <span ng-repeat="a in syn.synonyms" class="label label-default related-terms">{{a}} </span>
+          </li>
+        </ul>
+        <div class="row">
+          <ml-ol-search-facets-map ng-show="!ctrl.hideMap" facets="ctrl.response.facets" center="ctrl.mapOptions.center" zoom="ctrl.mapOptions.zoom" base-map="ctrl.mapOptions.baseMap" bounds-changed="ctrl.mapBoundsChanged(bounds)"></ml-ol-search-facets-map>
+        </div>
+        <div class="pagination-ctrls">
+          <uib-pagination class="pagination-sm" ng-model="ctrl.page" ng-change="ctrl.search()" max-size="10" boundary-links="true" total-items="ctrl.response.total" items-per-page="ctrl.response['page-length']">
+          </uib-pagination>
+          <ml-snippet set-snippet="ctrl.setSnippet(type)"></ml-snippet>
+        </div>
+        <ml-metrics search="ctrl.response" ></ml-metrics>
+        <ml-results template="app/search/search-results.html" results="ctrl.response.results"></ml-results>
+      </div>
+    </uib-tab>
+    <uib-tab active="true" heading="Dashboard">
+      <div class="row">
+        <div class="panel panel-default panel-body sortable">
+          <div class="column-container">
+            <div class="col-xs-6 column sortable">
+              <div class="blocks panel panel-default panel-body">
+                <div class="block clearfix">
+                  <div class="panel panel-primary ">
+                    <div class="panel-heading">
+                      <div class="panel-title">
+                        <h4>Company Type</h4>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <ml-highchart highchart-config="ctrl.companyTypeChart" ml-search="ctrl.mlSearch"></ml-highchart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-6 column sortable">
+              <div class="blocks panel panel-default panel-body">
+                <div class="block clearfix">
+                  <div class="panel panel-primary">
+                    <div class="panel-heading">
+                      <div class="panel-title">
+                        <h4>City Wise Distribution</h4>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <ml-highchart highchart-config="ctrl.typeChart" ml-search="ctrl.mlSearch"></ml-highchart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="panel panel-default panel-body sortable">
+          <div class="column-container">
+            <div class="col-xs-6 column sortable">
+              <div class="blocks panel panel-default panel-body">
+                <div class="block clearfix">
+                  <div class="panel panel-primary">
+                    <div class="panel-heading">
+                      <div class="panel-title">
+                        <h4>State Wise Distribution</h4>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <ml-highchart highchart-config="ctrl.ownerChart" ml-search="ctrl.mlSearch"></ml-highchart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-6 column sortable">
+              <div class="blocks panel panel-default panel-body">
+                <div class="block clearfix">
+                  <div class="panel panel-primary">
+                    <div class="panel-heading">
+                      <div class="panel-title">
+                        <h4>Spending Categories</h4>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <ml-highchart highchart-config="ctrl.spendChart" ml-search="ctrl.mlSearch"></ml-highchart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="panel panel-default panel-body sortable">
+          <div class="column-container">
+            <div class="col-xs-12 column sortable">
+              <div class="blocks panel panel-default panel-body">
+                <div class="block clearfix">
+                  <div class="panel panel-primary">
+                    <div class="panel-heading">
+                      <div class="panel-title">
+                        <h4>Company Category</h4>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <ml-highchart highchart-config="ctrl.companyCategoryChart" ml-search="ctrl.mlSearch"></ml-highchart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="panel panel-default panel-body sortable">
+          <div class="column-container">
+            <div class="col-xs-6 column sortable">
+              <div class="blocks panel panel-default panel-body">
+                <div class="block clearfix">
+                  <div class="panel panel-primary">
+                    <div class="panel-heading">
+                      <div class="panel-title">
+                        <h4>Tags</h4>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <ml-highchart highchart-config="ctrl.tagsChart" ml-search="ctrl.mlSearch"></ml-highchart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-6 column sortable">
+              <div class="blocks panel panel-default panel-body">
+                <div class="block clearfix">
+                  <div class="panel panel-primary">
+                    <div class="panel-heading">
+                      <div class="panel-title">
+                        <h4>Age Wise Distribution</h4>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <ml-highchart highchart-config="ctrl.languageChart" ml-search="ctrl.mlSearch"></ml-highchart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="panel panel-default panel-body sortable">
+          <div class="column-container">
+            <div class="col-xs-12 column sortable">
+              <div class="blocks panel panel-default panel-body">
+                <div class="block clearfix">
+                  <div class="panel panel-primary" >
+                    <div class="panel-heading" >
+                      <div class="panel-title" >
+                        <h4>Service Area</h4>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <ml-highchart highchart-config="ctrl.serviceAreaChart" ml-search="ctrl.mlSearch"></ml-highchart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--div class="row">
+        <div class="well">
+          <table>
+              <tr>
+                <td>
+                  <span>Analyze most frequent occurrences by selection:</span>
+                </td>
+                <td>
+                  <div id="selection boxes" onChange="getNewPost(); return false;">
+                    <SELECT id="lex1_control" NAME="lex1 control">
+                      <OPTION VALUE="marital-status">Marital Status</OPTION>
+                      <OPTION VALUE="purchase-category">Sub Category</OPTION>
+                      <OPTION VALUE="parent-category">Category</OPTION>
+                      <OPTION VALUE="coupons">Coupons</OPTION>
+                      <OPTION VALUE="age-group">Age group</OPTION>
+                    </SELECT>
+                    <b> AND</b>
+                    <SELECT id="lex2_control" NAME="lex2 control" onChange="getNewPost(); return false;">
+                      <OPTION VALUE="purchase-category">Sub Category</OPTION>
+                      <OPTION VALUE="marital-status">Marital Status</OPTION>
+                      <OPTION VALUE="city">City</OPTION>
+                      <OPTION VALUE="parent-category">Category</OPTION>
+                      <OPTION VALUE="coupons">Coupons</OPTION>
+                      <OPTION VALUE="age-group">Age group</OPTION>
+                    </SELECT>
+                  </div>
+                </td>
+              </tr>
+            </font>
+          </table>
+        </div>
+        <div id="flashcontent">
+          <object id="Cooc" width="100%" height="500" type="application/x-shockwave-flash"
+                  data="/flash/Cooc.swf">
+            <param name="wmode" value="opaque">
+            </param>
+            <param name="flashvars"
+                   value="primaryColor=0x700023&secondaryColor=0xA00132&filtering=true&serverURL=/ext/cooc.xqy">
+            </param>
+          </object>
+        </div>
+      </div -->
+
+    </uib-tab>
+
+    <uib-tab heading="Actionable View">
+      <h4 ng-if="ctrl.response.total === 0">No results to show</h4>
+      <div class="pagination-ctrls">
+        <pagination class="pagination pagination-sm" ng-model="ctrl.page" ng-change="ctrl.search()" max-size="10" boundary-links="true" total-items="ctrl.response.total" items-per-page="ctrl.response['page-length']">
+        </pagination>
+        <ml-snippet set-snippet="ctrl.setSnippet(type)"></ml-snippet>
+      </div>
+      <table class="table table-bordered table-striped" style="font-size: 14px;">
+        <th>Customer</th>
+        <th>Is Banking Customer</th>
+        <th>Is Credit Card Holder</th>
+        <th>Mortgage Account</th>
+        <th>Pays Rent</th>
+        <th>Pays ChildCare/School</th>
+        <th>Pays Travel</th>
+        <th>New/Expecting Parent</th>
+        <th>Invest in markets</th>
+        <th>Home Owner</th>
+        <th>Auto Owner</th>
+        <th>Small Business</th>
+        <th>Most spending category</th>
+        <tr ng-repeat="result in ctrl.response.results">
+          <td>
+            <a ui-sref="root.view({uri: result.uri})">
+              {{
+              result.metadata['GivenName'].values[0]
+              }}
+              {{
+              result.metadata['Surname'].values[0]
+              }}
+
+            </a>
+          </td>
+          <td><center><i class="icon fa fa-check fa-lg"></i></center></td>
+          <td><center><i class="icon fa fa-check fa-lg"></i></center></td>
+          <td>
+            <center>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Mortgage') == null" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Mortgage') == -1" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Mortgage') > -1" class="icon fa fa-check fa-lg"></i>
+            </center>
+          </td>
+          <td>
+            <center>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Renter') == null" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Renter') == -1" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Renter') > -1" class="icon fa fa-check fa-lg"></i>
+            </center>
+          </td>
+          <td>
+            <center>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Parent') == null" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Parent') == -1" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Parent') > -1" class="icon fa fa-check fa-lg"></i>
+            </center>
+          </td>
+          <td>
+            <center>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Leisure-Life-Style') == null" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Leisure-Life-Style') == -1" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Leisure-Life-Style') > -1" class="icon fa fa-check fa-lg"></i>
+            </center>
+          </td>
+          <td>
+            <center>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Expecting-Parent') == null" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Expecting-Parent') == -1" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Expecting-Parent') > -1" class="icon fa fa-check fa-lg"></i>
+            </center>
+          </td>
+          <td>
+            <center>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Investor') == null" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Investor') == -1" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Investor') > -1" class="icon fa fa-check fa-lg"></i>
+            </center>
+          </td>
+          <td>
+            <center>
+              <i ng-if="result.metadata.tags.values.join().indexOf('New-Home-Owner') == null" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('New-Home-Owner') == -1" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('New-Home-Owner') > -1" class="icon fa fa-check fa-lg"></i>
+            </center>
+          </td>
+          <td>
+            <center>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Auto-Owner') == null" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Auto-Owner') == -1" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Auto-Owner') > -1" class="icon fa fa-check fa-lg"></i>
+            </center>
+          </td>
+          <td>
+            <center>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Small-Business') == null" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Small-Business') == -1" class="icon fa fa-close fa-lg"></i>
+              <i ng-if="result.metadata.tags.values.join().indexOf('Small-Business') > -1" class="icon fa fa-check fa-lg"></i>
+            </center>
+          </td>
+          <td>{{result.metadata.tags.values.join()}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+
+    <uib-tab heading="Bulk Search">
+      <h4 ng-if="ctrl.response.total === 0">No results to show</h4>
+      <div ng-if="ctrl.response.total > 0" class="results">
+        <ul class="list-unstyled synonym-groups" ng-repeat="syn in ctrl.synonymMatches">
+          <li class="title"><strong class="title">Synonyms for term [ {{syn.term}} ]: </strong>
+            <span ng-repeat="a in syn.synonyms" class="label label-default related-terms">{{a}} </span>
+          </li>
+        </ul>
+        <div class="pagination-ctrls">
+          <uib-pagination class="pagination-sm" ng-model="model.bulk.page" ng-change="ctrl.bulkSearch()" max-size="10" boundary-links="true" total-items="model.bulk.search.total" items-per-page="ctrl.response['page-length']">
+          </uib-pagination>
+          <ml-metrics search="model.bulk.search" ></ml-metrics>
+          <ml-snippet set-snippet="ctrl.setSnippet(type)"></ml-snippet>
+        </div>
+        <ml-results template="app/search/search-results.html" results="model.bulk.results"></ml-results>
+      </div>
+    </uib-tab>
+  </uib-tabset>
+  </div>
+</div>

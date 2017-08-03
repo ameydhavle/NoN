@@ -1,0 +1,111 @@
+<div>
+	<div class="modal-header">
+		<h4>Geospatial Analysis
+			<button type="button" class="fa fa-times btn-warning pull-right" aria-hidden="true" ng-click="ctrl.modalCancel()"></button>
+		</h4>
+  </div>
+  <div class="modal-body" id="modal-body" ng-if="ctrl.showMap">
+  	<div class="row">
+			<div class="col-sm-9">
+	    	<ml-ol-detail-map enable-links="true" features="ctrl.mapFeatures" zoom="ctrl.mapOptions.zoom" base-map="ctrl.mapOptions.baseMap" single-click="ctrl.mapClicked(feature)"></ml-ol-detail-map>
+	  	</div>
+	  	<div class="col-sm-3">
+				<div class="panel panel-primary" ng-show="ctrl.mapItemSelected">
+				  <div class="panel-heading">
+				    Details
+				  </div>
+				  <div class="panel-body" >
+				  	<ul class="list-group" ng-show="ctrl.mapItemSelected.type === 'merchant'">
+				      <li class="list-group-item text-right">
+				        <span class="pull-left">
+				          <strong class="">Name</strong>
+				        </span>
+				        {{ ctrl.mapItemSelected.name | strReplace:'_':' ' }}
+				      </li>
+				      <li class="list-group-item text-right">
+				        <span class="pull-left">
+				          <strong class="">Type</strong>
+				        </span>
+				        {{ ctrl.mapItemSelected.type }}
+				      </li>
+				      <li class="list-group-item text-right">
+				        <span class="pull-left">
+				          <strong class="">Group</strong>
+				        </span>
+				        {{ ctrl.mapItemSelected.group }}
+				      </li>
+				      <li class="list-group-item text-right" ng-show="ctrl.mapItemSelected.companyContact">
+				        <span class="pull-left">
+				          <strong class="">Contact</strong>
+				        </span>
+				        {{ ctrl.mapItemSelected.companyContact | strReplace:'_':' ' }}
+				      </li>
+				      <li class="list-group-item text-right">
+				        <span class="pull-left">
+				          <strong class=""># of Employees</strong>
+				        </span>
+				        {{ ctrl.mapItemSelected.employees | number:0 }}
+				      </li>
+				      <li class="list-group-item text-right">
+				        <span class="pull-left">
+				          <strong class="">Revenue</strong>
+				        </span>
+				        {{ ctrl.mapItemSelected.revenue | currency }}
+				      </li>
+				      <li class="list-group-item text-right">
+				        <span class="pull-left">
+				          <strong class="">Industry</strong>
+				        </span>
+				        {{ ctrl.mapItemSelected.industry | strReplace:'_':' ' }}
+				      </li>
+				      <li class="list-group-item text-right">
+				        <span class="pull-left">
+				          <strong class="">Link Count</strong>
+				        </span>
+				        {{ ctrl.mapItemSelected.edgeCount | number:0 }}
+				      </li>
+				    </ul>
+				    <ul class="list-group" ng-show="ctrl.mapItemSelected.type === 'sent'">
+				      <li class="list-group-item text-right">
+				        <span class="pull-left">
+				          <strong class="">Name</strong>
+				        </span>
+				        {{ ctrl.mapItemSelected.type }}
+				      </li>
+				      <li class="list-group-item text-right">
+				        <span class="pull-left">
+				          <strong class="">Type</strong>
+				        </span>
+				        transaction
+				      </li>
+				      <li class="list-group-item text-right">
+				        <span class="pull-left">
+				          <strong class="">From</strong>
+				        </span>
+				        {{ ctrl.mapItemSelected.from | strReplace:'_':' ' }}
+				      </li>
+				      <li class="list-group-item text-right">
+				        <span class="pull-left">
+				          <strong class="">To</strong>
+				        </span>
+				        {{ ctrl.mapItemSelected.to | strReplace:'_':' ' }}
+				      </li>
+				      <li class="list-group-item text-right">
+				        <span class="pull-left">
+				          <strong class=""># of Transactions</strong>
+				        </span>
+				        {{ ctrl.mapItemSelected.transCount | number:0 }}
+				      </li>
+				      <li class="list-group-item text-right">
+				        <span class="pull-left">
+				          <strong class="">Trans. Volume</strong>
+				        </span>
+				        {{ ctrl.mapItemSelected.transVolume | currency }}
+				      </li>
+				    </ul>
+				  </div>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>

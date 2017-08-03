@@ -1,0 +1,49 @@
+
+<div class="row">
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu1" role="tab">Co-occurences</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu2" role="tab">Statistical Analysis - R</a>
+    </li>
+  </ul>
+
+  <div class="tab-content" style="margin-top: 20px;">
+    <div id="home" class="tab-pane fade in active">
+      <div class="row">
+        <div class="col-md-4">
+          <ml-highchart highchart-config="ctrl.ownerChart" ml-search="ctrl.mlSearch"></ml-highchart>
+        </div>
+        <div class="col-md-4">xx
+          <ml-highchart highchart-config="ctrl.typeChart" ml-search="ctrl.mlSearch"></ml-highchart>
+        </div>
+        <div class="col-md-4">
+          <ml-highchart highchart-config="ctrl.languageChart" ml-search="ctrl.mlSearch"></ml-highchart>
+        </div>
+      </div>
+
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <div class="row">
+        <div class="col-md-12" style="width: 100%">
+          <ml-highchart highchart-config="ctrl.ownerLanguageChart" ml-search="ctrl.mlSearch" style="width: 100%"></ml-highchart>
+        </div>
+      </div>
+
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <p>Statistical Analysis with R.</p>
+      <div class="row">
+        <span class="label label-info" style="margin-left:50px;">Demo credentials: rserver/rserver2016 </span>
+      </div>
+      <div class="row">
+        <iframe src="" id="rWorkspace" height="750px;" width="100%" style=" -moz-transform: scale(0.75, 0.75);-moz-transform-origin: bottom left;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>

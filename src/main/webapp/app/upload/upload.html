@@ -1,0 +1,106 @@
+<div class="col-md-12">
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a  href="#mlcp" data-toggle="tab">Upload using MLCP</a>
+    </li>
+    <li><a href="#migrate" data-toggle="tab">Migrate from Relational</a>
+    </li>
+    <li><a href="#web" data-toggle="tab">Web</a>
+    </li>
+    <li><a href="#binary" data-toggle="tab">Documents</a>
+    </li>
+  </ul>
+  <div class="tab-content ">
+    <div class="tab-pane active" id="mlcp">
+      <div class="panel panel-default">
+        <div class="panel-heading">Upload files</div>
+        <div class="panel-body">
+          <br/>
+          <ml-upload multiple="true" upload-file-list="enrichCtrl.data.files" mlcp="ctrl.mlcp">
+            <p><strong>Drop files here or click to select files.</strong></p>
+            <em>(Files will be uploaded automatically)</em>
+          </ml-upload>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="migrate">
+      <div class="panel panel-default">
+        <div class="panel-heading">Migrate from a SQL database</div>
+        <div class="panel-body">
+          <div class="alert alert-success" ng-if="ctrl.receipt">{{ctrl.receipt}}</div>
+          <p>Use the form below to specify a JDBC connection for the SQL database you wish to copy data from. Please
+            ensure that the JDBC driver you need is on the classpath - see build.gradle for examples.</p>
+          <form method="post">
+            <h4>JDBC Details</h4>
+            <div class="form-group">
+              <label for="jdbcDriver">Driver class name</label>
+              <input id="jdbcDriver" type="text" class="form-control" ng-model="ctrl.inputs.jdbcDriver" />
+            </div>
+            <div class="form-group">
+              <label for="jdbcUrl">Database URL</label>
+              <input id="jdbcUrl" type="text" class="form-control" ng-model="ctrl.inputs.jdbcUrl" />
+            </div>
+            <div class="form-group">
+              <label for="jdbcUsername">Username</label>
+              <input id="jdbcUrl" type="text" class="form-control" ng-model="ctrl.inputs.jdbcUsername" />
+            </div>
+            <div class="form-group">
+              <label for="jdbcPassword">Password</label>
+              <input id="jdbcPassword" type="password" class="form-control" ng-model="ctrl.inputs.jdbcPassword" />
+            </div>
+            <h4>SQL Query</h4>
+            <p>You can join tables together to produce a single document containing 1:many relationships. You can use
+              column labels to specify a nested XML structure in the document. For example, in a 1:many between "persons"
+              and "addresses", you can do 'SELECT persons.*, address.street as "address/street", address.city as
+              "address/city", etc', which will result in each address being added to the person document as an address
+              element with street and city child elements.</p>
+            <div class="form-group">
+              <label for="sql">Query</label>
+              <textarea id="sql" rows="5" cols="60" class="form-control" ng-model="ctrl.inputs.sql"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="rootLocalName">XML Root Element</label>
+              <input id="rootLocalName" type="text" class="form-control" ng-model="ctrl.inputs.rootLocalName" />
+            </div>
+            <button class="btn btn-primary" ng-click="ctrl.migrateSQL()">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="web">
+      <div class="panel panel-default">
+        <div class="panel-heading">Ingest data from web sources</div>
+        <div class="panel-body">
+          <div class="well well-sm">
+          <form class="form-inline">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-rss" aria-hidden="true"></i></div>
+                <input type="text" class="form-control" size="40" ng-model="ctrl.feedURL" id="exampleInputAmount" placeholder="http://www.cnbc.com/id/15837362/device/rss/rss.html">
+              </div>
+            </div>
+            <button ng-click="ctrl.ingestRSSFeed()" class="btn btn-primary">Ingest RSS Feed</button>
+          </form>
+            <button class="btn btn-sm btn-info" ng-click="ctrl.ingestMSNBC()">MSNBC</button>
+            <button class="btn btn-sm btn-info" ng-click="ctrl.ingestBBC()">BBC</button>
+        </div>
+        </div>
+    </div>
+  </div>
+    <div class="tab-pane" id="binary">
+      <div class="panel panel-default">
+        <div class="panel-heading">Upload files</div>
+        <div class="panel-body">
+          <br/>
+          <ml-upload multiple="true" upload-file-list="enrichCtrl.data.files" mlcp="ctrl.binary">
+            <p><strong>Drop files here or click to select files.</strong></p>
+            <em>(Files will be uploaded automatically)</em>
+          </ml-upload>
+        </div>
+      </div>
+
+    </div>
+</div>
+
+
+

@@ -1,0 +1,493 @@
+<div class="detail analysis-buttons" ng-if="ctrl.isCustomer || ctrl.isMerchant">
+    <h4>Analysis:</h4>
+	   <button type="button" class="btn btn-info" ng-click="ctrl.openMapModal()">Geospatial</button>
+	   <button ng-if="ctrl.isCustomer && !ctrl.isMerchant" type="button" class="btn btn-info" ng-click=" ctrl.openGraphModal('customer')">Link</button>
+	   <button ng-if="ctrl.isMerchant" type="button" class="btn btn-info" ng-click="ctrl.openGraphModal('merchant')">Link</button>
+</div>
+<div class="row detail">
+  <div class="col-sm-12">
+    <uib-tabset type="pills">
+      <uib-tab ng-if="ctrl.isCustomer" >
+        <uib-tab-heading>Customer Dashboard</uib-tab-heading>
+        <div class="row">
+          <div class="col-sm-3">
+            <!--left col-->
+            <ul class="list-group">
+              <li class="list-group-item text-muted" contenteditable="false">
+                Profile
+              </li>
+              <li class="list-group-item text-right">
+                <span class="pull-left">
+                  <strong class="">Name</strong>
+                </span>
+                {{ ctrl.json.envelope.headers.first_name | strReplace:'_':' '}} {{ ctrl.json.root.name || ctrl.json.envelope.headers.last_name || ctrl.json.envelope.content.Company_Name | strReplace:'_':' '}}
+              </li>
+              <li class="list-group-item text-right">
+                <span class="pull-left">
+                  <strong class="">Customer ID </strong>
+                </span>
+                {{ ctrl.json.envelope.content.AccountNum || "N.A"}}
+              </li>
+              <li class="list-group-item text-right">
+                <span class="pull-left">
+                  <strong class="">Source</strong>
+                </span>
+                {{ ctrl.json.envelope.headers.source || ctrl.json.root.sourceID || "N.A."}}
+              </li>
+              <li class="list-group-item text-right">
+                <span class="pull-left">
+                  <strong class="">Active Since</strong>
+                </span>
+                {{ctrl.json.envelope.headers.last_updated || ctrl.json.root.incorporation_date || "N.A"}}
+              </li>
+              <li class="list-group-item text-right">
+                <span class="pull-left">
+                  <strong class="">SSN/Tax ID: </strong>
+                </span>
+                {{ ctrl.json.envelope.content.ssn || ctrl.json.envelope.content.SIC_Code || ctrl.json.root.ibcRUC || "N.A."}}
+              </li>
+            </ul>
+
+          </div>
+          <!--/col-3-->
+          <div class="col-sm-9 dash-summary" contenteditable="false" style="">
+            <div class="row">
+              <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <div class="row" style="height:70px;">
+                      <div class="col-xs-3">
+                        <i class="fa fa-shopping-cart fa-5x"></i>
+                      </div>
+                      <div class="col-xs-9 text-right">
+                        <h3>{{ctrl.json.envelope.metadata['transaction-data'].record.length}}</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel-footer">
+                    <span class="pull-left">Total Transactions</span>
+                    <span class="pull-right"><i class="fa fa-info-circle"></i></span>
+
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <div class="panel panel-success">
+                  <div class="panel-heading">
+                    <div class="row" style="height:70px;">
+                      <div class="col-xs-3">
+                        <i class="fa fa-dollar fa-5x"></i>
+                      </div>
+                      <div class="col-xs-9 text-right">
+                        <h3>{{ctrl.deposits| currency}}</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel-footer">
+                    <span class="pull-left">Total Deposits</span>
+                    <span class="pull-right"><i class="fa fa-info-circle"></i></span>
+
+                    <div class="clearfix"></div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <div class="panel panel-danger">
+                  <div class="panel-heading">
+                    <div class="row" style="height:70px;">
+                      <div class="col-xs-3">
+                        <i class="fa fa-credit-card fa-5x"></i>
+                      </div>
+                      <div class="col-xs-9 pull-left">
+                        <h3>{{ctrl.spend | currency}}</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel-footer">
+                    <span class="pull-left">Total Spend/Payments</span>
+                    <span class="pull-right"><i class="fa fa-info-circle"></i></span>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <div class="panel panel-info">
+                  <div class="panel-heading">
+                    <div class="row" style="height:70px;">
+                      <div class="col-xs-3">
+                        <i class="fa fa-map-marker fa-5x"></i>
+                      </div>
+                      <div class="col-xs-9 text-right trunc">
+                        <h3>{{ctrl.json.envelope.content['City']}} </h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel-footer">
+                    <span class="pull-left">Customer location</span>
+                    <span class="pull-right"><i class="fa fa-info-circle"></i></span>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default target">
+              <div class="panel-heading" contenteditable="false"><h3 class="panel-title">Customer Transactions</h3></div>
+              <div class="panel-body">
+                <div class="col-sm-12">
+                  <table st-table="purchases" ng-if="ctrl.json.envelope.metadata['transaction-data'].length > 10">
+                    <tr style="height:5px;">
+                      <th colspan="5">
+                        <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="10"></div>
+                      </th>
+                    </tr>
+                  </table>
+                  <table class="table table-condensed">
+                    <tr>
+                      <th width="25%">Transaction Type</th>
+                      <th width="25%">Date</th>
+                      <th width="25%">Amount</th>
+                      <th width="25%">Merchant</th>
+                    </tr>
+                  </table>
+                  <table ng-if="ctrl.json.envelope.metadata['transaction-data'].record.length > 1" ng-repeat="transaction in ctrl.json.envelope.metadata['transaction-data'].record" class="table table-condensed">
+                    <tr>
+                      <td width="25%">
+                        <i ng-if="transaction.Service_Area === 'Credit Card Swipe' || transaction.message.Beneficiary.Beneficiary_Name !== ctrl.json.envelope.content.Company_Name" class="icon fa fa-credit-card fa-lg"></i>
+                        <i ng-if="transaction.Service_Area === 'Cash Deposits' || transaction.message.Beneficiary.Beneficiary_Name === ctrl.json.envelope.content.Company_Name" class="icon fa fa-bank fa-lg"></i>
+                        {{transaction.Service_Area }}
+                      </td>
+                      <td width="25%">{{transaction.Transaction_Date || transaction.message.Date}}</td>
+                      <td width="25%">{{transaction.Amount || transaction.message.Amount | currency}}</td>
+                      <td width="25%">
+                        <p ng-if="transaction.Creditor.Company_Name.length > 0 || transaction.message.Beneficiary.Beneficiary_Name.length > 0 ">
+                          {{transaction.Creditor.Company_Name || transaction.message.Beneficiary.Beneficiary_Name  | strReplace:'_':' '}}
+                        </p>
+
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </uib-tab>
+      <uib-tab ng-show="ctrl.isMerchant">
+        <uib-tab-heading>Merchant Dashboard</uib-tab-heading>
+        <div class="row">
+          <div class="col-sm-3">
+            <!--left col-->
+            <ul class="list-group">
+              <li class="list-group-item text-muted" contenteditable="false">
+                Profile
+              </li>
+              <li class="list-group-item text-right">
+                <span class="pull-left">
+                  <strong class="">Name</strong>
+                </span>
+                {{ ctrl.json.envelope.content.Company_Name | strReplace:'_':' ' }}
+              </li>
+              <li class="list-group-item text-right">
+                <span class="pull-left">
+                  <strong class="">Group: </strong>
+                </span>
+                {{ ctrl.json.envelope.headers.group || "N.A." }}
+              </li>
+              <li class="list-group-item text-right">
+                <span class="pull-left">
+                  <strong class="">Revenue: </strong>
+                </span>
+                {{ ctrl.json.envelope.content.Revenue | currency }}
+              </li>
+              <li class="list-group-item text-right">
+                <span class="pull-left">
+                  <strong class="">Employees </strong>
+                </span>
+                {{ ctrl.json.envelope.content.Employees | number }}
+              </li>
+              <li class="list-group-item text-right">
+                <span class="pull-left">
+                  <strong class="">Industry </strong>
+                </span>
+                {{ ctrl.json.envelope.content.Industry | strReplace:'_':' ' || "N.A."}}
+              </li>
+              <li class="list-group-item text-right">
+                <span class="pull-left">
+                  <strong class="">Source</strong>
+                </span>
+                {{ ctrl.json.envelope.headers.source || ctrl.json.root.sourceID || "N.A."}}
+              </li>
+              <li class="list-group-item text-right">
+                <span class="pull-left">
+                  <strong class="">Active Since</strong>
+                </span>
+                {{ctrl.json.envelope.headers.last_updated || ctrl.json.root.incorporation_date || "N.A"}}
+              </li>
+
+            </ul>
+
+          </div>
+          <!--/col-3-->
+          <div class="col-sm-9 dash-summary" contenteditable="false" style="">
+            <div class="row">
+              <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <div class="row" style="height:70px;">
+                      <div class="col-xs-3">
+                        <i class="fa fa-calculator fa-5x"></i>
+                      </div>
+                      <div class="col-xs-9 text-right">
+                        <h3>{{ctrl.merchantSummary.outgoingSummary.count + ctrl.merchantSummary.incomingSummary.count}}</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel-footer">
+                    <span class="pull-left">Total Transactions</span>
+                    <span class="pull-right"><i class="fa fa-info-circle"></i></span>
+
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <div class="panel panel-success">
+                  <div class="panel-heading">
+                    <div class="row" style="height:70px;">
+                      <div class="col-xs-3">
+                        <i class="fa fa-dollar fa-5x"></i>
+                      </div>
+                      <div class="col-xs-9 text-right">
+                        <h3>{{ctrl.merchantSummary.incomingSummary.amount | currency}}</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel-footer">
+                    <span class="pull-left">Incoming Funds</span>
+                    <span class="pull-right"><i class="fa fa-info-circle"></i></span>
+
+                    <div class="clearfix"></div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <div class="panel panel-danger">
+                  <div class="panel-heading">
+                    <div class="row" style="height:70px;">
+                      <div class="col-xs-3">
+                        <i class="fa fa-sign-out fa-5x"></i>
+                      </div>
+                      <div class="col-xs-9 pull-left">
+                        <h3>{{ctrl.merchantSummary.outgoingSummary.amount | currency}}</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel-footer">
+                    <span class="pull-left">Outgoing Funds</span>
+                    <span class="pull-right"><i class="fa fa-info-circle"></i></span>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <div class="panel panel-info">
+                  <div class="panel-heading">
+                    <div class="row" style="height:70px;">
+                      <div class="col-xs-3">
+                        <i class="fa fa-map-marker fa-5x"></i>
+                      </div>
+                      <div class="col-xs-9 text-right trunc">
+                        <h3>{{ctrl.json.envelope.content['City']}} </h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel-footer">
+                    <span class="pull-left">Merchant Location</span>
+                    <span class="pull-right"><i class="fa fa-info-circle"></i></span>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default target">
+              <div class="panel-heading" contenteditable="false">Merchant Transactions</div>
+              <div class="panel-body">
+                <div class="col-sm-12">
+                  <table class="table">
+                    <tr>
+                      <th width="25%">Transaction Type</th>
+                      <th width="25%">Date</th>
+                      <th width="25%">Amount</th>
+                      <th width="25%">Merchant</th>
+                    </tr>
+                  </table>
+                  <table ng-if="ctrl.merchantSummary.incomingTransactions.length > 1" ng-repeat="transaction in ctrl.merchantSummary.incomingTransactions" class="table">
+                    <tr>
+                      <td width="25%">
+                        <i class="icon fa fa-dollar fa-lg"></i>
+                        {{ transaction.type }}
+                      </td>
+                      <td width="25%">{{ transaction.date }}</td>
+                      <td width="25%">{{ transaction.amount | currency }}</td>
+                      <td width="25%">{{ transaction.merchant  | strReplace:'_':' ' }}</td>
+                    </tr>
+                  </table>
+                  <table ng-if="ctrl.merchantSummary.outgoingTransactions.length > 1" ng-repeat="transaction in ctrl.merchantSummary.outgoingTransactions" class="table">
+                    <tr class="table-danger">
+                      <td width="25%">
+                        <i class="icon fa fa-sign-out fa-lg"></i>
+                        {{ transaction.type }}
+                      </td>
+                      <td width="25%">{{ transaction.date }}</td>
+                      <td width="25%">{{ transaction.amount | currency }}</td>
+                      <td width="25%">{{ transaction.merchant  | strReplace:'_':' ' }}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </uib-tab>
+      <uib-tab ng-if="ctrl.triples" active="false">
+        <uib-tab-heading >Actionable View</uib-tab-heading>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-10">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                Actionable View for {{ ctrl.json.envelope.headers.first_name}} {{ ctrl.json.envelope.headers.last_name}}
+              </div>
+              <div class="panel-body">
+                <table class="table table-bordered table-striped" style="font-size: 14px;">
+                  <th>Is Banking Customer</th>
+                  <th>Is Credit Card Holder</th>
+                  <th>Mortgage Account</th>
+                  <th>Pays Rent</th>
+                  <th>Pays ChildCare/School</th>
+                  <th>Pays Travel</th>
+                  <th>New/Expecting Parent</th>
+                  <th>Invest in markets</th>
+                  <th>Home Owner</th>
+                  <th>Auto Owner</th>
+                  <th>Small Business</th>
+                  <th>Average Deposit Size</th>
+                  <th>Average Spend Size</th>
+                  <th>Most spending category</th>
+                  <tr>
+                    <td><center><i class="icon fa fa-check fa-lg"></i></center></td>
+                    <td><center><i class="icon fa fa-check fa-lg"></i></center></td>
+                    <td>
+                      <center>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.values.join().indexOf('Mortgage') == null" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.values.join().indexOf('Mortgage') == -1" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.values.join().indexOf('Mortgage') > -1" class="icon fa fa-check fa-lg"></i>
+                      </center>
+                    </td>
+                    <td>
+                      <center>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Renter') == null" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Renter') == -1" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Renter') > -1" class="icon fa fa-check fa-lg"></i>
+                      </center>
+                    </td>
+                    <td>
+                      <center>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Parent') == null" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Parent') == -1" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Parent') > -1" class="icon fa fa-check fa-lg"></i>
+                      </center>
+                    </td>
+                    <td>
+                      <center>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Leisure-Life-Style') == null" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Leisure-Life-Style') == -1" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Leisure-Life-Style') > -1" class="icon fa fa-check fa-lg"></i>
+                      </center>
+                    </td>
+                    <td>
+                      <center>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Expecting-Parent') == null" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Expecting-Parent') == -1" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Expecting-Parent') > -1" class="icon fa fa-check fa-lg"></i>
+                      </center>
+                    </td>
+                    <td>
+                      <center>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Investor') == null" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Investor') == -1" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Investor') > -1" class="icon fa fa-check fa-lg"></i>
+                      </center>
+                    </td>
+                    <td>
+                      <center>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('New-Home-Owner') == null" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('New-Home-Owner') == -1" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('New-Home-Owner') > -1" class="icon fa fa-check fa-lg"></i>
+                      </center>
+                    </td>
+                    <td>
+                      <center>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Auto-Owner') == null" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Auto-Owner') == -1" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Auto-Owner') > -1" class="icon fa fa-check fa-lg"></i>
+                      </center>
+                    </td>
+                    <td>
+                      <center>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Small-Business') == null" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Small-Business') == -1" class="icon fa fa-close fa-lg"></i>
+                        <i ng-if="ctrl.json.envelope.metadata.tags.join().indexOf('Small-Business') > -1" class="icon fa fa-check fa-lg"></i>
+                      </center>
+                    </td>
+                    <td>{{(ctrl.deposits/ctrl.depositTransactions) | currency}}</td>
+                    <td>{{(ctrl.spend/ctrl.ccTransactions) | currency}}</td>
+                    <td class="trunc">{{ctrl.spends.join().substring(0,50)}}...</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                Graph driven facts supporting the actionable view
+              </div>
+              <div class="panel-body">
+                <ml-lodlive iri="ctrl.iri" profile="ctrl.profile">
+                </ml-lodlive>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+      </uib-tab>
+      <!--
+      <uib-tab ng-if="ctrl.type!=='binary'" active="false">
+        <uib-tab-heading>{{ctrl.type | uppercase}}</uib-tab-heading>
+        <div class="col-sm-9">
+          <json-explorer ng-if="ctrl.type==='json'" data="ctrl.json"></json-explorer>
+          <pre ng-if="ctrl.type!=='json'" class="pre-xml">{{ctrl.xml}} </pre>
+          <a ng-if="ctrl.type==='binary'" target="_blank" ng-href="/v1/documents?uri={{ctrl.uri}}&transform=download" class="btn btn-sm btn-info">Download</a>
+        </div>
+      </uib-tab>
+      -->
+      <uib-tab ng-if="ctrl.type!=='json'" active="false">
+        <uib-tab-heading>JSON</uib-tab-heading>
+        <div class="col-sm-9">
+          <json-explorer data="ctrl.json"></json-explorer>
+        </div>
+      </uib-tab>
+      <uib-tab>
+        <uib-tab-heading >XML</uib-tab-heading>
+        <div class="col-sm-9">
+          <pre class="pre-xml">{{ctrl.xml}}</pre>
+        </div>
+      </uib-tab >
+    </uib-tabset>
+  </div>
+  </div>
+</div>

@@ -1,0 +1,204 @@
+<div class="harmonize">
+<div class="row">
+  
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3 class="panel-title">Sanitize &amp; Envelope Pattern</h3></div>
+      <div class="panel-body">
+        <center><button type="button"  ng-click="ctrl.envelopePattern()" class="{{envBtn}}">
+            <span ng-show="loading"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+            {{buttonText}}
+          </button></center>
+         <div class="row well well-sm">
+            Use the Envelope data pattern to encapsulate data. Simply put, the envelope pattern wraps your data in either XML or JSON like so:<br/>
+            <code>
+              &lt;envelope&gt;<br/>
+              &nbsp;&lt;/headers&gt;<br/>
+              &nbsp;&lt;/triples&gt;<br/>
+              &nbsp;&lt;content&gt;
+              your data goes here
+              &lt;/content&gt;<br/>
+              &lt;/envelope&gt;<br/>
+            </code>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="panel panel-default" style="min-height: 300px;">
+      <div class="panel-heading"><h3 class="panel-title">Normalize Gender Column</h3></div>
+      <div class="panel-body">
+        <center><button type="button" class="{{normalizeBtn}}" ng-click="ctrl.normalizeGender()">
+            <span ng-show="loadingN"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+            {{normalizeText}}
+          </button></center>
+        <div class="row well well-sm">
+          Run this flow to normalize gender to a canonicalized form to maintain consistency across data from multiple sources <br/>
+          <code>
+            &lt;metadata&gt;<br/>
+            &nbsp;&lt;canonoicalizedGender&gt;Male&lt;/canonoicalizedGender&gt;<br/>
+            &lt;/metadata&gt;
+          </code>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default" style="min-height: 300px;">
+      <div class="panel-heading"><h3 class="panel-title">Harmonize Names</h3></div>
+      <div class="panel-body">
+        <center><button type="button" class={{nameBtn}} ng-click="ctrl.normalizeName()">
+          <span ng-show="loadingName"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+            {{nameText}}
+        </button></center>
+        <div class="row well well-sm ">
+          Run this flow to normalize first and last name of the customer to a canonicalized form <br/>
+          <code>
+            &lt;header&gt;<br/>
+            &nbsp;&lt;first_name&gt;Jean&lt;/first_name&gt;<br/>
+            &nbsp;&lt;last_name&gt;Smith&lt;/last_name&gt; <br/>
+            &lt;/header&gt;
+          </code>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default" style="min-height: 300px;">
+      <div class="panel-heading"><h3 class="panel-title">Geocoding &amp; Demographic Data</h3></div>
+      <div class="panel-body">
+        <center><button type="button" class="{{geoRecBtn}}" ng-click="ctrl.geocodeRecords()">
+            <span ng-show="geoRec"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+            {{geoText}}
+          </button></center>
+        <div class="row well well-sm ">
+          Run this flow to enrich the customer data with geospatial and basic demographic information <br/>
+          <code>
+            &lt;element-name&gt;<br/>
+            &nbsp;&lt;latitude&gt;37.52&lt;/latitude&gt;
+            &nbsp;&lt;longitude>-122.25&lt;/longitude&gt;<br/>
+            &lt;/element-name&gt;
+          </code>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default" style="min-height: 300px;">
+      <div class="panel-heading"><h3 class="panel-title">Extract &amp; Enrich with Cash Deposits Transaction data</h3></div>
+      <div class="panel-body">
+        <center><button type="button" class="{{mergeRecBtn}}" ng-click="ctrl.mergeRecords()">
+            <span ng-show="mergeRec"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+            {{mergeRecText}}
+          </button></center>
+        <div class="row well well-sm">
+          Enrich customer records with transaction data from deposits records <br/>
+          <code>
+            &lt;element-name&gt;<br/>
+            &nbsp;&lt;transaction&gt;Data&lt;/transaction&gt;<br/>
+            &lt;/element-name&gt;
+          </code>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default" style="min-height: 300px;">
+      <div class="panel-heading"><h3 class="panel-title">Create Merchant Graph</h3></div>
+      <div class="panel-body">
+        <center><button type="button" class="{{merRecBtn}}" ng-click="ctrl.merchantGraph()">
+            <span ng-show="merRec"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+            {{merchantText}}
+          </button></center>
+        <div class="row well well-sm ">
+          Run this flow to enrich the merchant data with semantic graph <br/>
+          <code>
+            &lt;sem:triple&gt;<br/>
+            &nbsp;&lt;sem:subject&gt;Merchant_Name&lt;/latitude&gt;<br/>
+            &nbsp;&lt;sem:predicate&gt;isPartOfIndustry&lt;/latitude&gt;,<br/>
+            &nbsp;&lt;sem:object&gt;Merchant_Industry&lt;/latitude&gt;,<br/>
+            &lt;/sem:triple&gt;
+          </code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default" style="min-height: 300px;">
+      <div class="panel-heading"><h3 class="panel-title">Create Semantic Linkage</h3></div>
+      <div class="panel-body">
+        <center><button type="button" class="{{linkBtn}}" ng-click="ctrl.linkData()">
+            <span ng-show="linkName"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+            {{linkText}}
+          </button></center>
+        <div class="row well well-sm ">
+          Run this flow to create semantic triples to discover customer graph and purchase preferences.<br/>
+          <code><i>e.g. Discover what products &amp; services the customer currently has, Explore graph driven Network of customers </i></code> <br/>
+          This transform build the customer graph and helps analyze the customer network. <br/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default" style="min-height: 300px;">
+      <div class="panel-heading"><h3 class="panel-title">Discover Householdings</h3></div>
+      <div class="panel-body">
+          <!-- Modal -->
+          <!--
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Launch demo modal
+          </button>
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <codep>
+                    declare function put(
+                      $context as map:map,
+                      $params  as map:map,
+                      $input   as document-node()*
+                      ) as document-node()?
+                    {
+                      for $person in fn:collection("entities")
+                      let $_ := cts:search
+                      (
+                          fn:collection('call-center'),
+                          cts:or-query
+                          ((
+                            cts:element-value-query(xs:QName("AccountNum"), ($person//AccountNum[1]/text())),
+                            cts:element-value-query(xs:QName("AccountNum"), ($person//CCNumber[1]/text()))
+                          ))
+                      )
+                      let $_ :=
+                        if($_ and not($_//caller_name/text() eq fn:concat($person//first_name/text(), ' ', $person//last_name/text()))) then
+                          xdmp:node-insert-child($person//triples,
+                              <sem:triple xmlns:sem="http://marklogic.com/semantics">
+                                <sem:subject>{'http://marklogic.com/triples/' || $person//first_name[1]/text() || '_' || $person//last_name[1]/text()}</sem:subject>
+                                <sem:predicate>http://marklogic.com/relatedTo</sem:predicate>
+                                <sem:object>{'http://marklogic.com/triples/' || fn:replace($_//caller_name/text(),' ','_')}</sem:object>
+                              </sem:triple>)
+                        else ()
+                      return xdmp:log("PUT called")
+                    };
+                </codep>
+              </div>
+            </div>
+          </div> -->
+        <center><button type="button" class="{{houseBtn}}" ng-click="ctrl.discoverHouseHolding()">
+            <span ng-show="houseBtnName"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+            {{houseText}}
+          </button></center>
+        <div class="row well well-sm " style="margin: 5px;">
+          Run this flow to create semantic triples to discover householdings and store them as semantic triples.<br/>
+          <code><i>e.g. Customer records show a name field which is different from the caller-name in the customer service records</i></code> <br/>
+          This transform identifies such anomalies/relationships and creates a 'relatedTo' semantic triple. <br/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

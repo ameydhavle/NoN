@@ -1,0 +1,183 @@
+<style>
+  .se-pitch-panel{
+    color: #fff;
+    background-color: #7DA3C0;
+    border-color: #7DA3C0;
+    }
+</style>
+<div class="col-sm-2"></div>
+<div class="col-sm-8">
+
+  <!-- Tab panes -->
+  <uib-tabset>
+    <uib-tab>
+      <uib-tab-heading>
+        Mappings
+      </uib-tab-heading>
+      <div class="col-sm-12" style="height:750px;">
+        <div class="panel panel-primary ">
+          <div class="panel-heading panel-primary">
+            <h3 class="panel-title">Link Data</h3>
+          </div>
+          <div class="panel-body">
+            <div class="alert alert-info">
+              <p>
+                Semantics enables the discovery of facts and relationships in data, and provides context for those facts. Semantic technologies refer to a family of specific W3C standards to allow the exchange of information about relationships in data, in machine readable form - whether it resides on the Web or within organizations.
+                <br/>A built-in enterprise triple store to enhance search and define data relationships.
+                <br/>Users can you this screen to represent the discovered relationships/links between data entities as triples and analyze their data contextually.
+              </p>
+
+            </div>
+            <div class="alert alert-success" ng-show="showSuccessAlert">
+              <button type="button" class="close" data-ng-click="switchBool('showSuccessAlert')">×</button> <strong>Done! </strong> {{successTextAlert}}
+            </div>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="inputSubject" class="col-sm-2 control-label">Subject</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputSubject" ng-model="ctrl.model.subject" placeholder="MSFT">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputPredicate" class="col-sm-2 control-label">Predicate</label>
+                <div class="col-sm-10">
+                  <select class="col-sm-10 form-control" id="inputPredicate"  name="singleSelect" ng-model="ctrl.model.predicate">
+                    <option value="relatedTo">Is Related To</option>
+                    <option value="isCustomerOf">Is Customer Of </option>
+                    <option value="isClassifiedAs">Is Classified As </option>
+                    <option value="hasCategoryPreference">Has Category Preference</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputObject" class="col-sm-2 control-label">Object</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputObject" ng-model="ctrl.model.object" placeholder="Microsoft_corporation">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-primary" ng-click="ctrl.createMapping()">Create Mapping</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+    <uib-tab>
+      <uib-tab-heading>
+        Alerts
+      </uib-tab-heading>
+      <div class="col-sm-12" style=" height:750px;">
+        <div class="panel panel panel-primary  ">
+          <div class="panel-heading se-pitch-panel">
+            <h3 class="panel-title">Configure Alert</h3>
+          </div>
+          <div class="panel-body">
+            <div class="alert alert-info" role="alert">
+              <p>An alerting application is used to notify users when new content is available and/or content is updated that matches a predefined (and usually stored) query.
+                MarkLogic Server includes several infrastructure components
+                that you can use to create alerting applications that have very flexible features and perform and scale to very large numbers of stored queries.</p>
+
+            </div>
+            <form class="form-inline">
+              <div class="form-group ">
+                <label for="exampleInputName2">Rule Name</label>
+                <input type="text" class="form-control" size="100" style="margin-left: 51px;" id="exampleInputName2"  ng-model="ctrl.model.rName" placeholder="Enter rule name">
+              </div>
+              <div class="form-group ">
+                <label for="exampleInputEmail2">Description</label>
+                <input type="text" class="form-control" style="margin-left: 50px;" size="100" ng-model="ctrl.model.rDesc" placeholder="Enter rule description">
+              </div>
+              <div class="form-group ">
+                <label for="exampleInputEmail2">Value</label>
+                <input type="text" class="form-control" style="margin-left: 90px;" ng-model="ctrl.model.rValue" placeholder="Enter Rule Description">
+              </div>
+              <br/>
+              <div class="form-group ">
+                <button type="button" id="addRule" ng-click="addRule()" class="btn btn-primary" style="margin-left: 25px;">Set alert</button>
+              </div>
+            </form>
+            <hr/>
+          </div>
+          <uib-tabset>
+            <uib-tab>
+              <uib-tab-heading>Alerting Rules</uib-tab-heading>
+              <div class="col-sm-12" style="height:750px;">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Alert</h3>
+                  </div>
+                  <div class="panel-body">
+                    <div id="alerts"></div>
+                  </div>
+                </div>
+              </div>
+            </uib-tab>
+            <uib-tab>
+              <uib-tab-heading>Alert Logs</uib-tab-heading>
+              <div class="col-sm-12" style="overflow: scroll; height:350px;">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Alert Logs</h3>
+                  </div>
+                  <div class="panel-body">
+
+                    <div id="alertLogs"></div>
+                  </div>
+                </div>
+              </div>
+
+            </uib-tab>
+          </uib-tabset>
+        </div>
+      </div>
+    </uib-tab>
+    <uib-tab>
+      <uib-tab-heading>
+        Redaction
+      </uib-tab-heading>
+      <div class="col-sm-12" style="height:750px;">
+        <div class="panel panel panel-primary ">
+          <div class="panel-heading se-pitch-panel">
+            <h3 class="panel-title">Redaction</h3>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input type="checkbox" aria-label="Checkbox for following text input" >
+                  </span>
+                  <input type="text" class="form-control" value="Social Security" aria-label="Text input with checkbox" readonly>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input type="checkbox" aria-label="Checkbox for following text input" >
+                  </span>
+                  <input type="text" class="form-control" value="Phone Number" aria-label="Text input with checkbox" readonly>
+                </div>
+              </div>
+            </div>
+            <br/><br/>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input type="checkbox" aria-label="Checkbox for following text input" >
+                  </span>
+                  <input type="text" class="form-control" value="Email" aria-label="Text input with checkbox" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+  </uib-tabset>
+
+</div>
+<div class="col-sm-2"></div>

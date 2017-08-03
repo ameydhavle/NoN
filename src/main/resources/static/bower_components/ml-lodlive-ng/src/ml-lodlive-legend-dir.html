@@ -1,0 +1,37 @@
+<div class="ml-lodlive-toolbar">
+  <div class="ml-lodlive-legend-toggle">
+    <button class="btn btn-xs ml-lodlive-toolbar-button" ng-click="model.showLegend = !model.showLegend">
+      <i class="glyphicon glyphicon-info-sign"></i>
+    </button>
+  </div>
+  <div class="ml-lodlive-legend-display" ng-if="model.showLegend">
+    <h4>Legend</h4>
+    <div ng-repeat="item in model.items">
+      <span class="{{item.icon}}"></span> {{item.title}}
+    </div>
+    <h5>Relationships</h5>
+    <div ng-repeat="rel in model.relationships | orderBy:'title' track by $index">
+      <span class="{{rel.icon}}" style="{{rel.style}}"></span> {{rel.title}}
+    </div>
+    <div>
+      <span class="fa fa-circle" style="color: #369;"></span> other
+    </div>
+  </div>
+  <div class="ml-lodlive-zooming" ng-if="zooming">
+    <div>
+      <button class="btn btn-xs ml-lodlive-toolbar-button" ng-click="zoomIn()">
+        <i class="glyphicon glyphicon-zoom-in"></i>
+      </button>
+    </div>
+    <div>
+      <button class="btn btn-xs ml-lodlive-toolbar-button" ng-click="zoomOut()">
+        <i class="glyphicon glyphicon-zoom-out"></i>
+      </button>
+    </div>
+    <div>
+      <button class="btn btn-xs ml-lodlive-toolbar-button" ng-click="zoomReset()">
+        <i class="glyphicon glyphicon-refresh"></i>
+      </button>
+    </div>
+  </div>
+</div>

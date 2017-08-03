@@ -1,0 +1,70 @@
+<div class="harmonize">
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default" style="min-height: 300px;">
+      <div class="panel-heading"><h3 class="panel-title">Sanitize &amp; Envelope Pattern</h3></div>
+      <div class="panel-body">
+          <center><button type="button"  ng-click="ctrl.envelopePattern()" class="{{envBtn}}">
+            <span ng-show="loading"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+            {{buttonText}}
+          </button></center>
+        <div class="row well well-sm">
+            Use the Envelope data pattern to encapsulate data. Simply put, the envelope pattern wraps your data in either XML or JSON like so:<br/>
+            <code>
+              &lt;envelope&gt;<br/>
+              &nbsp;&lt;/headers&gt;<br/>
+              &nbsp;&lt;/triples&gt;<br/>
+              &nbsp;&lt;content&gt;
+              your data goes here
+              &lt;/content&gt;<br/>
+              &lt;/envelope&gt;<br/>
+            </code>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default" style="min-height: 300px;">
+      <div class="panel-heading"><h3 class="panel-title">Geocoding Merchant Data</h3></div>
+      <div class="panel-body">
+          <center><button type="button" class="{{geoRecBtn}}" ng-click="ctrl.geocodeRecords()">
+            <span ng-show="geoRec"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+            {{geoText}}
+          </button></center>
+        <div class="row well well-sm ">
+          Run this flow to enrich the merchant data with geospatial information <br/>
+          <code>
+            &lt;element-name&gt;<br/>
+            &nbsp;&lt;latitude&gt;37.52&lt;/latitude&gt;
+            &nbsp;&lt;longitude>-122.25&lt;/longitude&gt;<br/>
+            &lt;/element-name&gt;
+          </code>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default" style="min-height: 300px;">
+      <div class="panel-heading"><h3 class="panel-title">Centralize Merchant</h3></div>
+      <div class="panel-body">
+          <center><button type="button" class="{{createCentralBtn}}" ng-click="ctrl.createCentralMerchant()">
+            <span ng-show="createCentralRunning"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+            {{createCentralText}}
+          </button></center>
+        <div class="row well well-sm " style="margin: 5px;">
+        	Run this to create a merchant that is linked to all other merchants<br/>
+        </div>
+        <div class="row delete-btn">
+      	  <center><button type="button" class="{{deleteCentralBtn}}" ng-click="ctrl.deleteCentralMerchant()">
+            <span ng-show="deleteCentralRunning"><i class="glyphicon glyphicon-refresh spinning"></i></span>
+            {{deleteCentralText}}
+					</button></center>
+	      </div>
+	      <div class="row well well-sm " style="margin: 5px;">
+	        Run this to remove the centralized merchant data<br/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,41 @@
+<html>
+
+<head>
+<base href="/" />
+<meta charset="utf-8" />
+<title>data-hub-gradle</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width" />
+<link rel="shortcut icon" th:href="@{images/favicon.ico}" />
+<!-- bower:css -->
+<link rel="stylesheet" href="bower_components/highlightjs/styles/default.css" />
+<link rel="stylesheet" href="bower_components/ng-json-explorer/dist/angular-json-explorer.css" />
+<link rel="stylesheet" href="bower_components/d3-cloud-ng/dist/d3-cloud-ng.css" />
+<link rel="stylesheet" href="bower_components/split-pane/split-pane.css" />
+<link rel="stylesheet" href="bower_components/angular-tree-control/css/tree-control.css" />
+<link rel="stylesheet" href="bower_components/vis/dist/vis.css" />
+<link rel="stylesheet" href="bower_components/ml-visjs-graph-ng/dist/ml-visjs-graph-ng.css" />
+<link rel="stylesheet" href="bower_components/ng-sortable/dist/ng-sortable.css" />
+<!-- endbower -->
+<link rel="stylesheet" href="/styles/main.css" />
+</head>
+
+<body>
+  <div class="container">
+    <center>
+      <h2>Oops! An error has occurred</h2>
+      <ul>
+        <li>Timestamp: <span th:text="${timestamp}"></span></li>
+        <li>Path: <span th:text="${path}"></span></li>
+        <li>HTTP Status: <span th:text="${status}"></span></li>
+        <li>Error: <span th:text="${error}"></span></li>
+        <li>Message: <span th:text="${message}"></span></li>
+      </ul>
+      <p>
+        <a href="/">Return to the home page</a>
+      </p>
+    </center>
+  </div>
+</body>
+
+</html>

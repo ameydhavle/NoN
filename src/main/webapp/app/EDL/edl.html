@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-md-12">
+    <split-pane>
+      <split-pane-component>
+        <div class="explore">
+          <blockquote>
+            <p>Explore Data.</p>
+            <div class="tree">
+              <treecontrol class="tree-light" tree-model="ctrl.model.tree.data"
+                           options="ctrl.model.tree.options" on-selection="ctrl.showSelected(node)"
+                           selected-node="node1">
+              <span ng-if="node.type === 'transaction-data'">
+                <i class="icon fa fa-twitter fa-lg"></i>
+                {{node.name}}
+                <span ng-if="node.count > 0 && !ctrl.model.customers.isSearching">(<b>{{node.count}}</b>)</span>
+                <span ng-show="model.customers.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
+              </span>
+              <span ng-if="node.type === 'customer-data'">
+                <i class="icon fa fa-mouse-pointer fa-lg"></i>
+                {{node.name}}
+                <span ng-if="node.count > 0 && !ctrl.model.customers.isSearching">(<b>{{node.count}}</b>)</span>
+                <span ng-show="model.customers.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
+              </span>
+              </treecontrol>
+            </div>
+          </blockquote>
+        </div>
+      </split-pane-component>
+      <split-pane-divider width="5px"></split-pane-divider>
+      <split-pane-component width="80%">
+        <tabset>
+          <tab active="ctrl.model.tabs.transactions.active">
+            <tab-heading>
+              <i class='icon fa fa-twitter fa-lg'></i>
+              Social Media Data
+              <span ng-if="ctrl.model.transactions.search.total > 0 && !ctrl.model.transactions.isSearching">(<b>{{ctrl.model.transactions.search.total}}</b>)</span>
+              <span ng-show="ctrl.model.transactions.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
+            </tab-heading>
+            <div class="col-sm-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i>{{ctrl.model.qtext}}</i> Social Media Data</h3>
+                </div>
+                <div class="panel-body">
+                  <h3 ng-show="model.transactions.search.total === 0 && !model.transactions.isSearching">No results to
+                    show</h3>
+                  <h3 ng-show="model.transactions.isSearching">
+                    <span class="glyphicon glyphicon-refresh spinning"></span>
+                    Searching ...
+                  </h3>
+                  <div class="col-md-12"
+                       ng-show="ctrl.model.transactions.search.total > 0 && !ctrl.model.transactions.isSearching">
+                    <pagination ng-model="ctrl.model.transactions.page" ng-change="ctrl.searchTransactions()"
+                                max-size="10" boundary-links="true" total-items="ctrl.model.transactions.search.total"
+                                items-per-page="ctrl.model.transactions.search['page-length']"></pagination>
+                    <ml-metrics search="ctrl.model.transactions.search"></ml-metrics>
+                    <div class="panel panel-info" ng-repeat="result in ctrl.model.transactions.results" class="results"
+                         style="width:100%">
+                      
+                        {{result.uri}}
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            
+          </tab>
+          <tab active="ctrl.model.tabs.customers.active">
+            <tab-heading>
+              <i class='icon fa fa-mouse-pointer fa-lg'></i>
+              Click Stream Data
+              <span ng-if="ctrl.model.customers.search.total > 0 && !ctrl.model.customers.isSearching">(<b>{{ctrl.model.customers.search.total}}</b>)</span>
+              <span ng-show="model.customers.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
+            </tab-heading>
+            
+            <div class="col-sm-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i>{{ctrl.model.qtext}}</i> Click Stream Data</h3>
+                </div>
+                <div class="panel-body">
+                  <h3 ng-show="model.customers.search.total === 0 && !model.customers.isSearching">No results to
+                    show</h3>
+                  <h3 ng-show="model.customers.isSearching">
+                    <span class="glyphicon glyphicon-refresh spinning"></span>
+                    Searching ...
+                  </h3>
+                  <div class="col-md-12"
+                       ng-show="ctrl.model.customers.search.total > 0 && !ctrl.model.customers.isSearching">
+                    <pagination ng-model="ctrl.model.customers.page" ng-change="ctrl.searchCustomers()" max-size="10"
+                                boundary-links="true" total-items="ctrl.model.customers.search.total"
+                                items-per-page="ctrl.model.customers.search['page-length']"></pagination>
+                    <ml-metrics search="ctrl.model.customers.search"></ml-metrics>
+                    <div class="panel panel-info" ng-repeat="result in ctrl.model.customers.results" class="results"
+                         style="width:100%">
+                      
+                        {{result.uri}}
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </tab>
+        </tabset>
+      </split-pane-component>
+    </split-pane>
+  </div>
+</div>
