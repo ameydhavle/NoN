@@ -34,9 +34,7 @@
 
 
     $scope.users = {
-      '1-idl': { label: 'Internal Data', desc: 'Internal data lake integrating the data silos for Transactions, Customer Data, Demographic Information etc.', name: 'idl' },
       '2-search': { label: 'Data 360', desc: 'Actionable view of your data combining internal & external data lakes.', name: 'search' },
-      '3-edl': { label: 'External Data', desc: 'External data lake integrating the data silos for Social Media, Click Stream, Online Marketing etc.', name: 'edl' },
       '5-upload': { label: 'Data Hub', desc: 'User interface for loading, harmonizing, accessing & configuration data', name: 'upload' },
       '4-events': { label: 'Network View', desc: 'Network of merchant networks view', name: 'events' }
     };
