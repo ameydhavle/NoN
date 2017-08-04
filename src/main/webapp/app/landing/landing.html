@@ -1,12 +1,39 @@
 <div class="row login-block login" style="margin-top: -20px;">
   <div class="col-sm-12" style="margin-left:90px;" style="background: rgba(64, 75, 154, 0.00); max-width: 800px;">
-    <div class="jumbotron login-box zz animated bounceInRight">
+		<br/>
+		<br/>
+		<br/>
+		<div class="row">
+			<div class="col-sm-2">
+			</div>
+			<div class="col-md-6">
+				<ml-input qtext="ctrl.qtext" search="ctrl.search(qtext)"  suggest="ctrl.suggestAdvanced(val)"  template="app/search/ml-input.html"></ml-input>
+			</div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-md-2">
+			</div>
+			<div class="col-sm-2" style="margin-left:40px;">
+				<i class="fa fa-2x fa-search" style="margin-left: 10px; color:#28375B"></i><br/><a href="/events">Data 360</a>
+			</div>
+			<div class="col-sm-2" style="margin-left:-20px;">
+				<i class="fa fa-2x fa-cubes" style="margin-left: 30px; color:#28375B"></i><br/><a href="/events">Explore Network</a>
+			</div>
+			<div class="col-sm-2" style="margin-left:20px;">
+				<i class="fa fa-2x fa-gear" style="margin-left: 20px; color:#28375B"></i><br/><a href="/events">Data Hub</a>
+			</div>
+		</div>
+		</div>
+		<!--
+		<div class="jumbotron login-box zz animated bounceInRight">
       <div class="login-tile " ng-repeat="(k,v) in users " ng-click="login(k)">
-        <h3>{{ v.label }}</h3> 
+        <h3>{{ v.label }}</h3>
         <p>{{ v.desc }}</p>
-        <button class="btn btn-warning" ng-hide="v.disabled">Analyze {{ v.label }}</button>
+        <button class="btn btn-sm btn-warning" ng-hide="v.disabled">Analyze {{ v.label }}</button>
         <button class="btn btn-disabled" ng-show="v.disabled" disabled>Coming Soon</button>
       </div>
     </div>
+		-->
   </div>
 </div>
