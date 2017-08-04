@@ -7,7 +7,6 @@ Assuming you just cloned this repository, here's how to deploy and run the appli
 1. Download, install and run the latest version of MarkLogic 9.
 1. A [Java Development Kit (JDK) 1.7+ or 1.8+](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (needed to compile a small amount of Java code in the Spring Boot app, as well as run the Spring Boot app)
 1. [Node 4.x+](https://nodejs.org/en/download/)
-1. [Bower](https://www.npmjs.com/package/bower)
 1. [Gulp](https://www.npmjs.com/package/gulp)
 1. [Git](https://git-scm.com/downloads) (required by Bower)
 1. (Optional) [Gradle](http://gradle.org/gradle-download/)
@@ -29,28 +28,10 @@ Run "./gradlew tasks" to see all those tasks. It's rare that you'll need to run 
 the future.
 
     ./gradlew -i mlDeploy
-    ./gradlew importThesaurus
-
-Install the Node dependencies (only needs to be done in the future when these change):
-
-    npm install
-
-Install the Bower dependencies (only needs to be done in the future when these change):
-
-    bower install
-
-Build the webapp (need to do this any time a file in the webapp is changed):
-
-    gulp build
 
 Fire up Spring Boot, which runs an embedded Tomcat server:
 
     ./gradlew bootRun
-
-## Data
-
-All data is added to the app using the "Ingest Data As-Is" screen from the "Data Hub" menu option.
-Use the settings in the "Upload using MLCP" area.  Below are the settings to use for each file loaded:
 
 
 ### Zipcodes
@@ -58,62 +39,6 @@ Use the settings in the "Upload using MLCP" area.  Below are the settings to use
 		Output collection: zipcodes
 		Document Type: xml
 		file: /data/zipcode.csv
-
-### Customers
-
-		Output collection: entities
-		Document Type: xml
-		file: /data/5kCustomers.csv
-
-### Merchants
-
-		Output collection: merchants,admin-merchants
-		Document Type: xml
-		file: /data/merchants.csv
-
-Once the base data types (Zipcodes, Customers, Merchants) have been loaded, transactions must be
-created.  In order to generate transactions, Scheduled Tasks must be defined in MarkLogic.  Below are
-the details needed to create the Scheduled Task for each transaction type.
-
-When the Scheduled Task is created, it is automatically enabled.  After a desired number of
-transactions have been created, the Schedule Task can be disabled through the ML Admin UI.
-
-### Credit Card Transactions
-
-		path: /ext/generate-cc-transaction.xqy
-		root: /
-		type: minutely
-		period: 1
-		database: finserv-cust-360-content
-		modules: finserv-cust-360-modules
-		user: admin
-		host: localhost
-		priority: normal
-
-### Cash Deposit Transactions
-
-		path: /ext/generate-cash-deposits-transaction.xqy
-		root: /
-		type: minutely
-		period: 1
-		database: finserv-cust-360-content
-		modules: finserv-cust-360-modules
-		user: admin
-		host: localhost
-		priority: normal
-
-### Merchant Transactions
-
-		path: /ext/generate-merchant-transaction.xqy
-		root: /
-		type: minutely
-		period: 1
-		database: finserv-cust-360-content
-		modules: finserv-cust-360-modules
-		user: admin
-		host: localhost
-		priority: normal
-
 
 ## What should I run while developing?
 
