@@ -1,13 +1,11 @@
 <options xmlns="http://marklogic.com/appservices/search">
   <search-option>unfiltered</search-option>
   <page-length>10</page-length>
-  <!--
+
 <additional-query>
 <cts:and-query xmlns:cts="http://marklogic.com/cts">
   <cts:collection-query>
-  <cts:uri>call-center</cts:uri>
-    <cts:uri>customers</cts:uri>
-    <cts:uri>documents</cts:uri>
+  <cts:uri>wire-transfers</cts:uri>
   </cts:collection-query>
 
   <cts:not-query xmlns:cts="http://marklogic.com/cts">
@@ -29,7 +27,6 @@
       </cts:not-query>
     </cts:and-query>
   </additional-query>
-  -->
   <term apply="term">
     <empty apply="all-results" />
     <term-option>punctuation-insensitive</term-option>
@@ -285,84 +282,11 @@
   </constraint>
 
   <extract-metadata>
-    <qname elem-ns="" elem-name="transaction-data"/>
-    <qname elem-ns="" elem-name="record"/>
-    <qname elem-ns="" elem-name="Service_Area"/>
-    <qname elem-ns="" elem-name="Account_Description"/>
-    <qname elem-ns="" elem-name="Creditor"/>
-    <qname elem-ns="" elem-name="Company_Name"/>
-    <qname elem-ns="" elem-name="SIC_Code"/>
-    <qname elem-ns="" elem-name="JV_Value"/>
-    <qname elem-ns="" elem-name="tags"/>
-    <qname elem-ns="" elem-name="record"/>
-
-    <qname elem-ns="" elem-name="CCNumber"/>
-    <qname elem-ns="" elem-name="Amount"/>
-    <qname elem-ns="" elem-name="Transaction_Date"/>
-    <qname elem-ns="" elem-name="AccountNum"/>
-
-
-
-    <qname elem-ns="" elem-name="Title"/>
-    <qname elem-ns="" elem-name="GivenName"/>
-    <qname elem-ns="" elem-name="Surname"/>
-    <qname elem-ns="" elem-name="StreetAddress"/>
-    <qname elem-ns="" elem-name="City"/>
-    <qname elem-ns="" elem-name="TelephoneNumber"/>
-    <qname elem-ns="" elem-name="CCNumber"/>
-    <qname elem-ns="" elem-name="AccountNum"/>
-    <qname elem-ns="" elem-name="EmailAddress"/>
-    <qname elem-ns="" elem-name="SSN"/>
-
-
-    <qname elem-ns="" elem-name="fname"/>
-    <qname elem-ns="" elem-name="lname"/>
-    <qname elem-ns="" elem-name="email"/>
-    <qname elem-ns="" elem-name="street_adddress"/>
-    <qname elem-ns="" elem-name="city"/>
-    <qname elem-ns="" elem-name="state"/>
-    <qname elem-ns="" elem-name="zip"/>
-    <qname elem-ns="" elem-name="policy_id"/>
-    <qname elem-ns="" elem-name="type"/>
-
-    <qname elem-ns="" elem-name="first_name"/>
-    <qname elem-ns="" elem-name="last_name"/>
-    <qname elem-ns="" elem-name="email"/>
-    <qname elem-ns="" elem-name="address"/>
-
-    <qname elem-ns="" elem-name="firstName"/>
-    <qname elem-ns="" elem-name="lastName"/>
-    <qname elem-ns="" elem-name="addr1"/>
-    <qname elem-ns="" elem-name="city"/>
-    <qname elem-ns="" elem-name="state"/>
-    <qname elem-ns="" elem-name="zipcode"/>
-
-    <qname elem-ns="" elem-name="title"/>
-    <qname elem-ns="" elem-name="submitted-by"/>
-
-    <qname elem-ns="" elem-name="link"/>
-    <qname elem-ns="http://marklogic.com/semantics" elem-name="object"/>
-    <qname elem-ns="" elem-name="pubDate"/>
-    <qname elem-ns="" elem-name="description"/>
-
-    <qname elem-ns="" elem-name="UniqueCarrier"/>
-    <qname elem-ns="" elem-name="FlightNum"/>
-    <qname elem-ns="" elem-name="Origin"/>
-    <qname elem-ns="" elem-name="Dest"/>
-    <qname elem-ns="" elem-name="Year"/>
-    <qname elem-ns="" elem-name="Month"/>
-    <qname elem-ns="" elem-name="DayofMonth"/>
-
-    <qname elem-ns="" elem-name="name"/>
-    <qname elem-ns="" elem-name="jurisdiction"/>
-    <qname elem-ns="" elem-name="jurisdiction_description"/>
-    <qname elem-ns="" elem-name="sourceID"/>
-    <qname elem-ns="" elem-name="ibcRUC"/>
-
-
-    <qname elem-ns="http://www.w3.org/1999/xhtml" elem-name="meta" attr-ns="http://www.w3.org/1999/xhtml" attr-name="Author"/>
-    <qname elem-ns="" elem-name="meta" attr-ns="http://www.w3.org/1999/xhtml" attr-name="content-type"/>
-
-
-  </extract-metadata>
+		<json-property>envelope</json-property>
+		<json-property>DBT_NAME1</json-property>
+		<json-property>CDT_NAME1</json-property>
+		<json-property>DBT_AMT</json-property>
+		<json-property>DIRECTION</json-property>
+		<json-property>NO_TRANS</json-property>
+	</extract-metadata>
 </options>

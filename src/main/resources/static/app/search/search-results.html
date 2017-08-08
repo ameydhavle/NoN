@@ -10,22 +10,22 @@
                   <span class=" pull-right badge badge-primary">{{result.fitness}}</span>
                   <dd class="col-lg-8" class="trunc"><b>
                     {{
-                    result.metadata['name'].values[0]|| result.metadata['GivenName'].values[0]|| result.metadata['title'].values[0] || result.extracted.content[0].envelope.content['GivenName'] || result.metadata['UniqueCarrier'].values[0]  || result.metadata['fname'].values[0] ||"N.A."
-                    }}
+										result.metadata['DBT_NAME1'].values[0]|| result.metadata['name'].values[0]|| result.metadata['GivenName'].values[0]|| result.metadata['title'].values[0] || result.extracted.content[0].envelope.content['GivenName'] || result.metadata['UniqueCarrier'].values[0]  || result.metadata['fname'].values[0] ||"N.A."
+                    }} -
                     {{
-                    result.metadata['FlightNum'].values[0]  || result.metadata['Surname'].values[0] || result.metadata['lname'].values[0]|| result.extracted.content[0].envelope.content['Surname'] || '- ' + result.metadata['pubDate'].values[0]
+                    result.metadata['CDT_NAME1'].values[0]  || result.metadata['Surname'].values[0] || result.metadata['lname'].values[0]|| result.extracted.content[0].envelope.content['Surname'] || '- ' + result.metadata['pubDate'].values[0]
                     }}</b>
                   </dd>
 
                   <dd class="col-lg-8" class="text-left trunc">
                     {{
-                    result.metadata['jurisdiction_description'].values[0]|| result.metadata['Origin'].values[0]  || result.metadata['street_adddress'].values[0] ||  result.metadata['StreetAddress'].values[0] || result.extracted.content[0].envelope.content['StreetAddress'] || "N.A"
+										result.metadata['DIRECTION'].values[0]  ||  result.metadata['jurisdiction_description'].values[0]|| result.metadata['Origin'].values[0]  || result.metadata['street_adddress'].values[0] ||  result.metadata['StreetAddress'].values[0] || result.extracted.content[0].envelope.content['StreetAddress'] || "N.A"
                     }}
                   </dd>
 
                   <dd class="col-lg-8" class="text-left trunc">
                     {{
-                    result.metadata['sourceID'].values[0] || result.metadata['Dest'].values[0] || result.metadata['city'].values[0] || result.metadata['City'].values[0] || result.extracted.content[0].envelope.content['City'] || "N.A"
+										result.metadata['DBT_AMT'].values[0] || "N.A" | currency
                     }}
                   </dd>
 
