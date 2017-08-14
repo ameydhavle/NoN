@@ -321,7 +321,7 @@
 			};
 
 			function search(id) {
-				return $http.get(api+'?rs:subject=' + encodeURIComponent(id)
+				return $http.get(api+'?rs:subject=CARIBBEAN MERCANTILE BANK'
 				)
 				.then(
 					function(response) {

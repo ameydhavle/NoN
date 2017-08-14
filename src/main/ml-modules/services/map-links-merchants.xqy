@@ -31,17 +31,17 @@ declare function res:build-graph(
   let $_ :=
 	  for $subject in $subjects
 	  let $results := cts:search(
-		  fn:collection("merchant-wire"),
+		  fn:collection("wire-transfers"),
 		  cts:element-value-query(
-		    xs:QName("Sender_Name"),
-		    $subject
+		    xs:QName("DBT_NAME1"),
+		    'CARIBBEAN MERCANTILE BANK'
 		  )
 		)
 
 	  let $results-obj := cts:search(
-		  fn:collection("merchant-wire"),
+		  fn:collection("wire-transfers"),
 		  cts:element-value-query(
-		    xs:QName("Receiver_Name"),
+		    xs:QName("CDT_NAME1"),
 		    $subject
 		  )
 		)
@@ -65,12 +65,12 @@ declare function res:build-graph(
 
 	      for $result in $results
 	      let $node := json:object()
-	      let $object := $result//Receiver_Name/data()
+	      let $object := $result//CDT_NAME1/data()
 	      let $props := res:get-object-props($object)
 	      let $edge-id := "edge-" || $subject || "-" || $object
 	      let $_ := map:put($edges-count-map, $edge-id, (map:get($edges-count-map, $edge-id), 1))
 	      let $_ :=
-	      	if (fn:exists($result//Amount)) then
+	      	if (fn:exists($result//DBT_AMT)) then
 	      		map:put($edges-volume-map, $edge-id, (map:get($edges-volume-map, $edge-id), $result//Amount/data()))
 	      	else
 	      		()
