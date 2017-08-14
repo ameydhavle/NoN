@@ -1,6 +1,6 @@
 {
   "name": "ml-visjs-graph-ng",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "authors": [
     "Patrick McElwee <patrick.mcelwee@marklogic.com>"
   ],
@@ -11,7 +11,7 @@
     "dist/ml-visjs-graph-ng-templates.js"
   ],
   "dependencies": {
-    "angular": "~1.4.4",
+    "angular": "^1.4.4",
     "angular-bootstrap": "^1.1",
     "angular-visjs": "https://github.com/visjs/angular-visjs.git#8a825e40852d29355a752ee1c30e28b3d989a1a8",
     "vis": "~4.16.1"
@@ -36,16 +36,17 @@
     "tests"
   ],
   "resolutions": {
+    "angular": "^1.4.4",
     "vis": "~4.16.1"
   },
   "devDependencies": {
-    "angular-mocks": "~1.4.4"
+    "angular-mocks": "^1.4.4"
   },
-  "_release": "2.3.0",
+  "_release": "2.4.0",
   "_resolution": {
     "type": "version",
-    "tag": "2.3.0",
-    "commit": "29303fa5318229306617f97ceb5fd6299f68553d"
+    "tag": "2.4.0",
+    "commit": "13fbc309a1f7384e5aae0e392347eeb7df57dd57"
   },
   "_source": "https://github.com/patrickmcelwee/ml-visjs-graph-ng.git",
   "_target": "^2.1.0",

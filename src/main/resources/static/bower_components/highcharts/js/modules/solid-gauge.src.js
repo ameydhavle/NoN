@@ -1,5 +1,5 @@
 /**
- * @license  Highcharts JS v5.0.11 (2017-05-04)
+ * @license  Highcharts JS v5.0.14 (2017-07-28)
  * Solid angular gauge module
  *
  * (c) 2010-2017 Torstein Honsi
@@ -61,6 +61,7 @@
                 // Insert rounded edge on end, and remove line.
                 path.splice.apply(path, [11, 3].concat(roundEnd));
             }
+
             return path;
         });
 
@@ -70,8 +71,7 @@
 
 
             initDataClasses: function(userOptions) {
-                var axis = this,
-                    chart = this.chart,
+                var chart = this.chart,
                     dataClasses,
                     colorCounter = 0,
                     options = this.options;
@@ -91,7 +91,10 @@
                                 colorCounter = 0;
                             }
                         } else {
-                            dataClass.color = axis.tweenColors(H.color(options.minColor), H.color(options.maxColor), i / (userOptions.dataClasses.length - 1));
+                            dataClass.color = H.color(options.minColor).tweenTo(
+                                H.color(options.maxColor),
+                                i / (userOptions.dataClasses.length - 1)
+                            );
                         }
                     }
                 });
@@ -152,66 +155,28 @@
                     // The position within the gradient
                     pos = 1 - (to[0] - pos) / ((to[0] - from[0]) || 1);
 
-                    color = this.tweenColors(
-                        from.color,
+                    color = from.color.tweenTo(
                         to.color,
                         pos
                     );
                 }
                 return color;
-            },
-            /*
-             * Return an intermediate color between two colors, according to pos where 0
-             * is the from color and 1 is the to color.
-             */
-            tweenColors: function(from, to, pos) {
-                // Check for has alpha, because rgba colors perform worse due to lack of
-                // support in WebKit.
-                var hasAlpha,
-                    ret;
-
-                // Unsupported color, return to-color (#3920)
-                if (!to.rgba.length || !from.rgba.length) {
-                    ret = to.input || 'none';
-
-                    // Interpolate
-                } else {
-                    from = from.rgba;
-                    to = to.rgba;
-                    hasAlpha = (to[3] !== 1 || from[3] !== 1);
-                    ret = (hasAlpha ? 'rgba(' : 'rgb(') +
-                        Math.round(to[0] + (from[0] - to[0]) * (1 - pos)) + ',' +
-                        Math.round(to[1] + (from[1] - to[1]) * (1 - pos)) + ',' +
-                        Math.round(to[2] + (from[2] - to[2]) * (1 - pos)) +
-                        (hasAlpha ? (',' + (to[3] + (from[3] - to[3]) * (1 - pos))) : '') + ')';
-                }
-                return ret;
             }
         };
-
-        /**
-         * Handle animation of the color attributes directly
+        /** 
+         * @extends plotOptions.gauge
+         * @optionparent plotOptions.solidgauge
          */
-        each(['fill', 'stroke'], function(prop) {
-            H.Fx.prototype[prop + 'Setter'] = function() {
-                this.elem.attr(
-                    prop,
-                    colorAxisMethods.tweenColors(
-                        H.color(this.start),
-                        H.color(this.end),
-                        this.pos
-                    ),
-                    null,
-                    true
-                );
-            };
-        });
-
-        // The solidgauge series type
-        H.seriesType('solidgauge', 'gauge', {
+        var solidGaugeOptions = {
+            /**
+             */
             colorByPoint: true
 
-        }, {
+        };
+
+
+        // The solidgauge series type
+        H.seriesType('solidgauge', 'gauge', solidGaugeOptions, {
 
             /**
              * Extend the translate function to extend the Y axis with the necessary

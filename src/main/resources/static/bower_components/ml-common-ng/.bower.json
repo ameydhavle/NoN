@@ -36,6 +36,6 @@
     "commit": "34b0fbd996cb2c6ccf9cde54ae80fd958d959c97"
   },
   "_source": "https://github.com/joemfb/ml-common-ng.git",
-  "_target": ">= 0.1.1",
+  "_target": ">= 0.0.6",
   "_originalSource": "ml-common-ng"
 }

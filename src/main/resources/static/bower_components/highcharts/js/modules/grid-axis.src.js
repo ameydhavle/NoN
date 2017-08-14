@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v5.0.11 (2017-05-04)
+ * @license Highcharts JS v5.0.14 (2017-07-28)
  * GridAxis
  *
  * (c) 2016 Lars A. V. Cabrera

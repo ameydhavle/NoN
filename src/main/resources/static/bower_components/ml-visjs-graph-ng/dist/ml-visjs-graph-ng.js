@@ -417,11 +417,6 @@
 
     function init() {
       nodes.clear();
-      if ($scope.items.nodes[0] && $scope.items.nodes[0].label) {
-        ctrl.label = $scope.items.nodes[0].label;
-      } else {
-        ctrl.label = 'this node';
-      }
 
       ctrl.refreshGraph();
       ctrl.physicsUpdated();
@@ -436,10 +431,12 @@
     });
 
     $scope.$watch('uris', function() {
-      $scope.graphSearch($scope.uris).then(function(items) {
-        $scope.items = items;
-        init();
-      });
+      if ($scope.network) {
+        $scope.graphSearch($scope.uris).then(function(items) {
+          $scope.items = items;
+          init();
+        });
+      }
     });
 
     $scope.$watch('customGraphOptions', function(newValue) {

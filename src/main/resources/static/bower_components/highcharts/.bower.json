@@ -1,13 +1,13 @@
 {
   "name": "highcharts",
-  "version": "5.0.11",
+  "version": "5.0.14",
   "main": "highcharts.js",
   "homepage": "https://github.com/highcharts/highcharts-dist",
-  "_release": "5.0.11",
+  "_release": "5.0.14",
   "_resolution": {
     "type": "version",
-    "tag": "v5.0.11",
-    "commit": "e4744ea83895ab508902c54b18859a911d6284df"
+    "tag": "v5.0.14",
+    "commit": "50234cd62565e4bbdf8615dd2e7411ebffae8212"
   },
   "_source": "https://github.com/highcharts/highcharts-dist.git",
   "_target": ">= 4.1.8",

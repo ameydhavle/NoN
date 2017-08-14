@@ -32,16 +32,16 @@ declare function res:build-graph(
 	  for $subject in $subjects
 	  let $results := cts:search(
 		  fn:collection("wire-transfers"),
-		  cts:element-value-query(
-		    xs:QName("DBT_NAME1"),
-		    'CARIBBEAN MERCANTILE BANK'
+		  cts:json-property-value-query(
+		    "DBT_NAME1",
+		    'Test'
 		  )
 		)
 
 	  let $results-obj := cts:search(
 		  fn:collection("wire-transfers"),
-		  cts:element-value-query(
-		    xs:QName("CDT_NAME1"),
+		  cts:json-property-value-query(
+		    "CDT_NAME1",
 		    $subject
 		  )
 		)

@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v5.0.11 (2017-05-04)
+ * @license Highcharts JS v5.0.14 (2017-07-28)
  * Highcharts Drilldown module
  * 
  * Author: Torstein Honsi
@@ -42,81 +42,234 @@
             inArray = H.inArray,
             ddSeriesId = 1;
 
-        // Utilities
-        /*
-         * Return an intermediate color between two colors, according to pos where 0
-         * is the from color and 1 is the to color. This method is copied from ColorAxis.js
-         * and should always be kept updated, until we get AMD support.
-         */
-        function tweenColors(from, to, pos) {
-            // Check for has alpha, because rgba colors perform worse due to lack of
-            // support in WebKit.
-            var hasAlpha,
-                ret;
-
-            // Unsupported color, return to-color (#3920)
-            if (!to.rgba.length || !from.rgba.length) {
-                ret = to.input || 'none';
-
-                // Interpolate
-            } else {
-                from = from.rgba;
-                to = to.rgba;
-                hasAlpha = (to[3] !== 1 || from[3] !== 1);
-                ret = (hasAlpha ? 'rgba(' : 'rgb(') +
-                    Math.round(to[0] + (from[0] - to[0]) * (1 - pos)) + ',' +
-                    Math.round(to[1] + (from[1] - to[1]) * (1 - pos)) + ',' +
-                    Math.round(to[2] + (from[2] - to[2]) * (1 - pos)) +
-                    (hasAlpha ? (',' + (to[3] + (from[3] - to[3]) * (1 - pos))) : '') + ')';
-            }
-            return ret;
-        }
-        /**
-         * Handle animation of the color attributes directly
-         */
-        each(['fill', 'stroke'], function(prop) {
-            H.Fx.prototype[prop + 'Setter'] = function() {
-                this.elem.attr(
-                    prop,
-                    tweenColors(color(this.start), color(this.end), this.pos),
-                    null,
-                    true
-                );
-            };
-        });
-
         // Add language
         extend(defaultOptions.lang, {
             drillUpText: '◁ Back to {series.name}'
         });
+
+        /**
+         * Options for drill down, the concept of inspecting increasingly high 
+         * resolution data through clicking on chart items like columns or pie slices.
+         *
+         * The drilldown feature requires the drilldown.js file to be loaded, 
+         * found in the modules directory of the download package, or online at 
+         * (code.highcharts.com/modules/drilldown.js)[code.highcharts.com/modules/drilldown.js].
+         *
+         * @type {Object}
+         * @optionparent drilldown
+         */
         defaultOptions.drilldown = {
 
+
+            /**
+             * Additional styles to apply to the X axis label for a point that
+             * has drilldown data. By default it is underlined and blue to invite
+             * to interaction.
+             * 
+             * @type {CSSObject}
+             * @see In [styled mode](http://www.highcharts.com/docs/chart-design-and-
+             * style/style-by-css), active label styles can be set with the `.highcharts-
+             * drilldown-axis-label` class.
+             * @sample {highcharts} highcharts/drilldown/labels/ Label styles
+             * @default { "cursor": "pointer", "color": "#003399", "fontWeight": "bold", "textDecoration": "underline" }
+             * @since 3.0.8
+             * @product highcharts highmaps
+             */
             activeAxisLabelStyle: {
+
+                /**
+                 */
                 cursor: 'pointer',
+
+                /**
+                 */
                 color: '#003399',
+
+                /**
+                 */
                 fontWeight: 'bold',
-                textDecoration: 'underline'
-            },
-            activeDataLabelStyle: {
-                cursor: 'pointer',
-                color: '#003399',
-                fontWeight: 'bold',
+
+                /**
+                 */
                 textDecoration: 'underline'
             },
 
+            /**
+             * Additional styles to apply to the data label of a point that has
+             * drilldown data. By default it is underlined and blue to invite to
+             * interaction.
+             * 
+             * @type {CSSObject}
+             * @see In [styled mode](http://www.highcharts.com/docs/chart-design-and-
+             * style/style-by-css), active data label styles can be applied with
+             * the `.highcharts-drilldown-data-label` class.
+             * @sample {highcharts} highcharts/drilldown/labels/ Label styles
+             * @default { "cursor": "pointer", "color": "#003399", "fontWeight": "bold", "textDecoration": "underline" }
+             * @since 3.0.8
+             * @product highcharts highmaps
+             */
+            activeDataLabelStyle: {
+
+                /**
+                 */
+                cursor: 'pointer',
+
+                /**
+                 */
+                color: '#003399',
+
+                /**
+                 */
+                fontWeight: 'bold',
+
+                /**
+                 */
+                textDecoration: 'underline'
+            },
+
+
+            /**
+             * Set the animation for all drilldown animations. Animation of a drilldown
+             * occurs when drilling between a column point and a column series,
+             * or a pie slice and a full pie series. Drilldown can still be used
+             * between series and points of different types, but animation will
+             * not occur.
+             * 
+             * The animation can either be set as a boolean or a configuration
+             * object. If `true`, it will use the 'swing' jQuery easing and a duration
+             * of 500 ms. If used as a configuration object, the following properties
+             * are supported:
+             * 
+             * <dl>
+             * 
+             * <dt>duration</dt>
+             * 
+             * <dd>The duration of the animation in milliseconds.</dd>
+             * 
+             * <dt>easing</dt>
+             * 
+             * <dd>A string reference to an easing function set on the `Math` object.
+             * See [the easing demo](http://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/plotoptions/series-
+             * animation-easing/).</dd>
+             * 
+             * </dl>
+             * 
+             * @type {Boolean|Object}
+             * @since 3.0.8
+             * @product highcharts highmaps
+             */
             animation: {
+
+                /**
+                 */
                 duration: 500
             },
+
+            /**
+             * Options for the drill up button that appears when drilling down
+             * on a series. The text for the button is defined in [lang.drillUpText](#lang.
+             * drillUpText).
+             * 
+             * @type {Object}
+             * @sample {highcharts} highcharts/drilldown/drillupbutton/ Drill up button
+             * @sample {highmaps} highcharts/drilldown/drillupbutton/ Drill up button
+             * @since 3.0.8
+             * @product highcharts highmaps
+             */
             drillUpButton: {
+
+                /**
+                 * Positioning options for the button within the `relativeTo` box.
+                 * Available properties are `x`, `y`, `align` and `verticalAlign`.
+                 * 
+                 * @type {Object}
+                 * @since 3.0.8
+                 * @product highcharts highmaps
+                 */
                 position: {
+
+                    /**
+                     */
                     align: 'right',
+
+                    /**
+                     */
                     x: -10,
+
+                    /**
+                     */
                     y: 10
                 }
                 // relativeTo: 'plotBox'
                 // theme
             }
         };
+
+
+
+        /**
+         * Fires when a drilldown point is clicked, before the new series is
+         * added. This event is also utilized for async drilldown, where the
+         * seriesOptions are not added by option, but rather loaded async. Note
+         * that when clicking a category label to trigger multiple series drilldown,
+         * one `drilldown` event is triggered per point in the category.
+         * 
+         * Event arguments:
+         * 
+         * <dl>
+         * 
+         * <dt>`category`</dt>
+         * 
+         * <dd>If a category label was clicked, which index.</dd>
+         * 
+         * <dt>`point`</dt>
+         * 
+         * <dd>The originating point.</dd>
+         * 
+         * <dt>`originalEvent`</dt>
+         * 
+         * <dd>The original browser event (usually click) that triggered the
+         * drilldown.</dd>
+         * 
+         * <dt>`points`</dt>
+         * 
+         * <dd>If a category label was clicked, this array holds all points
+         * corresponing to the category.</dd>
+         * 
+         * <dt>`seriesOptions`</dt>
+         * 
+         * <dd>Options for the new series</dd>
+         * 
+         * </dl>
+         * 
+         * @type {Function}
+         * @context Chart
+         * @sample {highcharts} highcharts/drilldown/async/ Async drilldown
+         * @since 3.0.8
+         * @product highcharts highmaps
+         * @apioption chart.events.drilldown
+         */
+
+        /**
+         * Fires when drilling up from a drilldown series.
+         * 
+         * @type {Function}
+         * @context Chart
+         * @since 3.0.8
+         * @product highcharts highmaps
+         * @apioption chart.events.drillup
+         */
+
+        /**
+         * In a chart with multiple drilldown series, this event fires after
+         * all the series have been drilled up.
+         * 
+         * @type {Function}
+         * @context Chart
+         * @since 4.2.4
+         * @product highcharts highmaps
+         * @apioption chart.events.drillupall
+         */
 
         /**
          * A general fadeIn method
@@ -233,6 +386,11 @@
             // Push it to the lookup array
             this.drilldownLevels.push(level);
 
+            // Reset names to prevent extending (#6704)
+            if (xAxis && xAxis.names) {
+                xAxis.names.length = 0;
+            }
+
             newSeries = level.lowerSeries = this.addSeries(ddOptions, false);
             newSeries.options._levelNumber = levelNumber + 1;
             if (xAxis) {
@@ -320,10 +478,10 @@
 
         /**
          * When the chart is drilled down to a child series, calling `chart.drillUp()`
-         * will drill up to the parent series.
+         * will drill up to the parent series. Requires the drilldown module.
          *
+         * @function drillUp
          * @memberOf Highcharts.Chart
-         * @name #drillUp
          */
         Chart.prototype.drillUp = function() {
             var chart = this,
@@ -417,8 +575,6 @@
             this.ddDupes.length = []; // #3315
         };
 
-
-        ColumnSeries.prototype.supportsDrilldown = true;
 
         /**
          * When drilling up, keep the upper series invisible until the lower series has
@@ -588,7 +744,6 @@
 
         if (PieSeries) {
             extend(PieSeries.prototype, {
-                supportsDrilldown: true,
                 animateDrillupTo: ColumnSeries.prototype.animateDrillupTo,
                 animateDrillupFrom: ColumnSeries.prototype.animateDrillupFrom,
 
@@ -796,10 +951,18 @@
             proceed.call(this);
 
             each(this.points, function(point) {
-                var pointCSS = {};
+                var dataLabelsOptions = point.options.dataLabels,
+                    pointCSS = pick(
+                        point.dlOptions,
+                        dataLabelsOptions && dataLabelsOptions.style, {}
+                    );
+
                 if (point.drilldown && point.dataLabel) {
                     if (css.color === 'contrast') {
                         pointCSS.color = renderer.getContrast(point.color || this.color);
+                    }
+                    if (dataLabelsOptions && dataLabelsOptions.color) {
+                        pointCSS.color = dataLabelsOptions.color;
                     }
                     point.dataLabel
                         .addClass('highcharts-drilldown-data-label');
@@ -813,26 +976,42 @@
             }, this);
         });
 
+
+        var applyCursorCSS = function(element, cursor, addClass) {
+            element[addClass ? 'addClass' : 'removeClass']('highcharts-drilldown-point');
+
+
+            element.css({
+                cursor: cursor
+            });
+
+        };
+
         // Mark the trackers with a pointer 
         var drawTrackerWrapper = function(proceed) {
             proceed.call(this);
             each(this.points, function(point) {
                 if (point.drilldown && point.graphic) {
-                    point.graphic.addClass('highcharts-drilldown-point');
-
-
-                    point.graphic.css({
-                        cursor: 'pointer'
-                    });
-
+                    applyCursorCSS(point.graphic, 'pointer', true);
                 }
             });
         };
 
-        objectEach(seriesTypes, function(seriesType) {
-            if (seriesType.prototype.supportsDrilldown) {
-                wrap(seriesType.prototype, 'drawTracker', drawTrackerWrapper);
+        var setPointStateWrapper = function(proceed, state) {
+            var ret = proceed.apply(this, Array.prototype.slice.call(arguments, 1));
+
+            if (this.drilldown && this.series.halo && state === 'hover') {
+                applyCursorCSS(this.series.halo, 'pointer', true);
+            } else if (this.series.halo) {
+                applyCursorCSS(this.series.halo, 'auto', false);
             }
+            return ret;
+        };
+
+
+        objectEach(seriesTypes, function(seriesType) {
+            wrap(seriesType.prototype, 'drawTracker', drawTrackerWrapper);
+            wrap(seriesType.prototype.pointClass.prototype, 'setState', setPointStateWrapper);
         });
 
     }(Highcharts));

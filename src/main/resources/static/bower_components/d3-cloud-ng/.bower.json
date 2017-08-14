@@ -1,6 +1,6 @@
 {
   "name": "d3-cloud-ng",
-  "version": "0.9.6",
+  "version": "0.9.8",
   "description": "Angular directive wrapping the d3-cloud library",
   "main": [
     "dist/d3-cloud-ng.js",
@@ -18,7 +18,8 @@
     "globals"
   ],
   "authors": [
-    "grtjn"
+    "grtjn",
+    "vaclavpavlicek"
   ],
   "homepage": "http://grtjn.github.io/d3-cloud-ng/",
   "repository": {
@@ -29,7 +30,8 @@
     "angular",
     "angularjs",
     "d3",
-    "d3-cloud"
+    "d3-cloud",
+    "marklogic"
   ],
   "license": "Apache-2.0",
   "ignore": [
@@ -44,11 +46,11 @@
     "karma.conf.js",
     "package.json"
   ],
-  "_release": "0.9.6",
+  "_release": "0.9.8",
   "_resolution": {
     "type": "version",
-    "tag": "0.9.6",
-    "commit": "ae182bcbcc3244a4e0256231c0369e49da2ab6b7"
+    "tag": "0.9.8",
+    "commit": "f42c75fe21518581412a93751230d62cf96d4973"
   },
   "_source": "https://github.com/grtjn/d3-cloud-ng.git",
   "_target": "^0.9.4",
