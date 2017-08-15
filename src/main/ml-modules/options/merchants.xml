@@ -132,6 +132,15 @@
     <qname elem-ns="" elem-name="Lat"/>
     <qname elem-ns="" elem-name="Long"/>
 
+		<qname elem-ns="" elem-name="TRN_DATE"/>
+		<qname elem-ns="" elem-name="DIRECTION"/>
+		<qname elem-ns="" elem-name="CDT_NAME1"/>
+		<qname elem-ns="" elem-name="DBT_NAME1"/>
+		<qname elem-ns="" elem-name="DBT_AMT"/>
+		<qname elem-ns="" elem-name="NO_TRANS"/>
+		<qname elem-ns="" elem-name="CDT_AMT"/>
+
+
 
   </extract-metadata>
 </options>

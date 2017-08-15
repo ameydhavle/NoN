@@ -257,6 +257,13 @@
     <qname elem-ns="" elem-name="sourceID"/>
     <qname elem-ns="" elem-name="ibcRUC"/>
 
+		<qname elem-ns="" elem-name="TRN_DATE"/>
+		<qname elem-ns="" elem-name="DIRECTION"/>
+		<qname elem-ns="" elem-name="CDT_NAME1"/>
+		<qname elem-ns="" elem-name="DBT_NAME1"/>
+		<qname elem-ns="" elem-name="DBT_AMT"/>
+		<qname elem-ns="" elem-name="NO_TRANS"/>
+		<qname elem-ns="" elem-name="CDT_AMT"/>
 
     <qname elem-ns="http://www.w3.org/1999/xhtml" elem-name="meta" attr-ns="http://www.w3.org/1999/xhtml" attr-name="Author"/>
     <qname elem-ns="" elem-name="meta" attr-ns="http://www.w3.org/1999/xhtml" attr-name="content-type"/>

@@ -92,6 +92,7 @@
         }
       },
     }
+    console.log("heere")
     var uri = $stateParams.uri;
     ctrl.graphSearch = mapLinksService.search;
     ctrl.graphExpand = mapLinksService.expand;
@@ -99,9 +100,11 @@
     try{
       switch(ctrl.contentType.substring(0,ctrl.contentType.indexOf(';'))) {
         case 'application/json':
-          console.log("json");
-          ctrl.xml = vkbeautify.xml(x2js.json2xml_str(doc.data));
+          console.log("json", doc);
+
+          //ctrl.xml = vkbeautify.xml(x2js.json2xml_str(doc.data));
           ctrl.json = doc.data;
+					console.log(ctrl.json)
           break;
         case 'application/xml':
           if(ctrl.enableRedaction){
@@ -110,6 +113,7 @@
               ctrl.json = x2js.xml_str2json(response.data);
               ctrl.render();
               ctrl.processLocationData(ctrl.json);
+              console.log(ctrl.json)
               if (ctrl.isMerchant) {
               	ctrl.getMerchantSummary(ctrl.json.envelope.content.Company_Name);
               }
@@ -329,6 +333,7 @@
     };
 
     ctrl.getMerchantSummary = function (merchant) {
+    	console.log("hi")
     	mlRest.extension('merchant-summary?rs:subject=' + merchant, {method: 'GET'}).then(function (response) {
         ctrl.merchantSummary = response.data;
       })

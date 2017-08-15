@@ -34,7 +34,7 @@ declare function res:build-graph(
 		  fn:collection("wire-transfers"),
 		  cts:json-property-value-query(
 		    "DBT_NAME1",
-		    'Test'
+		    $subject
 		  )
 		)
 
@@ -105,7 +105,7 @@ declare function res:build-graph(
 
 	      for $result in $results-obj
 	      let $node := json:object()
-	      let $object := $result//Sender_Name/data()
+	      let $object := $result//CDT_NAME1/data()
 	      let $props := res:get-object-props($object)
 	      let $edge-id := "edge-" || $object || "-" || $subject
 	      let $_ := map:put($edges-count-map, $edge-id, (map:get($edges-count-map, $edge-id), 1))
@@ -207,8 +207,8 @@ declare private function res:get-edge-count($subject) as xs:int
 declare private function res:get-object-props($subject as xs:string) as json:object
 {
 	let $results := cts:search(
-	  fn:collection("merchants"),
-	  cts:element-range-query(xs:QName("Company_Name"), "=", $subject, ("collation=http://marklogic.com/collation/en/S1"))
+	  fn:collection("wire-transfers"),
+	  cts:json-property-range-query("CDT_NAME1", "=", $subject, ("collation=http://marklogic.com/collation/en/S1"))
 	)
   let $node := json:object()
   let $_ :=
@@ -258,8 +258,8 @@ declare private function res:get-object-props($subject as xs:string) as json:obj
 declare private function res:get-object-location($subject as xs:string) as json:object
 {
 	let $results := cts:search(
-	  fn:collection("merchants"),
-	  cts:element-range-query(xs:QName("Company_Name"), "=", $subject, ("collation=http://marklogic.com/collation/en/S1"))
+	  fn:collection("wire-transfers"),
+	  cts:json-property-range-query("CDT_NAME1", "=", $subject, ("collation=http://marklogic.com/collation/en/S1"))
 	)
   let $node := json:object()
   let $_ :=
@@ -279,8 +279,8 @@ declare private function res:get-object-location($subject as xs:string) as json:
 declare private function res:get-object-group($subject as xs:string) as xs:string
 {
 	let $results := cts:search(
-	  fn:collection("merchants"),
-	  cts:element-range-query(xs:QName("Company_Name"), "=", $subject, ("collation=http://marklogic.com/collation/en/S1"))
+	  fn:collection("wire-transfers"),
+	  cts:json-property-range-query("CDT_NAME1", "=", $subject, ("collation=http://marklogic.com/collation/en/S1"))
 	)
   let $group :=
     if ($results and fn:count($results) > 0) then

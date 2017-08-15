@@ -113,7 +113,7 @@
 		}
 
 		function search(){
-			searchMerchants()
+			//searchMerchants()
 			searchTransactions()
 		}
 
@@ -186,12 +186,14 @@
 				.then(updateTransactionResults);
 		}
 		function updateTransactionResults(data) {
+
 			model.transactions.isSearching = false;
 			model.transactions.search = data;
 			ctrl.myFacets = data.facets
 
 			model.transactions.page = transactionsData.getPage();
 			model.transactions.results = data.results;
+			console.log(model.transactions.results[0].extracted.content[0].envelope.content)
 			model.tree.data[model.tree.indexes.TRANSACTION_DATA].count = model.transactions.search.total
 			model.tree.data[model.tree.indexes.TRANSACTION_DATA].children = model.transactions.search.facets['Service-Area'].facetValues
 

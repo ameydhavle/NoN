@@ -24,17 +24,17 @@ declare function res:build-data($subject)
   let $incoming-tx := json:array()
 
   let $outgoing-trans := cts:search(
-	  fn:collection("merchant-wire"),
-	  cts:element-value-query(
-	    xs:QName("Sender_Name"),
-	    $subject
-	  )
-	)
+	  fn:collection("wire-transfers"),
+    	  cts:json-property-value-query(
+    	    "CDT_NAME1",
+    	    $subject
+    	  )
+    	)
 
   let $incoming-trans := cts:search(
-	  fn:collection("merchant-wire"),
-	  cts:element-value-query(
-	    xs:QName("Receiver_Name"),
+	  fn:collection("wire-transfers"),
+	  cts:json-property-value-query(
+	    "CDT_NAME1",
 	    $subject
 	  )
 	)
@@ -86,8 +86,8 @@ declare function res:build-data($subject)
 declare private function res:get-merchant-uri($subject as xs:string) as xs:string
 {
 	let $results := cts:search(
-	  fn:collection("merchants"),
-	  cts:element-range-query(xs:QName("Company_Name"), "=", $subject, ("collation=http://marklogic.com/collation/en/S1"))
+	  fn:collection("wire-transfers"),
+	  cts:json-property-range-query("CDT_NAME1", "=", $subject, ("collation=http://marklogic.com/collation/en/S1"))
 	)
   let $uri :=
     if ($results and fn:count($results) > 0) then

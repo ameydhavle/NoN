@@ -193,9 +193,16 @@
     <qname elem-ns="" elem-name="Receiver_State"/>
     <qname elem-ns="" elem-name="Receiver_Zip"/>
     <qname elem-ns="" elem-name="Amount"/>
+		<qname elem-ns="" elem-name="TRN_DATE"/>
+		<qname elem-ns="" elem-name="DIRECTION"/>
+		<qname elem-ns="" elem-name="CDT_NAME1"/>
+		<qname elem-ns="" elem-name="DBT_NAME1"/>
+		<qname elem-ns="" elem-name="DBT_AMT"/>
+		<qname elem-ns="" elem-name="NO_TRANS"/>
+		<qname elem-ns="" elem-name="CDT_AMT"/>
 
   </extract-metadata>
-  <extract-document-data selected="include">
-    <extract-path>//Receiver/Name</extract-path>
+  <extract-document-data selected="all">
+    <extract-path>//content</extract-path>
   </extract-document-data>
 </options>
