@@ -7,14 +7,7 @@
 </div>
 <div class="search row">
   <div class="col-md-12">
-    <uib-tabset type="pills">
-      <uib-tab>
-        <uib-tab-heading>
-          <i class='icon fa fa-bar-chart fa-lg'></i>
-          Transactions
-          <span ng-if="ctrl.model.transactions.search.total > 0 && !ctrl.model.transactions.isSearching">(<b>{{ctrl.model.transactions.search.total | number}}</b>)</span>
-          <span ng-show="ctrl.model.transactions.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
-        </uib-tab-heading>
+
         <div class="col-sm-12">
           <div class="panel panel-primary">
             <div class="panel-heading">
@@ -97,7 +90,6 @@
             </div>
           </div>
         </div>
-      </uib-tab>
-    </uib-tabset>
+
   </div>
 </div>
