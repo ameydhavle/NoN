@@ -50,6 +50,42 @@
       <element ns="" name="Amount"/>
     </range>
   </constraint>
+	<constraint name="CDT_AMT">
+		<range type="xs:int" facet="true">
+			<bucket name="Under 100K" lt="100000">Under 100K</bucket>
+			<bucket name="100k - 250k" ge="100001" lt="250000">100K - 250K</bucket>
+			<bucket name="250k - 500k" ge="250001" lt="500000">250K - 500K</bucket>
+			<bucket name="Over - 500K" ge="500001">Over 500K</bucket>
+			<facet-option>limit=10</facet-option>
+			<facet-option>frequency-order</facet-option>
+			<facet-option>descending</facet-option>
+			<element ns="" name="CDT_AMT"/>
+		</range>
+	</constraint>
+	<constraint name="DBT_AMT">
+		<range type="xs:int" facet="true">
+			<bucket name="Under 100K" lt="100000">Under 100K</bucket>
+			<bucket name="100k - 250k" ge="100001" lt="250000">100K - 250K</bucket>
+			<bucket name="250k - 500k" ge="250001" lt="500000">250K - 500K</bucket>
+			<bucket name="Over - 500K" ge="500001">Over 500K</bucket>
+			<facet-option>limit=10</facet-option>
+			<facet-option>frequency-order</facet-option>
+			<facet-option>descending</facet-option>
+			<element ns="" name="DBT_AMT"/>
+		</range>
+	</constraint>
+	<constraint name="NO_TRANS">
+		<range type="xs:int" facet="true">
+			<bucket name="Under 100K" lt="100000">Under 100K</bucket>
+			<bucket name="100k - 250k" ge="100001" lt="250000">100K - 250K</bucket>
+			<bucket name="250k - 500k" ge="250001" lt="500000">250K - 500K</bucket>
+			<bucket name="Over - 500K" ge="500001">Over 500K</bucket>
+			<facet-option>limit=10</facet-option>
+			<facet-option>frequency-order</facet-option>
+			<facet-option>descending</facet-option>
+			<element ns="" name="NO_TRANS"/>
+		</range>
+	</constraint>
   <constraint name="Creditor">
     <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
       <facet-option>limit=10</facet-option>

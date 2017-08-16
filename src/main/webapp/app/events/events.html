@@ -20,13 +20,16 @@
                 <span class="glyphicon glyphicon-refresh spinning"></span>
                 Searching ...
               </h3>
-              <div class="col-md-12"
-                   ng-show="ctrl.model.transactions.search.total > 0 && !ctrl.model.transactions.isSearching">
-                <uib-pagination ng-model="ctrl.model.transactions.page" ng-change="ctrl.searchTransactions()"
-                                max-size="10" boundary-links="true" total-items="ctrl.model.transactions.search.total"
-                                items-per-page="ctrl.model.transactions.search['page-length']"></uib-pagination>
-                <ml-metrics search="ctrl.model.transactions.search"></ml-metrics>
-                <div ng-repeat="result in ctrl.model.transactions.results" class=" product-result">
+							<div class="col-md-2">
+								<ml-facets facets="ctrl.response.facets" toggle="ctrl.toggleFacet(facet, value)" active-facets="ctrl.mlSearch.activeFacets" negate="ctrl.toggleNegatedFacet(facet,value)"></ml-facets>
+
+							</div>
+              <div class="col-md-10">
+                <uib-pagination ng-model="ctrl.page " ng-change="ctrl.search()"
+                                max-size="10" boundary-links="true" total-items="ctrl.response.total"
+                                items-per-page="ctrl.response['page-length']"></uib-pagination>
+								<ml-metrics search="ctrl.response"></ml-metrics>
+                <div ng-repeat="result in ctrl.response.results" class=" product-result">
                   <div class="col-lg-4 col-md-6">
                     <div class="bg-warning panel profile-tile animated bounceInRight ">
                       <div class="panel-body bg-info">

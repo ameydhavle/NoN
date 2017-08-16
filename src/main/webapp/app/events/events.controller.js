@@ -23,16 +23,16 @@
 		var ctrl = this;
 		ctrl.isCustomer = true
 
+
 		var transactionsData = searchFactory.newContext({
 			queryOptions: 'transactions',
 			pageLength: 12
 		});
-		var merchantsData = searchFactory.newContext({
-			queryOptions: 'merchants',
-			pageLength: 30
-		});
-		ctrl.myFacets = {};
+		superCtrl.constructor.call(ctrl, $scope, $location, transactionsData);
+		ctrl.init();
 
+		ctrl.myFacets = {};
+		ctrl.response ={};
 		$scope.login = function (key) {
 			$location.path('/' + key.substring(key.indexOf('-') + 1));
 		};
@@ -47,32 +47,14 @@
 				search: {},
 				isSearching: false,
 				page: 1,
-				results: []
+				results: [],
+				facets:{}
 			},
 			merchants: {
 				search: {},
 				isSearching: false,
 				page: 1,
 				results: []
-			},
-			tree: {
-				options: {
-					nodeChildren: 'children',
-					dirSelectable: true
-				},
-				data: [
-					{ 'name': 'Merchants', 'id': null, 'type': 'merchant-data', 'count': 10, 'children': [] },
-					{ 'name': 'Transactions', 'id': null, 'type': 'transaction-data', 'count': 0, 'children': [] }
-
-				],
-				indexes: {
-					TRANSACTION_DATA: 1,
-					MERCHANT_DATA: 0
-				}
-			},
-			tabs: {
-				transactions: { active: false },
-				merchants: { active: true }
 			},
 			mapOptions: {
 				zoom: 3,
@@ -117,7 +99,7 @@
 			searchTransactions()
 		}
 
-
+		/*
 		function searchMerchants() {
 			model.merchants.isSearching = true;
 			ctrl.userName = userService.currentUser().name
@@ -136,6 +118,7 @@
 			model.tree.data[model.tree.indexes.MERCHANT_DATA].count = model.merchants.search.total;
 			buildFeatures(data);
 		}
+		*/
 
 		function buildFeatures(data) {
 			if (data && data.results && data.results.length > 0) {
@@ -179,28 +162,15 @@
 			model.transactions.isSearching = true;
 			ctrl.userName = userService.currentUser().name
 			transactionsData.additionalQueries.push(transactionConstraint());
-			transactionsData
-				.setText(model.qtext)
-				.setPage(model.transactions.page)
-				.search()
-				.then(updateTransactionResults);
+			superCtrl.search.call(ctrl);
 		}
 		function updateTransactionResults(data) {
 
 			model.transactions.isSearching = false;
 			model.transactions.search = data;
-			ctrl.myFacets = data.facets
-
+			ctrl.response.facets = data.facets
 			model.transactions.page = transactionsData.getPage();
 			model.transactions.results = data.results;
-			console.log(model.transactions.results[0].extracted.content[0].envelope.content)
-			model.tree.data[model.tree.indexes.TRANSACTION_DATA].count = model.transactions.search.total
-			model.tree.data[model.tree.indexes.TRANSACTION_DATA].children = model.transactions.search.facets['Service-Area'].facetValues
-
-			for(var i = 0; i < model.transactions.search.facets['Service-Area'].facetValues.length; i++) {
-				model.tree.data[model.tree.indexes.TRANSACTION_DATA].children[i].id = model.transactions.search.facets['Service-Area'].facetValues[i].name;
-				model.tree.data[model.tree.indexes.TRANSACTION_DATA].children[i].type = model.transactions.search.facets['Service-Area'].facetValues[i].name
-			}
 		}
 
 		$scope.filterCreditor = function(val){
@@ -239,7 +209,7 @@
 		angular.extend(ctrl, {
 			model:model,
 			searchTransactions:searchTransactions,
-			searchMerchants:searchMerchants,
+			//searchMerchants:searchMerchants,
 			search:search,
 			clear:clear
 		});

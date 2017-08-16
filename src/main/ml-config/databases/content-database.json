@@ -17,6 +17,32 @@
 			"invalid-values": "ignore"
 		},
 		{
+			"scalar-type": "int",
+			"namespace-uri": "",
+			"collation": "",
+			"localname": "DBT_AMT",
+			"range-value-positions": false,
+			"invalid-values": "ignore"
+		},
+		{
+			"scalar-type": "int",
+			"namespace-uri": "",
+			"collation": "",
+			"localname": "CDT_AMT",
+			"range-value-positions": false,
+			"invalid-values": "ignore"
+		},
+		{
+			"scalar-type": "int",
+			"namespace-uri": "",
+			"collation": "",
+			"localname": "NO_TRANS",
+			"range-value-positions": false,
+			"invalid-values": "ignore"
+		},
+
+
+		{
 			"scalar-type": "string",
 			"namespace-uri": "",
 			"localname": "Account_Description",
