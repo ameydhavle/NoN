@@ -19,7 +19,7 @@
         type: 'OSM'
       }
     };
-
+		console.log(doc.data.envelope.content.CDT_NAME1);
     var topoBaseMap = {
       name: 'Esri Maps',
       source: {
@@ -68,9 +68,10 @@
     ctrl.mortgage = ['Mortgage', 'Realtor', 'Pre-Approval', 'Refinance']
     ctrl.maternity = ['Prenatal', 'Pregnancy', '529', 'Maternity']
     ctrl.renter = ['Rent', 'rent']
-    ctrl.nodeUri = null;
+    ctrl.nodeUri = doc.data.envelope.content.CDT_NAME1;
     ctrl.showMap = true;
     ctrl.showGraph = false;
+
     ctrl.mapFeatures = [];
     ctrl.mapOptions = {
       zoom: 6,
@@ -312,7 +313,7 @@
 
       if ('customer' === type) {
       	ctrlName = 'GraphDataModalCtrl';
-      	uri = ctrl.iri;
+      	uri = ctrl.nodeUri;
       }
 
       var modalInstance = $uibModal.open({

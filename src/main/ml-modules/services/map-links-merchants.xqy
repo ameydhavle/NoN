@@ -32,19 +32,19 @@ declare function res:build-graph(
 	  for $subject in $subjects
 	  let $results := cts:search(
 		  fn:collection("wire-transfers"),
-		  cts:json-property-value-query(
-		    "DBT_NAME1",
-		    $subject
+		  cts:json-property-range-query(
+		    "DBT_NAME1",'=',
+		    $subject,('collation=http://marklogic.com/collation/en/S1')
 		  )
-		)
+		)[1 to 50]
 
 	  let $results-obj := cts:search(
 		  fn:collection("wire-transfers"),
-		  cts:json-property-value-query(
-		    "CDT_NAME1",
-		    $subject
+		  cts:json-property-range-query(
+		    "CDT_NAME1",'=',
+		    $subject,('collation=http://marklogic.com/collation/en/S1')
 		  )
-		)
+		)[1 to 50]
 
 	  return
 	    (
@@ -191,7 +191,9 @@ declare private function res:get-label($subject as xs:string) as xs:string
 
 declare private function res:get-edge-count($subject) as xs:int
 {
-	let $count := xdmp:estimate(
+
+	let $count := 0
+	(:xdmp:estimate(
 		cts:search(
 			fn:collection("merchant-wire"),
 			cts:or-query((
@@ -200,6 +202,7 @@ declare private function res:get-edge-count($subject) as xs:int
 			))
 		)
 	)
+	:)
 
 	return $count
 };

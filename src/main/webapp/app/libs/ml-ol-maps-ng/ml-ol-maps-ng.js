@@ -321,7 +321,7 @@
 			};
 
 			function search(id) {
-				return $http.get(api+'?rs:subject=WELLS FARGO BANK, N.A.'
+				return $http.get(api+'?rs:subject='+ encodeURIComponent(id)
 				)
 				.then(
 					function(response) {

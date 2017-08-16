@@ -29,15 +29,15 @@ declare function res:build-data($subject)
     	    "CDT_NAME1",
     	    $subject
     	  )
-    	)
+    	)[1 to 10]
 
   let $incoming-trans := cts:search(
 	  fn:collection("wire-transfers"),
 	  cts:json-property-value-query(
-	    "CDT_NAME1",
+	    "DBT_NAME1",
 	    $subject
 	  )
-	)
+	)[1 to 10]
 
 	let $_ :=
 		for $i in $outgoing-trans

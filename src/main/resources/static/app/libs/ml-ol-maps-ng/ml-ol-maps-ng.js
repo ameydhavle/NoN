@@ -321,8 +321,7 @@
 			};
 
 			function search(id) {
-				return $http.get(api+'?rs:subject=' + encodeURIComponent(id)
-				)
+				return $http.get(api+'?rs:subject=' + encodeURIComponent(id))
 				.then(
 					function(response) {
 						return response.data;
