@@ -19,7 +19,7 @@
         type: 'OSM'
       }
     };
-		console.log(doc.data.envelope.content.CDT_NAME1);
+		console.log(doc.data.content.CDT_NAME1);
     var topoBaseMap = {
       name: 'Esri Maps',
       source: {
@@ -68,7 +68,7 @@
     ctrl.mortgage = ['Mortgage', 'Realtor', 'Pre-Approval', 'Refinance']
     ctrl.maternity = ['Prenatal', 'Pregnancy', '529', 'Maternity']
     ctrl.renter = ['Rent', 'rent']
-    ctrl.nodeUri = doc.data.envelope.content.CDT_NAME1;
+    ctrl.nodeUri = doc.data.content.CDT_NAME1;
     ctrl.showMap = true;
     ctrl.showGraph = false;
 

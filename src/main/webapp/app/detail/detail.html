@@ -16,25 +16,25 @@
                 <span class="pull-left">
                   <strong class="">Name</strong>
                 </span>
-						{{ ctrl.json.envelope.content.CDT_NAME1 | strReplace:'_':' ' }}
+						{{ ctrl.json.content.CDT_NAME1 | strReplace:'_':' ' }}
 					</li>
 					<li class="list-group-item text-right">
                 <span class="pull-left">
                   <strong class="">Direction: </strong>
                 </span>
-						{{ ctrl.json.envelope.content.DIRECTION || "N.A." }}
+						{{ ctrl.json.content.DIRECTION || "N.A." }}
 					</li>
 					<li class="list-group-item text-right">
                 <span class="pull-left">
                   <strong class="">Revenue: </strong>
                 </span>
-						{{ ctrl.json.envelope.content.DBT_AMT | currency }}
+						{{ ctrl.json.content.DBT_AMT | currency }}
 					</li>
 					<li class="list-group-item text-right">
                 <span class="pull-left">
                   <strong class="">Employees </strong>
                 </span>
-						{{ ctrl.json.envelope.content.CDT_AMT | currency }}
+						{{ ctrl.json.content.CDT_AMT | currency }}
 					</li>
 					<li class="list-group-item text-right">
                 <span class="pull-left">
@@ -46,13 +46,13 @@
                 <span class="pull-left">
                   <strong class="">Source</strong>
                 </span>
-						{{ ctrl.json.envelope.headers.source || ctrl.json.root.sourceID || "N.A."}}
+						{{ ctrl.json.headers.source || ctrl.json.root.sourceID || "N.A."}}
 					</li>
 					<li class="list-group-item text-right">
                 <span class="pull-left">
                   <strong class="">Active Since</strong>
                 </span>
-						{{ctrl.json.envelope.headers.last_updated || ctrl.json.root.incorporation_date || "N.A"}}
+						{{ctrl.json.headers.last_updated || ctrl.json.root.incorporation_date || "N.A"}}
 					</li>
 
 				</ul>
@@ -69,7 +69,7 @@
 										<i class="fa fa-calculator fa-5x"></i>
 									</div>
 									<div class="col-xs-9 text-right">
-										<h3>{{ctrl.json.envelope.content.NO_TRANS}}</h3>
+										<h3>{{ctrl.json.content.NO_TRANS}}</h3>
 									</div>
 								</div>
 							</div>
@@ -110,7 +110,7 @@
 										<i class="fa fa-sign-out fa-5x"></i>
 									</div>
 									<div class="col-xs-9 pull-left">
-										<h3>{{ctrl.json.envelope.content.DBT_AMT | currency}}</h3>
+										<h3>{{ctrl.json.content.DBT_AMT | currency}}</h3>
 									</div>
 								</div>
 							</div>
@@ -154,26 +154,26 @@
 									<th width="25%">Merchant</th>
 								</tr>
 							</table>
-							<table ng-if="ctrl.json.envelope.content.DIRECTION == 'Outgoing'" class="table">
+							<table ng-if="ctrl.json.content.DIRECTION == 'Outgoing'" class="table">
 								<tr>
 									<td width="25%">
 										<i class="icon fa fa-dollar fa-lg"></i>
-										{{ ctrl.json.envelope.content.DIRECTION }}
+										{{ ctrl.json.content.DIRECTION }}
 									</td>
-									<td width="25%">{{ ctrl.json.envelope.content.TRN_DATE }}</td>
-									<td width="25%">{{ ctrl.json.envelope.content.DBT_AMT | currency }}</td>
-									<td width="25%">{{ ctrl.json.envelope.content.DBT_NAME1 }}</td>
+									<td width="25%">{{ ctrl.json.content.TRN_DATE }}</td>
+									<td width="25%">{{ ctrl.json.content.DBT_AMT | currency }}</td>
+									<td width="25%">{{ ctrl.json.content.DBT_NAME1 }}</td>
 								</tr>
 							</table>
-							<table ng-if="ctrl.json.envelope.content.DIRECTION == 'Incoming'" class="table">
+							<table ng-if="ctrl.json.content.DIRECTION == 'Incoming'" class="table">
 								<tr>
 									<td width="25%">
 										<i class="icon fa fa-dollar fa-lg"></i>
-										{{ ctrl.json.envelope.content.DIRECTION }}
+										{{ ctrl.json.content.DIRECTION }}
 									</td>
-									<td width="25%">{{ ctrl.json.envelope.content.TRN_DATE }}</td>
-									<td width="25%">{{ ctrl.json.envelope.content.DBT_AMT | currency }}</td>
-									<td width="25%">{{ ctrl.json.envelope.content.CDT_NAME1 }}</td>
+									<td width="25%">{{ ctrl.json.content.TRN_DATE }}</td>
+									<td width="25%">{{ ctrl.json.content.DBT_AMT | currency }}</td>
+									<td width="25%">{{ ctrl.json.content.CDT_NAME1 }}</td>
 								</tr>
 							</table>
 						</div>

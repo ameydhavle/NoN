@@ -38,18 +38,6 @@
   <constraint name="Collection">
     <collection prefix=""/>
   </constraint>
-  <constraint name="Amount">
-    <range type="xs:int" facet="true">
-      <bucket name="Under 100K" lt="100000">Under 100K</bucket>
-      <bucket name="100k - 250k" ge="100001" lt="250000">100K - 250K</bucket>
-      <bucket name="250k - 500k" ge="250001" lt="500000">250K - 500K</bucket>
-      <bucket name="Over - 500K" ge="500001">Over 500K</bucket>
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="Amount"/>
-    </range>
-  </constraint>
 	<constraint name="CDT_AMT">
 		<range type="xs:int" facet="true">
 			<bucket name="Under 100K" lt="100000">Under 100K</bucket>
@@ -59,7 +47,7 @@
 			<facet-option>limit=10</facet-option>
 			<facet-option>frequency-order</facet-option>
 			<facet-option>descending</facet-option>
-			<element ns="" name="CDT_AMT"/>
+			<element ns="" name="CDT_AMOUNT"/>
 		</range>
 	</constraint>
 	<constraint name="DBT_AMT">
@@ -71,7 +59,7 @@
 			<facet-option>limit=10</facet-option>
 			<facet-option>frequency-order</facet-option>
 			<facet-option>descending</facet-option>
-			<element ns="" name="DBT_AMT"/>
+			<element ns="" name="DBT_AMOUNT"/>
 		</range>
 	</constraint>
 	<constraint name="NO_TRANS">
@@ -86,40 +74,7 @@
 			<element ns="" name="NO_TRANS"/>
 		</range>
 	</constraint>
-  <constraint name="Creditor">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="Creditor"/>
-    </range>
-  </constraint>
-  <constraint name="Service-Area">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="Service_Area"/>
-    </range>
-  </constraint>
-
-  <constraint name="Account">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="Account_Description"/>
-    </range>
-  </constraint>
-
-  <constraint name="Last-Updated-By">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="last_updated_by"/>
-    </range>
-  </constraint>
+  
   <default-suggestion-source>
     <word-lexicon collation="http://marklogic.com/collation/"></word-lexicon>
   </default-suggestion-source>
@@ -176,22 +131,6 @@
     </state>
   </operator>
 
-  <constraint name="geo-point">
-    <custom facet="true">
-      <parse apply="parse-structured" ns="http://marklogic.com/appservices/viz/geo" at="/ext/constraint/geo_ml8.xqy" />
-      <start-facet apply="start" ns="http://marklogic.com/appservices/viz/geo" at="/ext/constraint/geo_ml8.xqy" />
-      <finish-facet apply="finish" ns="http://marklogic.com/appservices/viz/geo" at="/ext/constraint/geo_ml8.xqy" />
-    </custom>
-    <annotation>
-      <geo-elem-pair>
-        <heatmap n="90" e="180" s="-90" w="-180" latdivs="6" londivs="6"/>
-        <parent ns="" name="geo-data"/>
-        <lat ns="" name="Lat"/>
-        <lon ns="" name="Long"/>
-      </geo-elem-pair>
-    </annotation>
-  </constraint>
-
   <extract-metadata>
     <qname elem-ns="" elem-name="Service_Area"/>
     <qname elem-ns="" elem-name="Account_Description"/>
@@ -236,7 +175,8 @@
 		<qname elem-ns="" elem-name="DBT_AMT"/>
 		<qname elem-ns="" elem-name="NO_TRANS"/>
 		<qname elem-ns="" elem-name="CDT_AMT"/>
-
+		<qname elem-ns="" elem-name="DBT_AMOUNT"/>
+		<qname elem-ns="" elem-name="CDT_AMOUNT"/>
   </extract-metadata>
   <extract-document-data selected="all">
     <extract-path>//content</extract-path>

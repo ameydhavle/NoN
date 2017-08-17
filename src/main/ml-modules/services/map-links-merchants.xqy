@@ -31,7 +31,7 @@ declare function res:build-graph(
   let $_ :=
 	  for $subject in $subjects
 	  let $results := cts:search(
-		  fn:collection("wire-transfers"),
+		  fn:collection("wire-transfer"),
 		  cts:json-property-range-query(
 		    "DBT_NAME1",'=',
 		    $subject,('collation=http://marklogic.com/collation/en/S1')
@@ -39,7 +39,7 @@ declare function res:build-graph(
 		)[1 to 50]
 
 	  let $results-obj := cts:search(
-		  fn:collection("wire-transfers"),
+		  fn:collection("wire-transfer"),
 		  cts:json-property-range-query(
 		    "CDT_NAME1",'=',
 		    $subject,('collation=http://marklogic.com/collation/en/S1')
@@ -210,7 +210,7 @@ declare private function res:get-edge-count($subject) as xs:int
 declare private function res:get-object-props($subject as xs:string) as json:object
 {
 	let $results := cts:search(
-	  fn:collection("wire-transfers"),
+	  fn:collection("wire-transfer"),
 	  cts:json-property-range-query("CDT_NAME1", "=", $subject, ("collation=http://marklogic.com/collation/en/S1"))
 	)
   let $node := json:object()
@@ -261,7 +261,7 @@ declare private function res:get-object-props($subject as xs:string) as json:obj
 declare private function res:get-object-location($subject as xs:string) as json:object
 {
 	let $results := cts:search(
-	  fn:collection("wire-transfers"),
+	  fn:collection("wire-transfer"),
 	  cts:json-property-range-query("CDT_NAME1", "=", $subject, ("collation=http://marklogic.com/collation/en/S1"))
 	)
   let $node := json:object()
@@ -282,7 +282,7 @@ declare private function res:get-object-location($subject as xs:string) as json:
 declare private function res:get-object-group($subject as xs:string) as xs:string
 {
 	let $results := cts:search(
-	  fn:collection("wire-transfers"),
+	  fn:collection("wire-transfer"),
 	  cts:json-property-range-query("CDT_NAME1", "=", $subject, ("collation=http://marklogic.com/collation/en/S1"))
 	)
   let $group :=

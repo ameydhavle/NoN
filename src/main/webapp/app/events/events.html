@@ -37,42 +37,42 @@
                             <dl>
 															<!--
                               <dd>
-                                <button ng-if="result.extracted.content[0].envelope.content.CDT_NAME1" class="btn btn-sm btn-primary" ng-click="filterCreditor(result.extracted.content[0].envelope.content.CDT_NAME1)">Creditor: {{
-																	result.extracted.content[0].envelope.content.CDT_NAME1
+                                <button ng-if="result.extracted.content[0].content.CDT_NAME1" class="btn btn-sm btn-primary" ng-click="filterCreditor(result.extracted.content[0].content.CDT_NAME1)">Creditor: {{
+																	result.extracted.content[0].content.CDT_NAME1
                                   }}</button><br ng-if="result.metadata['Receiver_Name']"/>
-                                <button ng-if="result.extracted.content[0].envelope.content.DBT_NAME1" class="btn btn-sm btn-warning" ng-click="filterCreditor(result.extracted.content[0].envelope.content.DBT_NAME1)">Debtor:{{
-																	result.extracted.content[0].envelope.content.DBT_NAME1
+                                <button ng-if="result.extracted.content[0].content.DBT_NAME1" class="btn btn-sm btn-warning" ng-click="filterCreditor(result.extracted.content[0].content.DBT_NAME1)">Debtor:{{
+																	result.extracted.content[0].content.DBT_NAME1
                                   }}</button><br ng-if="result.metadata['AccountNum']"/>
-                                <button ng-if="result.extracted.content[0].envelope.content.DIRECTION.length > 0"  class="btn btn-sm btn-warning" ng-click="filterCreditor(result.extracted.content[0].envelope.content.DIRECTION)">Event: {{
-																	result.extracted.content[0].envelope.content.DIRECTION
-                                  }}</button><br ng-if="result.extracted.content[0].envelope.content.DIRECTION.length > 0"/>
+                                <button ng-if="result.extracted.content[0].content.DIRECTION.length > 0"  class="btn btn-sm btn-warning" ng-click="filterCreditor(result.extracted.content[0].content.DIRECTION)">Event: {{
+																	result.extracted.content[0].content.DIRECTION
+                                  }}</button><br ng-if="result.extracted.content[0].content.DIRECTION.length > 0"/>
                               </dd>
 															-->
                               <dd class="col-lg-10" class="trunc" style="margin-top: 5px;">
 																<b>Creditor:</b>&nbsp;&nbsp;{{
-																result.extracted.content[0].envelope.content.CDT_NAME1
+																result.extracted.content[0].content.CDT_NAME1
 																}}
 															</dd>
 															<dd class="col-lg-10" class="trunc" style="margin-top: 5px;">
 																<b>Debtor:</b>&nbsp;&nbsp;{{
-																result.extracted.content[0].envelope.content.DBT_NAME1
+																result.extracted.content[0].content.DBT_NAME1
 																}}
 															</dd>
 															<dd class="col-lg-10" class="trunc" style="margin-top: 5px;">
 																<b>Direction:</b>&nbsp;&nbsp;{{
-																result.extracted.content[0].envelope.content.DIRECTION
+																result.extracted.content[0].content.DIRECTION
 																}}
 															</dd>
                               <dd class="col-lg-10" class="trunc" style="margin-top: 5px;">
                                 <b>Amount:</b>&nbsp;&nbsp;{{
-																result.extracted.content[0].envelope.content.DBT_AMT | currency
+																result.extracted.content[0].content.DBT_AMOUNT | currency
                                 }}
                               </dd>
                               <dd class="col-lg-10" class="trunc" style="margin-top: 5px;">
                                 <b>Date:</b>
                                 &nbsp;&nbsp;<i class="icon fa fa-calendar fa-lg"></i>
                                 {{
-																result.extracted.content[0].envelope.content.TRN_DATE
+																result.extracted.content[0].content.TRN_DATE
 																}}
                               </dd>
                             </dl>

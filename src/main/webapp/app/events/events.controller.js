@@ -74,7 +74,7 @@
 		function transactionConstraint(){
 			return {
 				'collection-query': {
-					'uri': ['wire-transfers']
+					'uri': ['wire-transfer']
 				}
 			}
 		}

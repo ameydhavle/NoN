@@ -7,111 +7,7 @@
 </div>
 <div class="search row">
   <div class="col-md-12">
-    <uib-tabset type="pills">
-      <uib-tab active="true">
-        <uib-tab-heading>
-          <i class='icon fa fa-building fa-lg'></i>
-          Merchants (<b>{{ctrl.model.merchants.search.total | number}}</b>)
-          <span ng-if="ctrl.model.merchants.search.total > 0 && !ctrl.model.merchants.isSearching"></span>
-          <span ng-show="model.merchants.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
-        </uib-tab-heading>
-        <div class="col-sm-12 results" ng-if="ctrl.model.merchants.search.total > 0">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title"><i>{{ctrl.model.qtext}}</i> Billing Merchants Data</h3>
-            </div>
-            <div class="panel-body">
-              <h3 ng-show="model.merchants.search.total === 0 && !model.documents.isSearching">No results to
-                show</h3>
-              <h3 ng-show="model.merchants.isSearching">
-                <span class="glyphicon glyphicon-refresh spinning"></span>
-                Searching ...
-              </h3>
-              <div class="col-md-12">
-              	<div class="checkbox">
-						      <label>
-						        <input type="checkbox" ng-model="ctrl.model.hideMap">
-						        Hide Map
-						      </label>
-						    </div>
 
-                <div ng-if="!ctrl.model.hideMap">
-                	<ml-ol-search-feature-map features="ctrl.model.features" center="ctrl.model.mapOptions.center" zoom="ctrl.model.mapOptions.zoom" base-map="ctrl.model.mapOptions.baseMap" single-click="ctrl.mapSingleClick(featureUri)"></ml-ol-search-feature-map>
-                </div>
-
-                <div class="pagination-ctrls">
-                	<uib-pagination ng-model="ctrl.model.merchants.page" ng-change="ctrl.searchMerchants()" max-size="10"
-                                boundary-links="true" total-items="ctrl.model.merchants.search.total"
-                                items-per-page="ctrl.model.merchants.search['page-length']"></uib-pagination>
-                </div>
-
-                <ml-metrics search="ctrl.model.merchants.search"></ml-metrics>
-                <div ng-repeat="result in ctrl.model.merchants.results" class="product-result">
-                  <div class="col-lg-4 col-md-6">
-                    <div class="panel profile-tile animated bounceInRight ">
-                      <div class="panel-body bg-info">
-                          <div class="text-left trunc">
-                            <dl>
-                              <dd class="trunc">
-                                <button ng-if="result.metadata['SIC_Code']" class="btn btn-sm btn-primary" ng-click="filterCreditor(result.metadata['SIC_Code'].values[0])">SIC Code:{{
-                                  result.metadata['SIC_Code'].values[0]
-                                  }}</button>
-                              </dd>
-                              <dt class="col-lg-4">Company:</dt>
-                              <dd class="col-lg-8" class="text-left trunc">
-                                {{
-                                result.metadata['Company_Name'].values[0] | strReplace:'_':' '
-                                }}
-                              </dd>
-                              <dt class="col-lg-4">Address:</dt>
-                              <dd class="col-lg-8" class="text-left trunc">
-                                {{
-                                result.metadata['Address'].values[0] | strReplace:'_':' '
-                                }}
-                              </dd>
-                              <dt class="col-lg-4">City:</dt>
-                              <dd class="col-lg-8" class="text-left trunc">
-                                {{
-                                result.metadata['City'].values[0] | strReplace:'_':' '
-                                }}
-                              </dd>
-                              <dt class="col-lg-4">State:</dt>
-                              <dd class="col-lg-8" class="text-left trunc">
-                                {{
-                                result.metadata['State'].values[0] | strReplace:'_':' '
-                                }}
-                              </dd>
-                              <dt class="col-lg-4">Zip:</dt>
-                              <dd class="col-lg-8" class="text-left trunc">
-                                {{
-                                result.metadata['Zip'].values[0] | strReplace:'_':' '
-                                }}
-                              </dd>
-                            </dl>
-                          </div>
-                      </div>
-                      <a ui-sref="root.view({uri: result.uri})">
-                        <div class="panel-footer">
-                          <span class="pull-left">View Details</span>
-                          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                          <div class="clearfix"></div>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </uib-tab>
-      <uib-tab>
-        <uib-tab-heading>
-          <i class='icon fa fa-bar-chart fa-lg'></i>
-          Transactions
-          <span ng-if="ctrl.model.transactions.search.total > 0 && !ctrl.model.transactions.isSearching">(<b>{{ctrl.model.transactions.search.total | number}}</b>)</span>
-          <span ng-show="ctrl.model.transactions.isSearching" class="glyphicon glyphicon-refresh spinning"></span>
-        </uib-tab-heading>
         <div class="col-sm-12">
           <div class="panel panel-primary">
             <div class="panel-heading">
@@ -124,59 +20,60 @@
                 <span class="glyphicon glyphicon-refresh spinning"></span>
                 Searching ...
               </h3>
-              <div class="col-md-12"
-                   ng-show="ctrl.model.transactions.search.total > 0 && !ctrl.model.transactions.isSearching">
-                <uib-pagination ng-model="ctrl.model.transactions.page" ng-change="ctrl.searchTransactions()"
-                                max-size="10" boundary-links="true" total-items="ctrl.model.transactions.search.total"
-                                items-per-page="ctrl.model.transactions.search['page-length']"></uib-pagination>
-                <ml-metrics search="ctrl.model.transactions.search"></ml-metrics>
-                <div ng-repeat="result in ctrl.model.transactions.results" class=" product-result">
+							<div class="col-md-2">
+								<ml-facets facets="ctrl.response.facets" toggle="ctrl.toggleFacet(facet, value)" active-facets="ctrl.mlSearch.activeFacets" negate="ctrl.toggleNegatedFacet(facet,value)"></ml-facets>
+
+							</div>
+              <div class="col-md-10">
+                <uib-pagination ng-model="ctrl.page " ng-change="ctrl.search()"
+                                max-size="10" boundary-links="true" total-items="ctrl.response.total"
+                                items-per-page="ctrl.response['page-length']"></uib-pagination>
+								<ml-metrics search="ctrl.response"></ml-metrics>
+                <div ng-repeat="result in ctrl.response.results" class=" product-result">
                   <div class="col-lg-4 col-md-6">
                     <div class="bg-warning panel profile-tile animated bounceInRight ">
                       <div class="panel-body bg-info">
                           <div class="text-left trunc">
                             <dl>
+															<!--
                               <dd>
-                                <button ng-if="result.metadata['Sender_Name']" class="btn btn-sm btn-primary" ng-click="filterCreditor(result.metadata['Sender_Name'].values[0])">Sender: {{
-                                  result.metadata['Sender_Name'].values[0]
+                                <button ng-if="result.extracted.content[0].content.CDT_NAME1" class="btn btn-sm btn-primary" ng-click="filterCreditor(result.extracted.content[0].content.CDT_NAME1)">Creditor: {{
+																	result.extracted.content[0].content.CDT_NAME1
                                   }}</button><br ng-if="result.metadata['Receiver_Name']"/>
-                                <button ng-if="result.metadata['Receiver_Name']" class="btn btn-sm btn-warning" ng-click="filterCreditor(result.metadata['Receiver_Name'].values[0])">Receiver:{{
-                                  result.metadata['Receiver_Name'].values[0]
+                                <button ng-if="result.extracted.content[0].content.DBT_NAME1" class="btn btn-sm btn-warning" ng-click="filterCreditor(result.extracted.content[0].content.DBT_NAME1)">Debtor:{{
+																	result.extracted.content[0].content.DBT_NAME1
                                   }}</button><br ng-if="result.metadata['AccountNum']"/>
-                                <button ng-if="result.metadata['Service_Area'].values[0].length > 0"  class="btn btn-sm btn-warning" ng-click="filterCreditor(result.metadata['Service_Area'].values[0])">Event: {{
-                                  result.metadata['Service_Area'].values[0]
-                                  }}</button><br ng-if="result.metadata['Service_Area'].values[0].length > 0"/>
+                                <button ng-if="result.extracted.content[0].content.DIRECTION.length > 0"  class="btn btn-sm btn-warning" ng-click="filterCreditor(result.extracted.content[0].content.DIRECTION)">Event: {{
+																	result.extracted.content[0].content.DIRECTION
+                                  }}</button><br ng-if="result.extracted.content[0].content.DIRECTION.length > 0"/>
                               </dd>
+															-->
                               <dd class="col-lg-10" class="trunc" style="margin-top: 5px;">
-                                {{
-                                result.metadata['Sender'].Name.values[0]
-                                }}
-                              </dd>
-                              <dd ng-if="result.metadata['CCNumber']"
-                                  class="col-lg-10" class="trunc" style="margin-top: 5px;">
-                                <b>Credit Card:</b>
-                                &nbsp;&nbsp;<i class="icon fa fa-credit-card fa-lg"></i>
-                                {{
-                                result.metadata['CCNumber'].values[0]
-                                }}
-                              </dd>
-                              <dd ng-if="result.metadata['IBFT']"
-                                  class="col-lg-10" class="trunc" style="margin-top: 5px;">
-                                <b>IBFT:</b>
-                                &nbsp;&nbsp;<i class="icon fa fa-bank fa-lg"></i>
-                                {{
-                                result.metadata['IBFT'].values[0]
-                                }}
-                              </dd>
+																<b>Creditor:</b>&nbsp;&nbsp;{{
+																result.extracted.content[0].content.CDT_NAME1
+																}}
+															</dd>
+															<dd class="col-lg-10" class="trunc" style="margin-top: 5px;">
+																<b>Debtor:</b>&nbsp;&nbsp;{{
+																result.extracted.content[0].content.DBT_NAME1
+																}}
+															</dd>
+															<dd class="col-lg-10" class="trunc" style="margin-top: 5px;">
+																<b>Direction:</b>&nbsp;&nbsp;{{
+																result.extracted.content[0].content.DIRECTION
+																}}
+															</dd>
                               <dd class="col-lg-10" class="trunc" style="margin-top: 5px;">
                                 <b>Amount:</b>&nbsp;&nbsp;{{
-                                result.metadata['Amount'].values[0] | currency
+																result.extracted.content[0].content.DBT_AMOUNT | currency
                                 }}
                               </dd>
                               <dd class="col-lg-10" class="trunc" style="margin-top: 5px;">
                                 <b>Date:</b>
                                 &nbsp;&nbsp;<i class="icon fa fa-calendar fa-lg"></i>
-                                {{result.metadata['Transaction_Date'].values[0] || result.metadata['Date'].values[0]}}
+                                {{
+																result.extracted.content[0].content.TRN_DATE
+																}}
                               </dd>
                             </dl>
                           </div>
@@ -196,7 +93,6 @@
             </div>
           </div>
         </div>
-      </uib-tab>
-    </uib-tabset>
+
   </div>
 </div>

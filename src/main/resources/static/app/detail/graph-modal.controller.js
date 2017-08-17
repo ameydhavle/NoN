@@ -12,6 +12,7 @@
     if (nodeUri) {
     	ctrl.nodeUri = nodeUri;
     }
+    console.log(ctrl)
     ctrl.graphOptions = {
     	groups: {
         'inNetwork': {

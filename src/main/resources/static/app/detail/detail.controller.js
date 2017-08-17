@@ -19,7 +19,7 @@
         type: 'OSM'
       }
     };
-
+		console.log(doc.data.content.CDT_NAME1);
     var topoBaseMap = {
       name: 'Esri Maps',
       source: {
@@ -68,9 +68,10 @@
     ctrl.mortgage = ['Mortgage', 'Realtor', 'Pre-Approval', 'Refinance']
     ctrl.maternity = ['Prenatal', 'Pregnancy', '529', 'Maternity']
     ctrl.renter = ['Rent', 'rent']
-    ctrl.nodeUri = null;
+    ctrl.nodeUri = doc.data.content.CDT_NAME1;
     ctrl.showMap = true;
     ctrl.showGraph = false;
+
     ctrl.mapFeatures = [];
     ctrl.mapOptions = {
       zoom: 6,
@@ -92,6 +93,7 @@
         }
       },
     }
+    console.log("heere")
     var uri = $stateParams.uri;
     ctrl.graphSearch = mapLinksService.search;
     ctrl.graphExpand = mapLinksService.expand;
@@ -99,9 +101,11 @@
     try{
       switch(ctrl.contentType.substring(0,ctrl.contentType.indexOf(';'))) {
         case 'application/json':
-          console.log("json");
-          ctrl.xml = vkbeautify.xml(x2js.json2xml_str(doc.data));
+          console.log("json", doc);
+
+          //ctrl.xml = vkbeautify.xml(x2js.json2xml_str(doc.data));
           ctrl.json = doc.data;
+					console.log(ctrl.json)
           break;
         case 'application/xml':
           if(ctrl.enableRedaction){
@@ -110,6 +114,7 @@
               ctrl.json = x2js.xml_str2json(response.data);
               ctrl.render();
               ctrl.processLocationData(ctrl.json);
+              console.log(ctrl.json)
               if (ctrl.isMerchant) {
               	ctrl.getMerchantSummary(ctrl.json.envelope.content.Company_Name);
               }
@@ -308,7 +313,7 @@
 
       if ('customer' === type) {
       	ctrlName = 'GraphDataModalCtrl';
-      	uri = ctrl.iri;
+      	uri = ctrl.nodeUri;
       }
 
       var modalInstance = $uibModal.open({
@@ -329,6 +334,7 @@
     };
 
     ctrl.getMerchantSummary = function (merchant) {
+    	console.log("hi")
     	mlRest.extension('merchant-summary?rs:subject=' + merchant, {method: 'GET'}).then(function (response) {
         ctrl.merchantSummary = response.data;
       })
