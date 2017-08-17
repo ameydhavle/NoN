@@ -12,7 +12,15 @@
 			"scalar-type": "int",
 			"namespace-uri": "",
 			"collation": "",
-			"localname": "Amount",
+			"localname": "DBT_AMOUNT",
+			"range-value-positions": false,
+			"invalid-values": "ignore"
+		},
+		{
+			"scalar-type": "int",
+			"namespace-uri": "",
+			"collation": "",
+			"localname": "CDT_AMOUNT",
 			"range-value-positions": false,
 			"invalid-values": "ignore"
 		},
@@ -40,56 +48,6 @@
 			"range-value-positions": false,
 			"invalid-values": "ignore"
 		},
-
-
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "Account_Description",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "city",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "Dest",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "Origin",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "UniqueCarrier",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "FlightNum",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
 		{
 			"scalar-type": "string",
 			"namespace-uri": "",
@@ -113,175 +71,8 @@
 			"collation": "http://marklogic.com/collation/en/S1",
 			"range-value-positions": false,
 			"invalid-values": "ignore"
-		},
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "Creditor",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "normalizedGender",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
-        {
-          "scalar-type": "string",
-          "namespace-uri": "",
-          "localname": "Company_Name",
-          "collation": "http://marklogic.com/collation/en/S1",
-          "range-value-positions": false,
-          "invalid-values": "ignore"
-        },
-        {
-          "scalar-type": "string",
-          "namespace-uri": "",
-          "localname": "Industry",
-          "collation": "http://marklogic.com/collation/en/S1",
-          "range-value-positions": false,
-          "invalid-values": "ignore"
-        },
-        {
-          "scalar-type": "string",
-          "namespace-uri": "",
-          "localname": "SIC_Code_Description",
-          "collation": "http://marklogic.com/collation/en/S1",
-          "range-value-positions": false,
-          "invalid-values": "ignore"
-        },
-        {
-          "scalar-type": "string",
-          "namespace-uri": "",
-          "localname": "tags",
-          "collation": "http://marklogic.com/collation/en/S1",
-          "range-value-positions": false,
-          "invalid-values": "ignore"
-        },
-        {
-          "scalar-type": "int",
-          "namespace-uri": "",
-          "localname": "Age",
-          "collation": "",
-          "range-value-positions": false,
-          "invalid-values": "ignore"
-        },
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "Service_Area",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
+		}
+		]
+	}
 
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "Spending_Category",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "City",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "State",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "last_name",
-			"collation": "http://marklogic.com/collation/codepoint",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
-        {
-          "scalar-type": "string",
-          "namespace-uri": "",
-          "localname": "company_name",
-          "collation": "http://marklogic.com/collation/en/S1",
-          "range-value-positions": false,
-          "invalid-values": "ignore"
-        },
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "company_type",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "company_category",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
-        {
-          "scalar-type": "string",
-          "namespace-uri": "",
-          "localname": "Occupation",
-          "collation": "http://marklogic.com/collation/en/S1",
-          "range-value-positions": false,
-          "invalid-values": "ignore"
-        },
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "last_updated_by",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		},
-		{
-			"scalar-type": "string",
-			"namespace-uri": "",
-			"localname": "zip",
-			"collation": "http://marklogic.com/collation/en/S1",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		}
 
-	],
-	"geospatial-element-index": [
-		{
-			"namespace-uri": "",
-			"localname": "geo-point",
-			"coordinate-system": "wgs84",
-			"point-format": "point",
-			"range-value-positions": false,
-			"invalid-values": "reject"
-		}
-	],
-	"geospatial-element-pair-index": [
-		{
-			"parent-namespace-uri":"",
-			"parent-localname": "geo-data",
-			"latitude-namespace-uri":"",
-			"latitude-localname": "Lat",
-			"longitude-namespace-uri":"",
-			"longitude-localname": "Long",
-			"coordinate-system": "wgs84",
-			"range-value-positions": false,
-			"invalid-values": "ignore"
-		}
-	]
-}

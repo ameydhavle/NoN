@@ -2,4 +2,5 @@ build/
 .idea/
 *.sublime-project
 *.sublime-workspace
-.gradle/
+.gradle
+src/main/resources/application.properties
