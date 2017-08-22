@@ -293,13 +293,13 @@
               ctrl.qtext = ctrl.qtext + ' OR ' + tmp.join(' OR ')
               console.log(ctrl.qtext)
             }
-
+						/*
             $http.get('/v1/resources/doubleMeta', {params: {'rs:q': ctrl.qtext }}).then(
               function(response) {
                 var tmp = response.data.toString();
                 ctrl.suggestions = tmp.split(",");
               })
-
+						*/
             ctrl.startSearch( ctrl.qtext );
           }
         )

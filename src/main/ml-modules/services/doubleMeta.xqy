@@ -8,8 +8,9 @@ declare function get(
   ) as document-node()*
 {
   let $q := map:get($params, "q")
-  let $meta := for $i in spell:suggest('/data/ref/dictionary-large.xml',$q)
-  						 return if($i) then $i else()
+  let $meta :=
+  	for $i in spell:suggest('/data/ref/dictionary-large.xml',$q)
+  		return if($i) then $i else()
   return
     document {if(fn:count($meta) > 1)
      then string-join($meta, ',')

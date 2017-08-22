@@ -92,6 +92,7 @@
           Use Fuzzy Search
         </label>
       </div>
+			<!--
       <div class="checkbox">
         <label>
           <input type="checkbox" ng-model="ctrl.runMapSearch" ng-change="ctrl.toggleMapSearch()">
@@ -104,6 +105,7 @@
           Hide Map
         </label>
       </div>
+      -->
       <div class="checkbox">
         <label>
           <input type="checkbox" ng-model="ctrl.runHouseHolding" ng-change="  ctrl.toggleHouseHolding()">
@@ -117,7 +119,7 @@
         </label>
       </div>
     </div>
-    <a class="btn btn-primary btn-sm pull-right" ng-href="{{ctrl.downloadReportUrl()}}" target="_blank"><i class="fa fa-disk"></i>Download</a>
+   <!-- <a class="btn btn-primary btn-sm pull-right" ng-href="{{ctrl.downloadReportUrl()}}" target="_blank"><i class="fa fa-disk"></i>Download</a> -->
 		<ml-facets facets="ctrl.response.facets" toggle="ctrl.toggleFacet(facet, value)" active-facets="ctrl.mlSearch.activeFacets" negate="ctrl.toggleNegatedFacet(facet,value)"></ml-facets>
 	</div>
   <div class="col-md-10">
@@ -142,9 +144,11 @@
             <span ng-repeat="a in syn.synonyms" class="label label-default related-terms">{{a}} </span>
           </li>
         </ul>
+				<!--
         <div class="row">
           <ml-ol-search-facets-map ng-show="!ctrl.hideMap" facets="ctrl.response.facets" center="ctrl.mapOptions.center" zoom="ctrl.mapOptions.zoom" base-map="ctrl.mapOptions.baseMap" bounds-changed="ctrl.mapBoundsChanged(bounds)"></ml-ol-search-facets-map>
         </div>
+				-->
         <div class="pagination-ctrls">
           <uib-pagination class="pagination-sm" ng-model="ctrl.page" ng-change="ctrl.search()" max-size="10" boundary-links="true" total-items="ctrl.response.total" items-per-page="ctrl.response['page-length']">
           </uib-pagination>

@@ -17,14 +17,14 @@
       return num;
     }});
 
-  LandingCtrl.$inject = ['$scope', 'MLRest', '$state', 'userService','$http', '$window','MLSearchFactory', '$location'];
+  LandingCtrl.$inject = ['$scope', 'MLRest', '$state', 'userService','$http', '$window','MLSearchFactory', '$location', 'MLRemoteInputService'];
 
 
-  function LandingCtrl($scope, mlRest, $state, userService, $http, $window, searchFactory, $location) {
+  function LandingCtrl($scope, mlRest, $state, userService, $http, $window, searchFactory, $location, remoteInput) {
     var ctrl = this;
 
     var custData = searchFactory.newContext({
-      queryOptions: 'customers'
+      queryOptions: 'all'
     });
 
     var transactionsData = searchFactory.newContext({
