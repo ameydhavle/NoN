@@ -22,6 +22,7 @@
 	function EventsCtrl($scope, $location, userService, searchFactory,HighchartsHelper, $http, $window) {
 		var ctrl = this;
 		ctrl.isCustomer = true
+		ctrl.qtext ='';
 
 
 		var transactionsData = searchFactory.newContext({
@@ -161,6 +162,7 @@
 		function searchTransactions() {
 			model.transactions.isSearching = true;
 			ctrl.userName = userService.currentUser().name
+			ctrl.qtext = ctrl.model.qtext;
 			transactionsData.additionalQueries.push(transactionConstraint());
 			superCtrl.search.call(ctrl);
 		}

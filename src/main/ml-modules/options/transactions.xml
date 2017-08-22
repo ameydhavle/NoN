@@ -38,7 +38,7 @@
   <constraint name="Collection">
     <collection prefix=""/>
   </constraint>
-	<constraint name="CDT_AMT">
+	<constraint name="Credit-Amount">
 		<range type="xs:int" facet="true">
 			<bucket name="Under 100K" lt="100000">Under 100K</bucket>
 			<bucket name="100k - 250k" ge="100001" lt="250000">100K - 250K</bucket>
@@ -50,7 +50,7 @@
 			<element ns="" name="CDT_AMOUNT"/>
 		</range>
 	</constraint>
-	<constraint name="DBT_AMT">
+	<constraint name="Debit-Amount">
 		<range type="xs:int" facet="true">
 			<bucket name="Under 100K" lt="100000">Under 100K</bucket>
 			<bucket name="100k - 250k" ge="100001" lt="250000">100K - 250K</bucket>
@@ -62,19 +62,32 @@
 			<element ns="" name="DBT_AMOUNT"/>
 		</range>
 	</constraint>
-	<constraint name="NO_TRANS">
+	<constraint name="Direction">
+		<range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
+			<facet-option>limit=10</facet-option>
+			<facet-option>frequency-order</facet-option>
+			<facet-option>descending</facet-option>
+			<element ns="" name="DIRECTION"/>
+		</range>
+	</constraint>
+	<constraint name="Transactions">
 		<range type="xs:int" facet="true">
-			<bucket name="Under 100K" lt="100000">Under 100K</bucket>
-			<bucket name="100k - 250k" ge="100001" lt="250000">100K - 250K</bucket>
-			<bucket name="250k - 500k" ge="250001" lt="500000">250K - 500K</bucket>
-			<bucket name="Over - 500K" ge="500001">Over 500K</bucket>
+			<bucket name="0 - 10" ge="0" lt="10">Under 10</bucket>
+			<bucket name="10 - 20" ge="10" lt="20">10 - 20</bucket>
+			<bucket name="20 - 50" ge="20" lt="50">20 - 50</bucket>
+			<bucket name="50 - 100" ge="50" lt="100">50 - 100</bucket>
+			<bucket name="100 - 250" ge="10" lt="250">100 - 250</bucket>
+			<bucket name="250 - 500" ge="251" lt="500">250 - 500</bucket>
+			<bucket name="500 - 750" ge="501" lt="750">500 - 750</bucket>
+			<bucket name="751 - 1000" ge="751" lt="1000">750 - 1000</bucket>
+			<bucket name="Over - 1000" ge="1000">Over 1000</bucket>
 			<facet-option>limit=10</facet-option>
 			<facet-option>frequency-order</facet-option>
 			<facet-option>descending</facet-option>
 			<element ns="" name="NO_TRANS"/>
 		</range>
 	</constraint>
-  
+
   <default-suggestion-source>
     <word-lexicon collation="http://marklogic.com/collation/"></word-lexicon>
   </default-suggestion-source>
