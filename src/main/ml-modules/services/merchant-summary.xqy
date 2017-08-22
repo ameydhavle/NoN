@@ -68,7 +68,7 @@ declare function res:build-data($subject)
 		map:put($incoming-data, "amount", fn:sum($incoming-trans//Amount/data())),
 		map:put($data, "id", $subject),
 		map:put($data, "label", fn:replace($subject, "_", " ")),
-		map:put($data, "uri", res:get-merchant-uri($subject)),
+		(:map:put($data, "uri", res:get-merchant-uri($subject)),:)
 		map:put($data, "cashflow", (map:get($incoming-data, "amount") - map:get($outgoing-data, "amount"))),
 		map:put($data, "outgoingSummary", $outgoing-data),
 		map:put($data, "outgoingTransactions", $outgoing-tx),
