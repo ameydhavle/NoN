@@ -7,7 +7,7 @@ declare namespace html = "http://www.w3.org/1999/xhtml";
 declare namespace p360 = "http://marklogic.com/solutions/p360";
 declare namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 declare namespace resources ="http://marklogic.com/solutions/p360/resource";
-declare namespace skos = "http://www.w3.org/2004/02/skos/core#"; 
+declare namespace skos = "http://www.w3.org/2004/02/skos/core#";
 
 declare variable $trgr:uri as xs:string external;
 
@@ -27,9 +27,9 @@ let $_ := xdmp:document-insert(
       <submitted-by>{xdmp:get-current-user()}</submitted-by>
 
       <content>{$content}</content>
-    </artifact>, 
-    xdmp:default-permissions(), 
-    ( fn:concat(xdmp:get-current-user(),"-documents"), 'admin-documents'),
+    </artifact>,
+    xdmp:default-permissions(),
+    ( 'documents'),
     ()
   )
 

@@ -5,7 +5,11 @@
 <additional-query>
 <cts:and-query xmlns:cts="http://marklogic.com/cts">
   <cts:collection-query>
-  <cts:uri>wire-transfers</cts:uri>
+  	<cts:uri>wire-transfer</cts:uri>
+		<cts:uri>feeds</cts:uri>
+		<cts:uri>root</cts:uri>
+		<cts:uri>documents</cts:uri>
+		<cts:uri>data</cts:uri>
   </cts:collection-query>
 
   <cts:not-query xmlns:cts="http://marklogic.com/cts">
@@ -32,121 +36,6 @@
     <term-option>punctuation-insensitive</term-option>
     <term-option>stemmed</term-option>
   </term>
-  <sort-order direction="ascending" type="xs:string">
-    <element name="last_name"/>
-  </sort-order>
-  <constraint name="Gender">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="normalizedGender"/>
-    </range>
-  </constraint>
-  <constraint name="company_name">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="company_name"/>
-    </range>
-  </constraint>
-  <constraint name="company_type">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="company_type"/>
-    </range>
-  </constraint>
-  <constraint name="company_category">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="company_category"/>
-    </range>
-  </constraint>
-  <constraint name="Spending_Category">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="Spending_Category"/>
-    </range>
-  </constraint>
-
-  <constraint name="Tags">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="tags"/>
-    </range>
-  </constraint>
-  <constraint name="Service-Area">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="Service_Area"/>
-    </range>
-  </constraint>
-
-  <constraint name="Transaction-Size">
-    <range type="xs:int" facet="true" collation="">
-      <bucket name="Under 1000" ge="0" lt="1000"/>
-      <bucket name="1000-5000" ge="1001" lt="5000"/>
-      <bucket name="5001-10000" ge="5001" lt="10000"/>
-      <bucket name="10001-50000" ge="10001" lt="50000"/>
-      <bucket name="50001-100000" ge="50001" lt="1000000"/>
-      <element ns="" name="Amount"/>
-    </range>
-  </constraint>
-  <constraint name="Age-Group">
-    <range type="xs:int" facet="true" collation="">
-      <bucket name="Under 20" ge="13" lt="20"/>
-      <bucket name="20-30" ge="20" lt="30"/>
-      <bucket name="30-40" ge="30" lt="40"/>
-      <bucket name="40-55" ge="40" lt="55"/>
-      <bucket name="55+" ge="55" lt="100"/>
-      <element ns="" name="Age"/>
-    </range>
-  </constraint>
-
-  <constraint name="City">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="City"/>
-    </range>
-  </constraint>
-  <constraint name="State">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="State"/>
-    </range>
-  </constraint>
-
-  <constraint name="Occupation">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="Occupation"/>
-    </range>
-  </constraint>
-  <constraint name="Zip">
-    <range type="xs:string" facet="false" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="zip"/>
-    </range>
-  </constraint>
   <!--
   <constraint name="UniqueCarrier">
     <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
@@ -181,26 +70,8 @@
     </range>
   </constraint>
   -->
-  <constraint name="Creditor">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="Creditor"/>
-    </range>
-  </constraint>
   <constraint name="Collection">
     <collection prefix=""/>
-  </constraint>
-
-
-  <constraint name="Last-Updated-By">
-    <range type="xs:string" facet="true" collation="http://marklogic.com/collation/en/S1">
-      <facet-option>limit=10</facet-option>
-      <facet-option>frequency-order</facet-option>
-      <facet-option>descending</facet-option>
-      <element ns="" name="last_updated_by"/>
-    </range>
   </constraint>
 
   <default-suggestion-source>
@@ -265,21 +136,6 @@
     </state>
   </operator>
 
-  <constraint name="geo-point">
-    <custom facet="true">
-      <parse apply="parse-structured" ns="http://marklogic.com/appservices/viz/geo" at="/ext/constraint/geo_ml8.xqy" />
-      <start-facet apply="start" ns="http://marklogic.com/appservices/viz/geo" at="/ext/constraint/geo_ml8.xqy" />
-      <finish-facet apply="finish" ns="http://marklogic.com/appservices/viz/geo" at="/ext/constraint/geo_ml8.xqy" />
-    </custom>
-    <annotation>
-      <geo-elem-pair>
-        <heatmap n="90" e="180" s="-90" w="-180" latdivs="20" londivs="20"/>
-        <parent ns="" name="geo-data"/>
-        <lat ns="" name="Lat"/>
-        <lon ns="" name="Long"/>
-      </geo-elem-pair>
-    </annotation>
-  </constraint>
 
   <extract-metadata>
 		<json-property>envelope</json-property>
