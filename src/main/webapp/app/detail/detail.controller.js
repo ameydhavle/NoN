@@ -19,8 +19,7 @@
         type: 'OSM'
       }
     };
-		console.log(doc.data.content.CDT_NAME1);
-    var topoBaseMap = {
+		var topoBaseMap = {
       name: 'Esri Maps',
       source: {
         type: 'EsriBaseMaps',
@@ -44,7 +43,7 @@
     var x2js = new X2JS();
     ctrl.entityType ='';
     ctrl.contentType = '';
-    ctrl.enableRedaction = true;
+    ctrl.enableRedaction = false;
     ctrl.isCustomer = false;
     ctrl.isMerchant = false;
     ctrl.deposits = 0;
@@ -68,7 +67,7 @@
     ctrl.mortgage = ['Mortgage', 'Realtor', 'Pre-Approval', 'Refinance']
     ctrl.maternity = ['Prenatal', 'Pregnancy', '529', 'Maternity']
     ctrl.renter = ['Rent', 'rent']
-    ctrl.nodeUri = doc.data.content.CDT_NAME1;
+
     ctrl.showMap = true;
     ctrl.showGraph = false;
 
@@ -98,13 +97,15 @@
     ctrl.graphSearch = mapLinksService.search;
     ctrl.graphExpand = mapLinksService.expand;
     ctrl.contentType = doc.headers('content-type');
+		console.log(ctrl.contentType)
     try{
       switch(ctrl.contentType.substring(0,ctrl.contentType.indexOf(';'))) {
         case 'application/json':
           console.log("json", doc);
-
+					ctrl.nodeUri = doc.data.content.CDT_NAME1;
           //ctrl.xml = vkbeautify.xml(x2js.json2xml_str(doc.data));
           ctrl.json = doc.data;
+					ctrl.type = 'json';
 					console.log(ctrl.json)
           break;
         case 'application/xml':
@@ -115,19 +116,23 @@
               ctrl.render();
               ctrl.processLocationData(ctrl.json);
               console.log(ctrl.json)
+							ctrl.type = 'xml';
               if (ctrl.isMerchant) {
               	ctrl.getMerchantSummary(ctrl.json.envelope.content.Company_Name);
               }
-            })
+            });
           }else{
+						ctrl.type = 'xml';
             ctrl.xml = doc.data;
             ctrl.json = x2js.xml_str2json(doc.data);
           }
           break;
         case 'text/plain':
           console.log("text")
+					ctrl.type = 'json';
           break;
         default:
+					ctrl.type = 'json';
       }
 
     }catch(e){
