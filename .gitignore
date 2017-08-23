@@ -4,5 +4,5 @@ build/
 *.sublime-workspace
 .gradle
 src/main/resources/application.properties
-
+node_modules/
 
