@@ -287,10 +287,10 @@ declare private function res:get-object-group($subject as xs:string) as xs:strin
 	)
   let $group :=
     if ($results and fn:count($results) > 0) then
-    	if (fn:exists($results[1]//group)) then
-    		$results[1]//group/text()
+    	if (fn:exists($results[1]//CDT_PARENT_GCI_NO[fn:string(.) ne ''])) then
+    		"inNetwork"
       else
-      	"unknown"
+      	"outNetwork"
     else
       "unknown"
 

@@ -24,7 +24,7 @@ declare function res:build-data($subject)
   let $incoming-tx := json:array()
 
   let $outgoing-trans := cts:search(
-	  fn:collection("wire-transfers"),
+	  fn:collection("wire-transfer"),
     	  cts:json-property-value-query(
     	    "CDT_NAME1",
     	    $subject
@@ -32,7 +32,7 @@ declare function res:build-data($subject)
     	)[1 to 10]
 
   let $incoming-trans := cts:search(
-	  fn:collection("wire-transfers"),
+	  fn:collection("wire-transfer"),
 	  cts:json-property-value-query(
 	    "DBT_NAME1",
 	    $subject
@@ -44,9 +44,9 @@ declare function res:build-data($subject)
 		let $tx := json:object()
 		let $_ := (
 			map:put($tx, "type", "Outgoing"),
-			map:put($tx, "date", $i/message/Date/data()),
-			map:put($tx, "amount", $i/message/Amount/data()),
-			map:put($tx, "merchant", $i/message/Beneficiary/Beneficiary_Name/data())
+			map:put($tx, "date", $i//TRN_DATE/data()),
+			map:put($tx, "amount", $i//CDT_AMOUNT/data()),
+			map:put($tx, "merchant", $i//CDT_NAME1/data())
 		)
 		return json:array-push($outgoing-tx, $tx)
 
@@ -55,17 +55,17 @@ declare function res:build-data($subject)
 		let $tx := json:object()
 		let $_ := (
 			map:put($tx, "type", "Incoming"),
-			map:put($tx, "date", $i/message/Date/data()),
-			map:put($tx, "amount", $i/message/Amount/data()),
-			map:put($tx, "merchant", $i/message/Sender/Sender_Name/data())
+			map:put($tx, "date", $i//TRN_DATE/data()),
+			map:put($tx, "amount", $i//DBT_AMOUNT/data()),
+			map:put($tx, "merchant", $i//DBT_NAME1/data())
 		)
 		return json:array-push($incoming-tx, $tx)
 
 	let $_ := (
 		map:put($outgoing-data, "count", fn:count($outgoing-trans)),
-		map:put($outgoing-data, "amount", fn:sum($outgoing-trans//Amount/data())),
+		map:put($outgoing-data, "amount", fn:sum($outgoing-trans//CDT_AMOUNT/data())),
 		map:put($incoming-data, "count", fn:count($incoming-trans)),
-		map:put($incoming-data, "amount", fn:sum($incoming-trans//Amount/data())),
+		map:put($incoming-data, "amount", fn:sum($incoming-trans//DBT_AMOUNT/data())),
 		map:put($data, "id", $subject),
 		map:put($data, "label", fn:replace($subject, "_", " ")),
 		(:map:put($data, "uri", res:get-merchant-uri($subject)),:)
@@ -86,14 +86,14 @@ declare function res:build-data($subject)
 declare private function res:get-merchant-uri($subject as xs:string) as xs:string
 {
 	let $results := cts:search(
-	  fn:collection("wire-transfers"),
+	  fn:collection("wire-transfer"),
 	  cts:json-property-range-query("CDT_NAME1", "=", $subject, ("collation=http://marklogic.com/collation/en/S1"))
 	)
   let $uri :=
     if ($results and fn:count($results) > 0) then
     	xdmp:node-uri($results[1])
     else
-      ()
+      ""
 
   return $uri
 };
