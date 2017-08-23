@@ -107,7 +107,7 @@
       .state('root.land', {
         url: '/',
         templateUrl: 'app/landing/landing.html',
-        controller: 'LandingCtrl',
+        controller: 'SearchCtrl',
         controllerAs: 'ctrl'
       })
       .state('root.data', {
